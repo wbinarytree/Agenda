@@ -9,9 +9,9 @@ import android.widget.Toast;
  * Created by phoenix on 16/6/5.
  */
 
-public class ToastReceiver extends BroadcastReceiver{
+public class BalanceChangeReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Change Saved", Toast.LENGTH_SHORT).show();
     }
 }

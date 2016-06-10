@@ -16,12 +16,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.phoenix.soft.agenda.resource.BaseActivity;
 import com.phoenix.soft.agenda.resource.ResAccount;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private ListView list;
     private List<ResAccount> accList = new ArrayList<>();
@@ -29,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setContentView(R.layout.content_main);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
         list = (ListView) findViewById(R.id.list);
         initAccList();
         initListView();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+/*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,8 +45,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent("com.phoenix.soft.agenda.TOAST");
                 sendBroadcast(intent);
             }
-        });
+        });*/
 
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.content_main;
     }
 
     @Override

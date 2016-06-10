@@ -18,10 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity2">
+        <activity android:name=".Activity2"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <receiver android:name=".ToastReceiver">
+        <receiver android:name=".BalanceChangeReceiver">
             <intent-filter>
                 <action android:name="com.phoenix.soft.agenda.TOAST"/>
             </intent-filter>
