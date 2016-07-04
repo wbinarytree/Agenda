@@ -2,10 +2,16 @@ package com.phoenix.soft.agenda.resource;
 
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.phoenix.soft.agenda.R;
 
@@ -16,11 +22,12 @@ import com.phoenix.soft.agenda.R;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private Toolbar toolBar;
+    private FrameLayout contentView = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutResource());
+        setContentView(R.layout.activity_base);
         toolBar = (Toolbar) findViewById(R.id.toolbar);
 
         if (toolBar != null) {
@@ -52,7 +59,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+            if ( R.layout.activity_base == layoutResID) {
+                super.setContentView(R.layout.activity_base);
+                contentView = (FrameLayout) findViewById(R.id.activity_content);
+                contentView.removeAllViews();
 
-
-
+            } else if (layoutResID != R.layout.activity_base) {
+                View addView = LayoutInflater.from(this).inflate(layoutResID, null);
+                contentView.addView(addView);
+            }
+    }
 }
