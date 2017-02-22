@@ -40,9 +40,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setContentView(R.layout.content_main);
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
         list = (ListView) findViewById(R.id.list);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(this);
@@ -51,16 +48,7 @@ public class MainActivity extends BaseActivity {
         mRecyclerView.setAdapter(mAdapter);
         initAccList();
         initListView();
-/*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Intent intent = new Intent("com.phoenix.soft.agenda.TOAST");
-                sendBroadcast(intent);
-            }
-        });*/
+
 
     }
 
@@ -109,24 +97,3 @@ public class MainActivity extends BaseActivity {
 
 
 
-class AccAdapter extends ArrayAdapter<ResAccount>{
-    private int resourceId;
-
-    public AccAdapter(Context context, int resource,List<ResAccount> object) {
-        super(context, resource,object);
-        resourceId = resource;
-    }
-
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ResAccount acc = getItem(position);
-        View view = LayoutInflater.from(getContext()).inflate(resourceId,null);
-        TextView tv_acc = (TextView) view.findViewById(R.id.tv_list_acc);
-        TextView tv_bal = (TextView) view.findViewById(R.id.tv_list_bal);
-        tv_acc.setText(acc.getName());
-        tv_bal.setText(acc.getBal()+"");
-
-        return view;
-    }
-}
