@@ -13,6 +13,7 @@ public class Detail {
     private Date date;
     private Money money;
     private String desc;
+    private String title;
 
     public String getDetailId() {
         return detailId;
@@ -44,5 +45,13 @@ public class Detail {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

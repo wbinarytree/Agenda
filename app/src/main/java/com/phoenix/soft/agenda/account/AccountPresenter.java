@@ -1,4 +1,4 @@
-package com.phoenix.soft.agenda.ui.coststream;
+package com.phoenix.soft.agenda.account;
 
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.repos.AccountRepository;
@@ -8,13 +8,13 @@ import java.util.List;
 /**
  * Created by yaoda on 22/02/17.
  */
-public class CostStreamPresenter implements CostStreamContract.Presenter {
+public class AccountPresenter implements AccountContract.Presenter {
 
     private final AccountRepository repository;
-    private final CostStreamContract.View view;
+    private final AccountContract.View view;
     private List<Account> accounts;
 
-    public CostStreamPresenter(AccountRepository repository, CostStreamContract.View view) {
+    public AccountPresenter(AccountRepository repository, AccountContract.View view) {
         this.repository = repository;
         this.view = view;
     }

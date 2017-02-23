@@ -1,4 +1,4 @@
-package com.phoenix.soft.agenda.ui.coststream;
+package com.phoenix.soft.agenda.account;
 
 import com.phoenix.soft.agenda.module.Account;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by yaoda on 22/02/17.
  */
 
-public interface CostStreamContract {
+public interface AccountContract {
     interface View {
         void showAccountList(List<Account> accounts);
 
@@ -16,7 +16,8 @@ public interface CostStreamContract {
 
         void showError();
 
-        void showDetails();
+        void showDetails(Account account);
+
     }
 
     interface Presenter {

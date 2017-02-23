@@ -52,7 +52,7 @@ public class TestAccountRepository implements AccountRepository {
             for (int j = 0; j < 10; j++) {
                 Detail detail = new Detail();
                 detail.setMoney(Money.parse("USD " + r.nextInt()));
-                detail.setDate(new Date());
+                detail.setDate(new Date(Math.abs(System.currentTimeMillis() - r.nextLong())));
                 details.add(detail);
             }
             account.setDetailList(details);

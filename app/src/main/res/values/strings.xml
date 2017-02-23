@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">Agenda</string>
     <string name="action_settings">Settings</string>
-    <string name="cost_temp">$400</string>
+    <string name="tmp_cost">$400</string>
     <string name="income_title">Income</string>
     <string name="outcome_title">Outcome</string>
     <string name="total_title">Total</string>
     <string name="img_desc">account_type</string>
     <string name="loading">loading</string>
+    <string name="title_main">Home</string>
+    <string name="tmp_detail_desc">Carrefour shop</string>
+    <string name="tmp_date">2017-02-22 : 17h35</string>
 
 </resources>

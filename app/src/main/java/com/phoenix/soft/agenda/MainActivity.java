@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.phoenix.soft.agenda.resource.BaseActivity;
-import com.phoenix.soft.agenda.ui.coststream.AccountListFragment;
+import com.phoenix.soft.agenda.account.AccountListFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,12 +17,18 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
     @BindView(R2.id.fab)
     FloatingActionButton fab;
+    @BindView(R2.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            toolbar.setTitle(getResources().getString(R.string.title_main));
+        }
         Fragment fragment = new AccountListFragment();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         return fab;
     }
 
-
+    public Toolbar getToolbar(){return toolbar;}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

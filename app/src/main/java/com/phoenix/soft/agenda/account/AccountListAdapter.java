@@ -1,4 +1,4 @@
-package com.phoenix.soft.agenda.ui.coststream;
+package com.phoenix.soft.agenda.account;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -25,8 +25,8 @@ import butterknife.ButterKnife;
 public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.ViewHolder> {
     private List<Account> accountList;
     private Context context;
-    private CostStreamContract.View view;
-    public AccountListAdapter(List<Account> accountList, Context context, CostStreamContract.View view) {
+    private AccountContract.View view;
+    public AccountListAdapter(List<Account> accountList, Context context, AccountContract.View view) {
         this.accountList = accountList;
         this.context = context;
         this.view = view;
@@ -37,6 +37,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_account_list, parent, false);
         return new ViewHolder(view);
     }
+
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -50,7 +51,11 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
             holder.tvTotal.setTextColor(ContextCompat.getColor(context,R.color.limeGreen));
         }
         holder.tvTotal.setText(total);
-        holder.cardView.setOnClickListener(v -> view.showError());
+        holder.cardView.setOnClickListener(v -> {
+            holder.cardView.setTransitionName("account");
+            view.showDetails(account);
+        });
+
     }
 
     @Override

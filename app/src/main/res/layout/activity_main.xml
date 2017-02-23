@@ -11,6 +11,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         android:theme="@style/AppThemeNew.AppBarOverlay"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -32,7 +33,6 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add_white_24dp"
         app:backgroundTint="@drawable/fab_background"
-        app:backgroundTintMode="multiply"
         app:layout_anchor="@+id/fragment_content"
         app:layout_anchorGravity="bottom|right" />
 
