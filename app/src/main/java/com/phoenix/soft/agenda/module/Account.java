@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import org.joda.money.Money;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by yaoda on 22/02/17.
  */
 
-public class Account implements Parcelable {
+public class Account implements Parcelable,Serializable {
     public static final Parcelable.Creator<Account> CREATOR = new Parcelable.Creator<Account>() {
         @Override
         public Account createFromParcel(Parcel source) {
@@ -38,7 +39,7 @@ public class Account implements Parcelable {
         this.accountName = in.readString();
         this.accountPicUrl = in.readString();
         this.accountID = in.readString();
-        this.detailList = new ArrayList<Detail>();
+        this.detailList = new ArrayList<>();
         in.readList(this.detailList, Detail.class.getClassLoader());
         this.income = (Money) in.readSerializable();
         this.outcome = (Money) in.readSerializable();

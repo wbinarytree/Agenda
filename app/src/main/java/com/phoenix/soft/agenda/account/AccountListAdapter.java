@@ -2,6 +2,7 @@ package com.phoenix.soft.agenda.account;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,10 +52,8 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
             holder.tvTotal.setTextColor(ContextCompat.getColor(context,R.color.limeGreen));
         }
         holder.tvTotal.setText(total);
-        holder.cardView.setOnClickListener(v -> {
-            holder.cardView.setTransitionName("account");
-            view.showDetails(account);
-        });
+        ViewCompat.setTransitionName(holder.cardView,"accountCard" + String.valueOf(position));
+        holder.cardView.setOnClickListener(v -> view.showDetails(account));
 
     }
 

@@ -10,5 +10,6 @@
     <string name="title_main">Home</string>
     <string name="tmp_detail_desc">Carrefour shop</string>
     <string name="tmp_date">2017-02-22 : 17h35</string>
+    <string name="account_transition">account_transition</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.phoenix.soft.agenda.account;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.AutoTransition;
+import android.transition.ChangeBounds;
+import android.transition.ChangeTransform;
+import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +24,7 @@ import com.phoenix.soft.agenda.R2;
 import com.phoenix.soft.agenda.detail.DetailFragment;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.repos.TestAccountRepository;
+import com.phoenix.soft.agenda.transition.DetailTransition;
 
 import java.util.List;
 
@@ -89,6 +95,11 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         bind.unbind();
     }
 
@@ -99,11 +110,16 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
         Bundle arg = new Bundle();
         arg.putParcelable("detail",account);
         fragment.setArguments(arg);
-        getActivity().getSupportFragmentManager()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fragment.setSharedElementEnterTransition(new AutoTransition());
+            fragment.setSharedElementReturnTransition(new AutoTransition());
+            
+        }
+            getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_content,fragment ,DetailFragment.TAG)
-                .addSharedElement(accountList.findViewById(R.id.account_card), "account")
-                .addToBackStack("account")
+                .addSharedElement(accountList.findViewById(R.id.account_card), getString(R.string.account_transition))
+                .addToBackStack("account_page")
                 .commit();
     }
 }
