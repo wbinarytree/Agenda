@@ -1,5 +1,7 @@
 package com.phoenix.soft.agenda.module;
 
+import org.joda.money.Money;
+
 import java.util.List;
 
 /**
@@ -11,6 +13,8 @@ public class Account {
     private String accountPicUrl;
     private String accountID;
     private List<Detail> detailList;
+    private Money income;
+    private Money outcome;
 
     public String getAccountName() {
         return accountName;
@@ -42,5 +46,21 @@ public class Account {
 
     public void setDetailList(List<Detail> detailList) {
         this.detailList = detailList;
+    }
+
+    public Money getIncome() {
+        return income;
+    }
+
+    public void setIncome(Money income) {
+        this.income = income;
+    }
+
+    public Money getOutcome() {
+        return outcome;
+    }
+
+    public void setOutcome(Money outcome) {
+        this.outcome = outcome;
     }
 }

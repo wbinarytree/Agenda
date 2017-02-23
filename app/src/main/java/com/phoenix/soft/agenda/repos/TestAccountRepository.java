@@ -14,8 +14,31 @@ import java.util.Random;
  * Created by yaoda on 22/02/17.
  */
 public class TestAccountRepository implements AccountRepository {
+    private static List<Account> accountList;
+
+    public TestAccountRepository() {
+        if (accountList == null) {
+            accountList = createList();
+        }
+    }
+
     @Override
     public List<Account> getAccountList() {
+        return accountList;
+    }
+
+    @Override
+    public boolean addAccount(Account account) {
+        return accountList.add(account);
+
+    }
+
+    @Override
+    public boolean delAccount(Account account) {
+        return accountList.remove(account);
+    }
+
+    private List<Account> createList() {
         String[] names = {"CashAccount", "BankAccount", "RestaurantAccount"};
         List<Account> list = new ArrayList<>();
         Random r = new Random();
@@ -23,10 +46,12 @@ public class TestAccountRepository implements AccountRepository {
             Account account = new Account();
             account.setAccountName(names[i]);
             account.setAccountID(String.valueOf(i));
+            account.setIncome(Money.parse("USD " + r.nextInt()));
+            account.setOutcome(Money.parse("USD " + r.nextInt()));
             ArrayList<Detail> details = new ArrayList<>();
             for (int j = 0; j < 10; j++) {
                 Detail detail = new Detail();
-                detail.setMoney(Money.parse("USD " + r.nextDouble()));
+                detail.setMoney(Money.parse("USD " + r.nextInt()));
                 detail.setDate(new Date());
                 details.add(detail);
             }
