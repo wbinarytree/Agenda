@@ -33,8 +33,12 @@ public class AccountPresenter implements AccountContract.Presenter {
     }
 
     @Override
-    public void addAccount() {
-
+    public void addAccount(Account account) {
+        if (account == null) {
+            account = repository.getRandomAccount();
+        }
+        repository.addAccount(account);
+        view.showNewAccount();
     }
 
     @Override

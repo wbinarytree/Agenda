@@ -18,12 +18,15 @@ public interface AccountContract {
 
         void showDetails(Account account);
 
+        void showNewAccount();
+
+        void showModifyAccount();
     }
 
     interface Presenter {
         void loadAccount();
 
-        void addAccount();
+        void addAccount(Account account);
 
         void modifyAccount();
 

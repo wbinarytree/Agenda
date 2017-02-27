@@ -1,10 +1,12 @@
 package com.phoenix.soft.agenda.account;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.R2;
 import com.phoenix.soft.agenda.module.Account;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,10 +30,17 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
     private List<Account> accountList;
     private Context context;
     private AccountContract.View view;
+
+
     public AccountListAdapter(List<Account> accountList, Context context, AccountContract.View view) {
         this.accountList = accountList;
         this.context = context;
         this.view = view;
+    }
+
+
+    public void addAccount(){
+        this.notifyItemChanged(accountList.size()-1);
     }
 
     @Override
@@ -54,7 +64,10 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         holder.tvTotal.setText(total);
         ViewCompat.setTransitionName(holder.cardView,"accountCard" + String.valueOf(position));
         holder.cardView.setOnClickListener(v -> view.showDetails(account));
-
+        holder.cardView.setOnLongClickListener(v -> {
+            view.showModifyAccount();
+            return true;
+        });
     }
 
     @Override

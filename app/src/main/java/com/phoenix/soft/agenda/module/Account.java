@@ -2,6 +2,7 @@ package com.phoenix.soft.agenda.module;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import org.joda.money.Money;
 
@@ -70,10 +71,10 @@ public class Account implements Parcelable,Serializable {
     }
 
     public List<Detail> getDetailList() {
-        return detailList;
+        return this.detailList;
     }
 
-    public void setDetailList(List<Detail> detailList) {
+    public void setDetailList(@NonNull List<Detail> detailList) {
         this.detailList = detailList;
     }
 

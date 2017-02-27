@@ -1,5 +1,6 @@
 package com.phoenix.soft.agenda.account;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,9 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.AutoTransition;
-import android.transition.ChangeBounds;
-import android.transition.ChangeTransform;
-import android.transition.Fade;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ import com.phoenix.soft.agenda.R2;
 import com.phoenix.soft.agenda.detail.DetailFragment;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.repos.TestAccountRepository;
-import com.phoenix.soft.agenda.transition.DetailTransition;
 
 import java.util.List;
 
@@ -39,13 +37,14 @@ import butterknife.Unbinder;
 public class AccountListFragment extends Fragment implements AccountContract.View {
     public static final String TAG = "ACCOUNT_LIST_FRAGMENT";
     @BindView(R2.id.account_list)
-    RecyclerView accountList;
+    RecyclerView accountRecyclerView;
     @BindView(R2.id.layout_loading)
     FrameLayout loadingProcess;
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private AccountContract.Presenter presenter;
     private Unbinder bind;
+    private AccountListAdapter adapter;
 
 
     @Nullable
@@ -59,28 +58,30 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
         fab = ((MainActivity) getActivity()).getFab();
         fab.setOnClickListener(v -> this.showError());
         toolbar = ((MainActivity) getActivity()).getToolbar();
+        toolbar.setOnClickListener(v -> presenter.addAccount(null));
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        presenter = new AccountPresenter(new TestAccountRepository(), this);
+        presenter = new AccountPresenter(new TestAccountRepository(getContext()), this);
         presenter.loadAccount();
     }
 
     @Override
     public void showAccountList(List<Account> accounts) {
-        accountList.setVisibility(View.VISIBLE);
+        accountRecyclerView.setVisibility(View.VISIBLE);
         loadingProcess.setVisibility(View.GONE);
         // TODO: 23/02/17 add different layoutManager
-        accountList.setAdapter(new AccountListAdapter(accounts, getContext(), this));
-        accountList.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new AccountListAdapter(accounts, getContext(), this);
+        accountRecyclerView.setAdapter(adapter);
+        accountRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
     public void showNoAccount() {
-        accountList.setVisibility(View.GONE);
+        accountRecyclerView.setVisibility(View.GONE);
         loadingProcess.setVisibility(View.VISIBLE);
     }
 
@@ -108,18 +109,30 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
         // TODO: 23/02/17
         Fragment fragment = new DetailFragment();
         Bundle arg = new Bundle();
-        arg.putParcelable("detail",account);
+        arg.putParcelable("detail", account);
         fragment.setArguments(arg);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             fragment.setSharedElementEnterTransition(new AutoTransition());
             fragment.setSharedElementReturnTransition(new AutoTransition());
-            
+
         }
-            getActivity().getSupportFragmentManager()
+        getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_content,fragment ,DetailFragment.TAG)
-                .addSharedElement(accountList.findViewById(R.id.account_card), getString(R.string.account_transition))
+                .replace(R.id.fragment_content, fragment, DetailFragment.TAG)
+                .addSharedElement(accountRecyclerView.findViewById(R.id.account_card), getString(R.string.account_transition))
                 .addToBackStack("account_page")
                 .commit();
+    }
+
+    @Override
+    public void showNewAccount() {
+        adapter.addAccount();
+        accountRecyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+    }
+
+    @Override
+    public void showModifyAccount() {
+        // TODO: 27/02/17  add modify mode when recyclerview child long touched
+
     }
 }

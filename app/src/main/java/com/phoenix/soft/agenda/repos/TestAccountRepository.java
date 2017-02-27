@@ -1,10 +1,15 @@
 package com.phoenix.soft.agenda.repos;
 
+import android.content.Context;
+
+import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Detail;
 
 import org.joda.money.Money;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +20,16 @@ import java.util.Random;
  */
 public class TestAccountRepository implements AccountRepository {
     private static List<Account> accountList;
-
+    private Context context;
+    private File localData;
     public TestAccountRepository() {
+        if (accountList == null) {
+            accountList = createList();
+        }
+    }
+
+    public TestAccountRepository(Context context) {
+        this.context = context;
         if (accountList == null) {
             accountList = createList();
         }
@@ -36,6 +49,25 @@ public class TestAccountRepository implements AccountRepository {
     @Override
     public boolean delAccount(Account account) {
         return accountList.remove(account);
+    }
+
+    @Override
+    public Account getRandomAccount() {
+        Random r = new Random();
+        Account account = new Account();
+        account.setAccountName(String.valueOf(r.nextLong()));
+        account.setAccountID(String.valueOf(r.nextInt()));
+        account.setIncome(Money.parse("USD " + r.nextInt()));
+        account.setOutcome(Money.parse("USD " + r.nextInt()));
+        ArrayList<Detail> details = new ArrayList<>();
+        for (int j = 0; j < 10; j++) {
+            Detail detail = new Detail();
+            detail.setMoney(Money.parse("USD " + r.nextInt()));
+            detail.setDate(new Date(Math.abs(System.currentTimeMillis() - r.nextLong())));
+            details.add(detail);
+        }
+        account.setDetailList(details);
+        return account;
     }
 
     private List<Account> createList() {
@@ -59,5 +91,31 @@ public class TestAccountRepository implements AccountRepository {
             list.add(account);
         }
         return list;
+    }
+
+    // TODO: 27/02/17  add crud with sqlite of internal file to save user data
+    private void saveData() {
+        File filesDir = context.getFilesDir();
+        String localPath = context.getString(R.string.local_user_data_account);
+        File[] files = filesDir.listFiles((dir, name) -> {
+            if (name.equals(localPath)) {
+                return true;
+            }
+            return false;
+        });
+        if(files.length == 0 ){
+            localData = new File(context.getFilesDir(), localPath);
+        }else {
+            localData = files[0];
+        }
+
+        try {
+            FileOutputStream outputStream = context.openFileOutput(localPath, Context.MODE_PRIVATE);
+            outputStream.write("Test".getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
