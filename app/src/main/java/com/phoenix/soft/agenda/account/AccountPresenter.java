@@ -37,7 +37,6 @@ public class AccountPresenter implements AccountContract.Presenter {
         if (account == null) {
             account = repository.getRandomAccount();
         }
-        repository.addAccount(account);
         view.showNewAccount();
     }
 

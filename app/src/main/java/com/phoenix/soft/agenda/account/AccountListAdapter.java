@@ -63,7 +63,9 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         }
         holder.tvTotal.setText(total);
         ViewCompat.setTransitionName(holder.cardView,"accountCard" + String.valueOf(position));
-        holder.cardView.setOnClickListener(v -> view.showDetails(account));
+        holder.cardView.setOnClickListener(v -> {
+            view.showDetails(account,position);
+        });
         holder.cardView.setOnLongClickListener(v -> {
             view.showModifyAccount();
             return true;

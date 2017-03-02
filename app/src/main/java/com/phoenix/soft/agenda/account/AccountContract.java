@@ -16,7 +16,7 @@ public interface AccountContract {
 
         void showError();
 
-        void showDetails(Account account);
+        void showDetails(Account account,int position);
 
         void showNewAccount();
 

@@ -1,17 +1,17 @@
 package com.phoenix.soft.agenda.account;
 
-import android.graphics.Color;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.AutoTransition;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +20,11 @@ import android.widget.FrameLayout;
 import com.phoenix.soft.agenda.MainActivity;
 import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.R2;
+import com.phoenix.soft.agenda.Utils;
 import com.phoenix.soft.agenda.detail.DetailFragment;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.repos.TestAccountRepository;
+import com.phoenix.soft.agenda.transition.DetailTransition;
 
 import java.util.List;
 
@@ -45,14 +47,12 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
     private AccountContract.Presenter presenter;
     private Unbinder bind;
     private AccountListAdapter adapter;
+    private TestAccountRepository repository;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (container == null) {
-            return null;
-        }
         View view = inflater.inflate(R.layout.fragment_account_list, container, false);
         bind = ButterKnife.bind(this, view);
         fab = ((MainActivity) getActivity()).getFab();
@@ -65,7 +65,8 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        presenter = new AccountPresenter(new TestAccountRepository(getContext()), this);
+        repository = new TestAccountRepository(getContext());
+        presenter = new AccountPresenter(repository, this);
         presenter.loadAccount();
     }
 
@@ -74,9 +75,10 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
         accountRecyclerView.setVisibility(View.VISIBLE);
         loadingProcess.setVisibility(View.GONE);
         // TODO: 23/02/17 add different layoutManager
+        accountRecyclerView.setLayoutManager(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ?
+                new LinearLayoutManager(getContext()) : new GridLayoutManager(getContext(), 2));
         adapter = new AccountListAdapter(accounts, getContext(), this);
         accountRecyclerView.setAdapter(adapter);
-        accountRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
@@ -88,7 +90,9 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
     @Override
     public void showError() {
         Snackbar snackbar = Snackbar
-                .make(getActivity().findViewById(R.id.coordinator), "Loading error pleas wait", Snackbar.LENGTH_SHORT)
+                .make(getActivity().findViewById(R.id.coordinator),
+                        Utils.fromHtml("<font color=\"#ffffff\">Loading error pleas wait</font>"),
+                        Snackbar.LENGTH_SHORT)
                 .setAction("RETRY", v -> presenter.loadAccount());
         snackbar.show();
     }
@@ -105,23 +109,24 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
     }
 
     @Override
-    public void showDetails(Account account) {
+    public void showDetails(Account account,int position) {
         // TODO: 23/02/17
         Fragment fragment = new DetailFragment();
         Bundle arg = new Bundle();
         arg.putParcelable("detail", account);
         fragment.setArguments(arg);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new AutoTransition());
+            fragment.setSharedElementEnterTransition(new DetailTransition());
             fragment.setSharedElementReturnTransition(new AutoTransition());
 
         }
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_content, fragment, DetailFragment.TAG)
-                .addSharedElement(accountRecyclerView.findViewById(R.id.account_card), getString(R.string.account_transition))
+                .addSharedElement(accountRecyclerView.getChildAt(position).findViewById(R.id.account_card), getString(R.string.account_transition))
                 .addToBackStack("account_page")
                 .commit();
+
     }
 
     @Override
