@@ -14,9 +14,6 @@ public final class UserAccountContract {
         public static final String PIC_URL = "pic_url";
         public static final String INCOME = "income";
         public static final String OUTCOME = "outcome";
-
-
-
     }
 
 }

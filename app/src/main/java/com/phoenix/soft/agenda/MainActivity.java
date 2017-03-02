@@ -1,6 +1,5 @@
 package com.phoenix.soft.agenda;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -29,11 +28,14 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             toolbar.setTitle(getResources().getString(R.string.title_main));
         }
-        Fragment fragment = new AccountListFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_content, fragment, AccountListFragment.TAG)
-                .commit();
+        if(savedInstanceState == null){
+            Fragment fragment = new AccountListFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_content, fragment, AccountListFragment.TAG)
+                    .commit();
+        }
+
     }
 
 

@@ -51,8 +51,8 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Account account = accountList.get(position);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        final Account account = accountList.get(position);
         holder.tvIncome.setText(account.getIncome().toString());
         holder.tvOutcome.setText(account.getOutcome().toString());
         String total = account.getIncome().minus(account.getOutcome()).toString();
@@ -63,9 +63,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         }
         holder.tvTotal.setText(total);
         ViewCompat.setTransitionName(holder.cardView,"accountCard" + String.valueOf(position));
-        holder.cardView.setOnClickListener(v -> {
-            view.showDetails(account,position);
-        });
+        holder.cardView.setOnClickListener(v -> view.showDetails(account, position));
         holder.cardView.setOnLongClickListener(v -> {
             view.showModifyAccount();
             return true;

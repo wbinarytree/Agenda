@@ -32,10 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
- * Created by yaoda on 22/02/17.
- */
-
 public class AccountListFragment extends Fragment implements AccountContract.View {
     public static final String TAG = "ACCOUNT_LIST_FRAGMENT";
     @BindView(R2.id.account_list)
@@ -56,7 +52,7 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
         View view = inflater.inflate(R.layout.fragment_account_list, container, false);
         bind = ButterKnife.bind(this, view);
         fab = ((MainActivity) getActivity()).getFab();
-        fab.setOnClickListener(v -> this.showError());
+        fab.setOnClickListener(v -> AccountListFragment.this.showError());
         toolbar = ((MainActivity) getActivity()).getToolbar();
         toolbar.setOnClickListener(v -> presenter.addAccount(null));
         return view;
@@ -95,11 +91,6 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
                         Snackbar.LENGTH_SHORT)
                 .setAction("RETRY", v -> presenter.loadAccount());
         snackbar.show();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 
     @Override

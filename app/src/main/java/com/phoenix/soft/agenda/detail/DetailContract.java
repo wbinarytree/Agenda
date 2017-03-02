@@ -11,6 +11,7 @@ import java.util.List;
 public interface DetailContract {
     interface View {
         void showDetailList(List<Detail> detailList);
+        void showAddDetailDialog();
         void showNoDetail();
         void showError();
     }

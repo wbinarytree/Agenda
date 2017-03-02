@@ -1,8 +1,10 @@
 package com.phoenix.soft.agenda.repos;
 
 import android.content.Context;
+import android.database.Observable;
 
 import com.phoenix.soft.agenda.R;
+import com.phoenix.soft.agenda.db.UserDataHelper;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Detail;
 
@@ -10,6 +12,7 @@ import org.joda.money.Money;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,10 +25,14 @@ public class TestAccountRepository implements AccountRepository {
     private static List<Account> accountList;
     private Context context;
     private File localData;
+    private UserDataHelper userDataHelper;
+
     public TestAccountRepository() {
         if (accountList == null) {
             accountList = createList();
         }
+        userDataHelper = new UserDataHelper(context);
+        saveDataToDb();
     }
 
     public TestAccountRepository(Context context) {
@@ -33,7 +40,11 @@ public class TestAccountRepository implements AccountRepository {
         if (accountList == null) {
             accountList = createList();
         }
+        //userDataHelper = UserDataHelper.getInstance(context);
+        //saveDataToDb();
     }
+
+
 
     @Override
     public List<Account> getAccountList() {
@@ -42,14 +53,15 @@ public class TestAccountRepository implements AccountRepository {
 
     @Override
     public boolean addAccount(Account account) {
+        //userDataHelper.addAccount(account);
         return accountList.add(account);
-
     }
 
     @Override
     public boolean delAccount(Account account) {
         return accountList.remove(account);
     }
+
 
     @Override
     public Account getRandomAccount() {
@@ -67,6 +79,7 @@ public class TestAccountRepository implements AccountRepository {
             details.add(detail);
         }
         account.setDetailList(details);
+        addAccount(account);
         return account;
     }
 
@@ -93,19 +106,19 @@ public class TestAccountRepository implements AccountRepository {
         return list;
     }
 
-    // TODO: 27/02/17  add crud with sqlite of internal file to save user data
+    // TODO: 02/03/17 finish save data to local file
     private void saveData() {
         File filesDir = context.getFilesDir();
-        String localPath = context.getString(R.string.local_user_data_account);
+        final String localPath = context.getString(R.string.local_user_data_account);
         File[] files = filesDir.listFiles((dir, name) -> {
             if (name.equals(localPath)) {
                 return true;
             }
             return false;
         });
-        if(files.length == 0 ){
+        if (files.length == 0) {
             localData = new File(context.getFilesDir(), localPath);
-        }else {
+        } else {
             localData = files[0];
         }
 
@@ -117,5 +130,11 @@ public class TestAccountRepository implements AccountRepository {
             e.printStackTrace();
         }
 
+    }
+
+    private void saveDataToDb() {
+        for (Account account : accountList) {
+            userDataHelper.addAccount(account);
+        }
     }
 }

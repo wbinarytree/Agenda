@@ -6,7 +6,9 @@
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:transitionName="@string/account_transition"
+    app:contentPadding="8dp"
     app:cardElevation="4dp"
     app:cardPreventCornerOverlap="false">
 

@@ -1,5 +1,7 @@
 package com.phoenix.soft.agenda.detail;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,17 +40,22 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        Context context = holder.tvDesc.getContext();
         Detail detail = details.get(position);
         holder.tvDate.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(detail.getDate()));
-        holder.tvDesc.setText(detail.getDesc());
+        holder.tvDesc.setText(context.getText(R.string.tmp_detail_desc));
         Money money = detail.getMoney();
-        if(money.toString().contains("-")){
-            holder.tvTitle.setText("Outcome");
-            holder.tvNumber.setText(money.toString());
-        }else {
-            holder.tvTitle.setText("Imcome");
-            String s = "+" + money.toString();
+        if (money.toString().contains("-")) {
+            //holder.tvTitle.setText(holder.tvTitle.getContext().getText(R.string.outcome_title));
+            String text = "- " + money.toString().replace("-", " ");
+            holder.tvNumber.setText(text);
+            holder.tvNumber.setTextColor(ContextCompat.getColor(context, R.color.orangeRed));
+        } else {
+            //holder.tvTitle.setText(holder.tvTitle.getContext().getText(R.string.income_title));
+            String s = "+ " + money.toString();
             holder.tvNumber.setText(s);
+            holder.tvNumber.setTextColor(ContextCompat.getColor(context, R.color.limeGreen));
+
         }
     }
 
@@ -66,6 +73,7 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.Vi
         TextView tvNumber;
         @BindView(R2.id.tv_title_type)
         TextView tvTitle;
+
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
