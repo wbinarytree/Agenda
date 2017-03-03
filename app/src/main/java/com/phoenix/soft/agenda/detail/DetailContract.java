@@ -2,6 +2,7 @@ package com.phoenix.soft.agenda.detail;
 
 import com.phoenix.soft.agenda.module.Detail;
 
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 /**
@@ -12,11 +13,13 @@ public interface DetailContract {
     interface View {
         void showDetailList(List<Detail> detailList);
         void showAddDetailDialog();
+        void updateList();
         void showNoDetail();
-        void showError();
+        void showError(String errorMessage);
     }
 
     interface Presenter {
         void loadDetailList();
+        void addDetail(String number, boolean add);
     }
 }

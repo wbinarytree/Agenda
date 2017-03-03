@@ -1,31 +1,39 @@
 package com.phoenix.soft.agenda.detail;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.R2;
 import com.phoenix.soft.agenda.Utils;
-import com.phoenix.soft.agenda.account.AccountPresenter;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Detail;
-import com.phoenix.soft.agenda.repos.TestAccountRepository;
+import com.phoenix.soft.agenda.module.Events;
+import com.phoenix.soft.agenda.rxbus.RxBus;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 /**
  * Created by yaoda on 23/02/17.
@@ -37,24 +45,29 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     RecyclerView detailRecyclerList;
     private Unbinder bind;
     private DetailContract.Presenter presenter;
+    private DetailListAdapter detailListAdapter;
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detail_list,container,false);
+        View view = inflater.inflate(R.layout.fragment_detail_list, container, false);
         bind = ButterKnife.bind(this, view);
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setOnClickListener((v -> showAddDetailDialog()));
+        RxBus.getInstance().send(new Events.ToolbarChangeEvent(true));
         Account account = (Account) getArguments().get("detail");
-        presenter = new DetailPresenter(account,this);
+        presenter = new DetailPresenter(account, this);
         presenter.loadDetailList();
+        setHasOptionsMenu(true);
         setRetainInstance(true);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        super.onCreateOptionsMenu(menu, null);
     }
 
     @Override
@@ -70,22 +83,62 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void showDetailList(List<Detail> detailList) {
-        detailRecyclerList.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-        detailRecyclerList.setAdapter(new DetailListAdapter(detailList));
-        detailRecyclerList.setLayoutManager(new LinearLayoutManager(getContext()));
+        detailListAdapter = new DetailListAdapter(detailList);
+        LinearLayoutManager layout = new LinearLayoutManager(getContext());
+        detailRecyclerList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        detailRecyclerList.setAdapter(detailListAdapter);
+        detailRecyclerList.setLayoutManager(layout);
+        detailRecyclerList.setItemAnimator(new SlideInLeftAnimator());
     }
 
     @Override
     public void showAddDetailDialog() {
+        // TODO: 03/03/17 change this into DialogFragment
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        builder.setTitle("New Income/Expenses")
-                .setMessage("Test message")
-                .setView(inflater.inflate(R.layout.dialog_add_detail, null))
-                .create()
-                .show();
+        View dialogView = inflater.inflate(R.layout.dialog_add_detail, null);
+        EditText mount = (EditText) dialogView.findViewById(R.id.et_mount);
+        AlertDialog alertDialog = builder.setTitle("New Income/Expenses")
+                .setView(dialogView)
+                .setPositiveButton("add", (dialog, which) -> {
+                })
+                .setNegativeButton("cancel", (dialog, which) -> dialog.dismiss())
+                .create();
+        alertDialog.show();
+        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(v -> {
 
+            RadioGroup radioGroup = (RadioGroup) dialogView.findViewById(R.id.rd_group);
+            String mountNumber = mount.getText().toString();
+            if (mountNumber.equals("")) {
+                TextView textView = (TextView) dialogView.findViewById(R.id.tv_mount);
+                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.orangeRed));
+            } else {
+                boolean isAdd = false;
+                switch (radioGroup.getCheckedRadioButtonId()) {
+                    case R.id.rd_income:
+                        isAdd = true;
+                        break;
+                    case R.id.rd_outcome:
+                        isAdd = false;
+                        break;
+                }
+                presenter.addDetail(mountNumber, isAdd);
+                alertDialog.dismiss();
+            }
+
+        });
+        mount.setOnEditorActionListener((v1, actionId, event) -> {
+            alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).performClick();
+            return true;
+        });
+
+    }
+
+    @Override
+    public void updateList() {
+        detailListAdapter.notifyItemInserted(0);
+        detailRecyclerList.scrollToPosition(0);
     }
 
     @Override
@@ -94,9 +147,9 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     }
 
     @Override
-    public void showError() {
+    public void showError(String errorMessage) {
         Snackbar snackbar = Snackbar
-                .make(getActivity().findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">Loading error pleas wait</font>"), Snackbar.LENGTH_SHORT)
+                .make(getActivity().findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">" + errorMessage + "</font>"), Snackbar.LENGTH_SHORT)
                 .setAction("RETRY", v -> presenter.loadDetailList());
         snackbar.show();
     }

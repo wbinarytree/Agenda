@@ -4,18 +4,22 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.AutoTransition;
+import android.transition.ChangeBounds;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.phoenix.soft.agenda.MainActivity;
 import com.phoenix.soft.agenda.R;
@@ -23,7 +27,9 @@ import com.phoenix.soft.agenda.R2;
 import com.phoenix.soft.agenda.Utils;
 import com.phoenix.soft.agenda.detail.DetailFragment;
 import com.phoenix.soft.agenda.module.Account;
+import com.phoenix.soft.agenda.module.Events;
 import com.phoenix.soft.agenda.repos.TestAccountRepository;
+import com.phoenix.soft.agenda.rxbus.RxBus;
 import com.phoenix.soft.agenda.transition.DetailTransition;
 
 import java.util.List;
@@ -55,6 +61,7 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
         fab.setOnClickListener(v -> AccountListFragment.this.showError());
         toolbar = ((MainActivity) getActivity()).getToolbar();
         toolbar.setOnClickListener(v -> presenter.addAccount(null));
+        RxBus.getInstance().send(new Events.ToolbarChangeEvent(false));
         return view;
     }
 
@@ -100,24 +107,27 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
     }
 
     @Override
-    public void showDetails(Account account,int position) {
+    public void showDetails(Account account, int position) {
         // TODO: 23/02/17
         Fragment fragment = new DetailFragment();
         Bundle arg = new Bundle();
         arg.putParcelable("detail", account);
         fragment.setArguments(arg);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fragment.setSharedElementEnterTransition(new DetailTransition());
+            fragment.setSharedElementEnterTransition(new ChangeBounds());
             fragment.setSharedElementReturnTransition(new AutoTransition());
 
         }
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_content, fragment, DetailFragment.TAG)
-                .addSharedElement(accountRecyclerView.getChildAt(position).findViewById(R.id.account_card), getString(R.string.account_transition))
+                // RecyclerView.getChildAt(int index) only get those children shown on the screen.
+                // We need the adapter to get the specific ViewHolder
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addSharedElement(((AccountListAdapter.ViewHolder) accountRecyclerView.
+                        findViewHolderForAdapterPosition(position)).cardView, getString(R.string.account_transition))
                 .addToBackStack("account_page")
                 .commit();
-
     }
 
     @Override

@@ -1,22 +1,20 @@
 package com.phoenix.soft.agenda.account;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.R2;
 import com.phoenix.soft.agenda.module.Account;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,8 +37,8 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
     }
 
 
-    public void addAccount(){
-        this.notifyItemChanged(accountList.size()-1);
+    public void addAccount() {
+        this.notifyDataSetChanged();
     }
 
     @Override
@@ -56,18 +54,19 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         holder.tvIncome.setText(account.getIncome().toString());
         holder.tvOutcome.setText(account.getOutcome().toString());
         String total = account.getIncome().minus(account.getOutcome()).toString();
-        if(total.contains("-")){
-            holder.tvTotal.setTextColor(ContextCompat.getColor(context,R.color.orangeRed));
-        }else{
-            holder.tvTotal.setTextColor(ContextCompat.getColor(context,R.color.limeGreen));
+        if (total.contains("-")) {
+            holder.tvTotal.setTextColor(ContextCompat.getColor(context, R.color.orangeRed));
+        } else {
+            holder.tvTotal.setTextColor(ContextCompat.getColor(context, R.color.limeGreen));
         }
         holder.tvTotal.setText(total);
-        ViewCompat.setTransitionName(holder.cardView,"accountCard" + String.valueOf(position));
+        ViewCompat.setTransitionName(holder.cardView, "accountCard" + String.valueOf(position));
         holder.cardView.setOnClickListener(v -> view.showDetails(account, position));
         holder.cardView.setOnLongClickListener(v -> {
             view.showModifyAccount();
             return true;
         });
+        ViewCompat.setTransitionName(holder.imageView, "accountBackground" + String.valueOf(position));
     }
 
     @Override
@@ -85,6 +84,8 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         TextView tvTotal;
         @BindView(R2.id.account_card)
         CardView cardView;
+        @BindView(R2.id.imageView)
+        ImageView imageView;
 
         public ViewHolder(View v) {
             super(v);

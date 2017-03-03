@@ -19,6 +19,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan|adjustNothing"
             android:theme="@style/AppThemeNew.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,12 +30,6 @@
         <activity android:name=".Activity2"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <receiver android:name=".BalanceChangeReceiver">
-            <intent-filter>
-                <action android:name="com.phoenix.soft.agenda.TOAST"/>
-            </intent-filter>
-        </receiver>
-
         <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
 
     </application>

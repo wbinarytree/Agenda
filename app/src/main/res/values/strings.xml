@@ -14,4 +14,5 @@
     <string name="access_token">pk.eyJ1Ijoid2JpbmFyeXRyZWUiLCJhIjoiY2l6anAybDl6MDAyaTJ3cW5qbWw3ejJ5ZiJ9.henMg4JSWC2kWubZghxpjw</string>
     <string name="local_user_data_account">data_account</string>
     <string name="mount">Mount</string>
+    <string name="toolbar_transition">toolbar_image_trans</string>
 </resources>

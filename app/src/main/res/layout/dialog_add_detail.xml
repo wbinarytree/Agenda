@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="240dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <RadioGroup
+        android:id="@+id/rd_group"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatRadioButton
+            android:checked="true"
             android:id="@+id/rd_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,14 +31,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tv_mount"
             android:text="@string/mount"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/layout_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <android.support.v7.widget.AppCompatEditText
+            android:inputType="numberDecimal"
+            android:imeOptions="actionDone"
+            android:id="@+id/et_mount"
             android:hint="@string/app_name"
-            android:layout_width="120dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
