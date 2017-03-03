@@ -4,7 +4,6 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -18,6 +17,9 @@ import android.transition.ChangeBounds;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -26,11 +28,11 @@ import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.R2;
 import com.phoenix.soft.agenda.Utils;
 import com.phoenix.soft.agenda.detail.DetailFragment;
+import com.phoenix.soft.agenda.detail.DetailListAdapter;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Events;
 import com.phoenix.soft.agenda.repos.TestAccountRepository;
 import com.phoenix.soft.agenda.rxbus.RxBus;
-import com.phoenix.soft.agenda.transition.DetailTransition;
 
 import java.util.List;
 
@@ -131,7 +133,7 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
     }
 
     @Override
-    public void showNewAccount() {
+    public void updateAccount() {
         adapter.addAccount();
         accountRecyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
     }
@@ -139,6 +141,15 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
     @Override
     public void showModifyAccount() {
         // TODO: 27/02/17  add modify mode when recyclerview child long touched
-
+        for(int i = 0;i< adapter.getItemCount();i++){
+            // TODO: 03/03/17
+            //specific animation here . add onclick
+            ImageView ivDel = ((AccountListAdapter.ViewHolder) accountRecyclerView.findViewHolderForAdapterPosition(i)).ivDel;
+            ivDel.setVisibility(View.VISIBLE);
+            RotateAnimation animation = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            animation.setDuration(5000);
+            animation.setInterpolator(new LinearInterpolator());
+            ivDel.startAnimation(animation);
+        }
     }
 }

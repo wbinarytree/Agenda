@@ -86,6 +86,9 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         CardView cardView;
         @BindView(R2.id.imageView)
         ImageView imageView;
+        @BindView(R2.id.iv_del)
+        ImageView ivDel;
+
 
         public ViewHolder(View v) {
             super(v);
