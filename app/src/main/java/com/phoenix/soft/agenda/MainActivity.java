@@ -1,5 +1,6 @@
 package com.phoenix.soft.agenda;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.phoenix.soft.agenda.account.AccountListFragment;
+import com.phoenix.soft.agenda.hidden.HiddenActivity;
 import com.phoenix.soft.agenda.module.Events;
 import com.phoenix.soft.agenda.rxbus.RxBus;
 
@@ -113,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
                                 Snackbar.LENGTH_SHORT);
                 snackbar.show();
                 count = 0;
+                Intent intent = new Intent(this,HiddenActivity.class);
+                startActivity(intent);
             }
         }
 

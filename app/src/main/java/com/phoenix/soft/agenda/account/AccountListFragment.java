@@ -28,7 +28,6 @@ import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.R2;
 import com.phoenix.soft.agenda.Utils;
 import com.phoenix.soft.agenda.detail.DetailFragment;
-import com.phoenix.soft.agenda.detail.DetailListAdapter;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Events;
 import com.phoenix.soft.agenda.repos.TestAccountRepository;
@@ -147,7 +146,7 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
             ImageView ivDel = ((AccountListAdapter.ViewHolder) accountRecyclerView.findViewHolderForAdapterPosition(i)).ivDel;
             ivDel.setVisibility(View.VISIBLE);
             RotateAnimation animation = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            animation.setDuration(5000);
+            animation.setDuration(100);
             animation.setInterpolator(new LinearInterpolator());
             ivDel.startAnimation(animation);
         }
