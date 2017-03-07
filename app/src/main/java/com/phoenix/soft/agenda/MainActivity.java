@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     AppBarLayout appbar;
     @BindView(R2.id.coll_layout)
     CollapsingToolbarLayout coll;
-
+    private int count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             toolbar.setTitle(getResources().getString(R.string.title_main));
         }
+
         if (savedInstanceState == null) {
             Fragment fragment = new AccountListFragment();
             getSupportFragmentManager()
@@ -102,6 +104,16 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
+        } else if (id == R.id.action_icon) {
+            count++;
+            if(count == 15){
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.coordinator),
+                                Utils.fromHtml("<font color=\"#ffffff\">Activted Hidden Mode</font>"),
+                                Snackbar.LENGTH_SHORT);
+                snackbar.show();
+                count = 0;
+            }
         }
 
         return super.onOptionsItemSelected(item);

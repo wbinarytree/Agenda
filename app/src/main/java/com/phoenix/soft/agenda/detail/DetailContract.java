@@ -2,7 +2,6 @@ package com.phoenix.soft.agenda.detail;
 
 import com.phoenix.soft.agenda.module.Detail;
 
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 /**

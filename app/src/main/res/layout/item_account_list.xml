@@ -6,14 +6,16 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     >
+
     <android.support.v7.widget.CardView
-        android:layout_weight="10"
         android:id="@+id/account_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_weight="10"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardElevation="4dp"
@@ -47,13 +49,13 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:textColor="@color/limeGreen"
                         android:id="@+id/tv_income_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="@string/income_title"
+                        android:textColor="@color/limeGreen"
                         android:textSize="18sp"
                         android:typeface="serif" />
 
@@ -73,13 +75,13 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:textColor="@color/orangeRed"
                         android:id="@+id/tv_outcome_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="@string/outcome_title"
+                        android:textColor="@color/orangeRed"
                         android:textSize="18sp"
                         android:typeface="serif" />
 
@@ -123,6 +125,7 @@
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
     <ImageView
         android:id="@+id/iv_del"
         android:layout_gravity="top"

@@ -5,10 +5,11 @@
     <item
         android:id="@+id/action_icon"
         android:icon="@mipmap/ic_launcher"
-        android:title="icon"
         app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        />
+        android:title="icon"/>
+<!--
+        app:actionViewClass="android.support.v7.widget.SearchView"-->
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
