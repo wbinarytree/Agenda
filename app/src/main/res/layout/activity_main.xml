@@ -28,6 +28,7 @@
             android:id="@+id/fragment_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:behavior_overlapTop="64dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
              />
 

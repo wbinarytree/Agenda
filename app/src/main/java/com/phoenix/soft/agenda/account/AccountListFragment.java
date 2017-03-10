@@ -59,9 +59,9 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
         View view = inflater.inflate(R.layout.fragment_account_list, container, false);
         bind = ButterKnife.bind(this, view);
         fab = ((MainActivity) getActivity()).getFab();
-        fab.setOnClickListener(v -> AccountListFragment.this.showError());
+        fab.setOnClickListener(v -> presenter.addAccount(null));
         toolbar = ((MainActivity) getActivity()).getToolbar();
-        toolbar.setOnClickListener(v -> presenter.addAccount(null));
+        toolbar.setOnClickListener(v -> AccountListFragment.this.showError());
         RxBus.getInstance().send(new Events.ToolbarChangeEvent(false));
         return view;
     }

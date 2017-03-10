@@ -3,6 +3,8 @@ package com.phoenix.soft.agenda.detail;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -55,7 +57,6 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         bind = ButterKnife.bind(this, view);
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setOnClickListener((v -> showAddDetailDialog()));
-        RxBus.getInstance().send(new Events.ToolbarChangeEvent(true));
         Account account = (Account) getArguments().get("detail");
         presenter = new DetailPresenter(account, this);
         presenter.loadDetailList();
@@ -89,6 +90,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         detailRecyclerList.setAdapter(detailListAdapter);
         detailRecyclerList.setLayoutManager(layout);
         detailRecyclerList.setItemAnimator(new SlideInLeftAnimator());
+        RxBus.getInstance().send(new Events.ToolbarChangeEvent(true));
     }
 
     @Override
