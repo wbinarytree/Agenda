@@ -1,6 +1,7 @@
 package com.phoenix.soft.agenda.detail;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,11 +39,11 @@ public class DialogAddFragment extends DialogFragment {
 
         AlertDialog mDialog = new AlertDialog.Builder(getContext())
                 .setTitle("New Income/Expenses")
-                .setPositiveButton("add", (dialog, which) -> {})
-                .setNegativeButton("cancel", (dialog, which) -> dialog.dismiss())
+                .setPositiveButton("add", null)
+                .setNegativeButton("cancel", null)
                 .setView(view)
                 .create();
-        mDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> addDetail());
+        mDialog.setOnShowListener(dialog -> ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> addDetail()));
         mount = (EditText) view.findViewById(R.id.et_mount);
         textView = (TextView) view.findViewById(R.id.tv_mount);
         radioGroup = (RadioGroup) view.findViewById(R.id.rd_group);
@@ -56,6 +57,8 @@ public class DialogAddFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //TODO change this
+        presenter = ((DetailFragment)getFragmentManager().findFragmentByTag(DetailFragment.TAG)).getPresenter();
     }
 
     private void addDetail() {

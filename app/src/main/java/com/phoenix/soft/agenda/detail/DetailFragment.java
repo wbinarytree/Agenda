@@ -49,6 +49,9 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         return fragment;
     }
 
+    public DetailContract.Presenter getPresenter() {
+        return presenter;
+    }
 
     @Nullable
     @Override
