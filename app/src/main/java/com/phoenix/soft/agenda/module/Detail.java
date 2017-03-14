@@ -13,17 +13,17 @@ import java.util.Date;
  */
 
 public class Detail implements Serializable, Parcelable {
-    private String detailId;
+    private long detailId;
     private Date date;
     private Money money;
     private String desc;
     private String title;
 
-    public String getDetailId() {
+    public long getDetailId() {
         return detailId;
     }
 
-    public void setDetailId(String detailId) {
+    public void setDetailId(long detailId) {
         this.detailId = detailId;
     }
 
@@ -66,7 +66,7 @@ public class Detail implements Serializable, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.detailId);
+        dest.writeLong(this.detailId);
         dest.writeLong(this.date != null ? this.date.getTime() : -1);
         dest.writeSerializable(this.money);
         dest.writeString(this.desc);
@@ -77,7 +77,7 @@ public class Detail implements Serializable, Parcelable {
     }
 
     protected Detail(Parcel in) {
-        this.detailId = in.readString();
+        this.detailId = in.readLong();
         long tmpDate = in.readLong();
         this.date = tmpDate == -1 ? null : new Date(tmpDate);
         this.money = (Money) in.readSerializable();

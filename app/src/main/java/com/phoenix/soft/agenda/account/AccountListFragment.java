@@ -110,14 +110,10 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
     @Override
     public void showDetails(Account account, int position) {
         // TODO: 23/02/17
-        Fragment fragment = new DetailFragment();
-        Bundle arg = new Bundle();
-        arg.putParcelable("detail", account);
-        fragment.setArguments(arg);
+        Fragment fragment = DetailFragment.newInstance(account);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             fragment.setSharedElementEnterTransition(new ChangeBounds());
             fragment.setSharedElementReturnTransition(new AutoTransition());
-
         }
         getActivity().getSupportFragmentManager()
                 .beginTransaction()

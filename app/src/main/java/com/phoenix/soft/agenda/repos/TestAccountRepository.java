@@ -68,7 +68,7 @@ public class TestAccountRepository implements AccountRepository {
         Random r = new Random();
         Account account = new Account();
         account.setAccountName(String.valueOf(r.nextLong()));
-        account.setAccountID(String.valueOf(r.nextInt()));
+        account.setAccountID(r.nextLong());
         account.setIncome(Money.parse("USD " + r.nextInt()));
         account.setOutcome(Money.parse("USD " + r.nextInt()));
         ArrayList<Detail> details = new ArrayList<>();
@@ -90,7 +90,7 @@ public class TestAccountRepository implements AccountRepository {
         for (int i = 0; i < 3; i++) {
             Account account = new Account();
             account.setAccountName(names[i]);
-            account.setAccountID(String.valueOf(i));
+            account.setAccountID(i);
             account.setIncome(Money.parse("USD " + r.nextInt()));
             account.setOutcome(Money.parse("USD " + r.nextInt()));
             ArrayList<Detail> details = new ArrayList<>();

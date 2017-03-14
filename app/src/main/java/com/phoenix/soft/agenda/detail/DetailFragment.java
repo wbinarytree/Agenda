@@ -1,15 +1,10 @@
 package com.phoenix.soft.agenda.detail;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,9 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.R2;
@@ -48,6 +40,14 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     private Unbinder bind;
     private DetailContract.Presenter presenter;
     private DetailListAdapter detailListAdapter;
+
+    public static DetailFragment newInstance(Account account) {
+        Bundle args = new Bundle();
+        args.putParcelable("detail", account);
+        DetailFragment fragment = new DetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
 
     @Nullable
@@ -95,7 +95,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void showAddDetailDialog() {
-        // TODO: 03/03/17 change this into DialogFragment
+/*        // TODO: 03/03/17 change this into DialogFragment
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -133,7 +133,12 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         mount.setOnEditorActionListener((v1, actionId, event) -> {
             alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).performClick();
             return true;
-        });
+        });*/
+
+        DialogAddFragment dialogAddFragment = new DialogAddFragment();
+        dialogAddFragment.setPresenter(this.presenter);
+        dialogAddFragment.setTargetFragment(this,100);
+        dialogAddFragment.show(getFragmentManager(),"add");
 
     }
 
@@ -155,4 +160,5 @@ public class DetailFragment extends Fragment implements DetailContract.View {
                 .setAction("RETRY", v -> presenter.loadDetailList());
         snackbar.show();
     }
+
 }

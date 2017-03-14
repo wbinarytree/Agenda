@@ -28,7 +28,7 @@ public class Account implements Parcelable,Serializable {
     };
     private String accountName;
     private String accountPicUrl;
-    private String accountID;
+    private long accountID;
     private List<Detail> detailList;
     private Money income;
     private Money outcome;
@@ -39,7 +39,7 @@ public class Account implements Parcelable,Serializable {
     protected Account(Parcel in) {
         this.accountName = in.readString();
         this.accountPicUrl = in.readString();
-        this.accountID = in.readString();
+        this.accountID = in.readLong();
         this.detailList = new ArrayList<>();
         in.readList(this.detailList, Detail.class.getClassLoader());
         this.income = (Money) in.readSerializable();
@@ -62,11 +62,11 @@ public class Account implements Parcelable,Serializable {
         this.accountPicUrl = accountPicUrl;
     }
 
-    public String getAccountID() {
+    public long getAccountID() {
         return accountID;
     }
 
-    public void setAccountID(String accountID) {
+    public void setAccountID(long accountID) {
         this.accountID = accountID;
     }
 
@@ -103,7 +103,7 @@ public class Account implements Parcelable,Serializable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.accountName);
         dest.writeString(this.accountPicUrl);
-        dest.writeString(this.accountID);
+        dest.writeLong(this.accountID);
         dest.writeList(this.detailList);
         dest.writeSerializable(this.income);
         dest.writeSerializable(this.outcome);
