@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,8 +21,11 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.phoenix.soft.agenda.account.AccountListFragment;
+import com.phoenix.soft.agenda.account.AccountPagerAdapter;
+import com.phoenix.soft.agenda.detail.DetailFragment;
 import com.phoenix.soft.agenda.hidden.HiddenActivity;
 import com.phoenix.soft.agenda.module.Events;
+import com.phoenix.soft.agenda.repos.TestAccountRepository;
 import com.phoenix.soft.agenda.rxbus.RxBus;
 
 import java.util.concurrent.TimeUnit;
@@ -30,6 +37,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     @BindView(R2.id.fab)
     FloatingActionButton fab;
     @BindView(R2.id.toolbar)
@@ -40,9 +48,13 @@ public class MainActivity extends AppCompatActivity {
     AppBarLayout appbar;
     @BindView(R2.id.coll_layout)
     CollapsingToolbarLayout coll;
-
+    @BindView(R2.id.container_pager)
+    ViewPager viewPager;
+    @BindView(R2.id.tab_bar)
+    TabLayout tabLayout;
     private int count = 0;
     private Disposable subscribe;
+    private AccountPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,48 +63,38 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            toolbar.setTitle(getResources().getString(R.string.title_main));
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+//            toolbar.setTitle(getResources().getString(R.string.title_main));
         }
 
-        if (savedInstanceState == null) {
+/*        if (savedInstanceState == null) {
             Fragment fragment = new AccountListFragment();
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_content, fragment, AccountListFragment.TAG)
                     .commit();
-        }
+        }*/
+
+        adapter = new AccountPagerAdapter(getSupportFragmentManager(), new TestAccountRepository(this));
+        viewPager.setAdapter(adapter);
 
         RxBus.getInstance().toObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                     if (o instanceof Events.ToolbarChangeEvent) {
-                        modifyToolbar(((Events.ToolbarChangeEvent) o).isVisible());
+                        Log.d(TAG, "onCreate: message Receive");
                     }
                 });
         subscribe = RxView.clicks(fab)
-                .buffer(2, TimeUnit.SECONDS)
-                .filter(objects -> objects.size() > 10)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> Toast.makeText(MainActivity.this, "" + o.size(), Toast.LENGTH_SHORT).show());
+                .subscribe(o -> {
+                  ((DetailFragment) adapter.getCurrentItem()).FabClick();
+                });
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
-
-    private void modifyToolbar(boolean isVisible) {
-        if (isVisible) {
-            appbar.setFitsSystemWindows(true);
-            imageToolBar.setVisibility(View.VISIBLE);
-            imageToolBar.setFitsSystemWindows(true);
-            coll.setFitsSystemWindows(true);
-            appbar.requestApplyInsets();
-            findViewById(R.id.fragment_content).invalidate();
-        } else {
-            appbar.setFitsSystemWindows(false);
-            imageToolBar.setVisibility(View.GONE);
-            appbar.requestApplyInsets();
-        }
-    }
 
     public FloatingActionButton getFab() {
         return fab;

@@ -1,7 +1,7 @@
 package com.phoenix.soft.agenda.detail;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.phoenix.soft.agenda.R;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by yaoda on 13/03/17.
  */
@@ -24,12 +26,7 @@ public class DialogAddFragment extends DialogFragment {
     private EditText mount;
     private TextView textView;
     private RadioGroup radioGroup;
-    private DetailContract.Presenter presenter;
 
-    //Not a big fan for this approach
-    public void setPresenter(DetailContract.Presenter presenter) {
-        this.presenter = presenter;
-    }
 
     @NonNull
     @Override
@@ -57,8 +54,6 @@ public class DialogAddFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //TODO change this
-        presenter = ((DetailFragment)getFragmentManager().findFragmentByTag(DetailFragment.TAG)).getPresenter();
     }
 
     private void addDetail() {
@@ -75,9 +70,13 @@ public class DialogAddFragment extends DialogFragment {
                     isAdd = false;
                     break;
             }
-            presenter.addDetail(mountNumber, isAdd);
+            Intent intent = new Intent()
+                    .putExtra("mountNumber", mountNumber)
+                    .putExtra("isAdd", isAdd);
+            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
             getDialog().dismiss();
         }
     }
+
 
 }
