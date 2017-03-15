@@ -1,5 +1,6 @@
 package com.phoenix.soft.agenda.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +31,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by yaoda on 23/02/17.
  */
@@ -40,6 +44,8 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     private Unbinder bind;
     private DetailContract.Presenter presenter;
     private DetailListAdapter detailListAdapter;
+    private static final int REQUEST_CODE_DETAIL = 0xF1;
+    private Account account;
 
     public static DetailFragment newInstance(Account account) {
         Bundle args = new Bundle();
@@ -49,29 +55,20 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         return fragment;
     }
 
-    public DetailContract.Presenter getPresenter() {
-        return presenter;
+    public void FabClick(){
+        showAddDetailDialog();
     }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_list, container, false);
         bind = ButterKnife.bind(this, view);
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setOnClickListener((v -> showAddDetailDialog()));
-        Account account = (Account) getArguments().get("detail");
+        account = (Account) getArguments().get("detail");
         presenter = new DetailPresenter(account, this);
         presenter.loadDetailList();
-        setHasOptionsMenu(true);
         setRetainInstance(true);
+        Log.d(TAG, "onCreateView: ");
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        super.onCreateOptionsMenu(menu, null);
     }
 
     @Override
@@ -83,6 +80,30 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     public void onDestroy() {
         super.onDestroy();
         bind.unbind();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.d(TAG, "setUserVisibleHint: "  + isVisibleToUser + getId());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "onActivityCreated: ");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
     }
 
     @Override
@@ -98,51 +119,10 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void showAddDetailDialog() {
-/*        // TODO: 03/03/17 change this into DialogFragment
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View dialogView = inflater.inflate(R.layout.dialog_add_detail, null);
-        EditText mount = (EditText) dialogView.findViewById(R.id.et_mount);
-        AlertDialog alertDialog = builder.setTitle("New Income/Expenses")
-                .setView(dialogView)
-                .setPositiveButton("add", (dialog, which) -> {
-                })
-                .setNegativeButton("cancel", (dialog, which) -> dialog.dismiss())
-                .create();
-        alertDialog.show();
-        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(v -> {
-
-            RadioGroup radioGroup = (RadioGroup) dialogView.findViewById(R.id.rd_group);
-            String mountNumber = mount.getText().toString();
-            if (mountNumber.equals("")) {
-                TextView textView = (TextView) dialogView.findViewById(R.id.tv_mount);
-                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.orangeRed));
-            } else {
-                boolean isAdd = false;
-                switch (radioGroup.getCheckedRadioButtonId()) {
-                    case R.id.rd_income:
-                        isAdd = true;
-                        break;
-                    case R.id.rd_outcome:
-                        isAdd = false;
-                        break;
-                }
-                presenter.addDetail(mountNumber, isAdd);
-                alertDialog.dismiss();
-            }
-
-        });
-        mount.setOnEditorActionListener((v1, actionId, event) -> {
-            alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).performClick();
-            return true;
-        });*/
-
+        //Target Fragment will be set by FragmentManager. Which means it can be saved after saveInstance.
         DialogAddFragment dialogAddFragment = new DialogAddFragment();
-        dialogAddFragment.setPresenter(this.presenter);
-        dialogAddFragment.setTargetFragment(this,100);
+        dialogAddFragment.setTargetFragment(this, REQUEST_CODE_DETAIL);
         dialogAddFragment.show(getFragmentManager(),"add");
-
     }
 
     @Override
@@ -164,4 +144,14 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         snackbar.show();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        switch (requestCode){
+            case REQUEST_CODE_DETAIL:
+                if(resultCode == RESULT_OK){
+                    presenter.addDetail(data.getStringExtra("mountNumber"),data.getBooleanExtra("isAdd",false));
+                }
+        }
+    }
 }
