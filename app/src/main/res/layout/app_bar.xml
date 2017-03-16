@@ -22,7 +22,6 @@
             android:layout_height="200dp"
             android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/find_bank"
             android:transitionName="@string/toolbar_transition"
             app:layout_collapseMode="parallax" />
 

@@ -85,12 +85,14 @@ public class TestAccountRepository implements AccountRepository {
 
     private List<Account> createList() {
         String[] names = {"CashAccount", "BankAccount", "RestaurantAccount"};
+        String[] urls = {String.valueOf(R.drawable.download), String.valueOf(R.drawable.download_1),String.valueOf(R.drawable.akti510)};
         List<Account> list = new ArrayList<>();
         Random r = new Random();
         for (int i = 0; i < 3; i++) {
             Account account = new Account();
             account.setAccountName(names[i]);
             account.setAccountID(i);
+            account.setAccountPicUrl(urls[i]);
             account.setIncome(Money.parse("USD " + r.nextInt()));
             account.setOutcome(Money.parse("USD " + r.nextInt()));
             ArrayList<Detail> details = new ArrayList<>();

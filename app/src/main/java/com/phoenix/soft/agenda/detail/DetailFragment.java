@@ -1,5 +1,6 @@
 package com.phoenix.soft.agenda.detail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,10 +12,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.R2;
@@ -23,6 +23,7 @@ import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Detail;
 import com.phoenix.soft.agenda.module.Events;
 import com.phoenix.soft.agenda.rxbus.RxBus;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,13 +40,14 @@ import static android.app.Activity.RESULT_OK;
 
 public class DetailFragment extends Fragment implements DetailContract.View {
     public final static String TAG = "DETAIL_FRAGMENT";
+    private static final int REQUEST_CODE_DETAIL = 0xF1;
     @BindView(R2.id.detail_list)
     RecyclerView detailRecyclerList;
     private Unbinder bind;
     private DetailContract.Presenter presenter;
     private DetailListAdapter detailListAdapter;
-    private static final int REQUEST_CODE_DETAIL = 0xF1;
     private Account account;
+    private ImageView imageView;
 
     public static DetailFragment newInstance(Account account) {
         Bundle args = new Bundle();
@@ -55,9 +57,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         return fragment;
     }
 
-    public void FabClick(){
-        showAddDetailDialog();
-    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,31 +81,6 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         super.onDestroy();
         bind.unbind();
     }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        Log.d(TAG, "setUserVisibleHint: "  + isVisibleToUser + getId());
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: ");
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "onActivityCreated: ");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-    }
-
     @Override
     public void showDetailList(List<Detail> detailList) {
         detailListAdapter = new DetailListAdapter(detailList);
@@ -122,7 +97,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         //Target Fragment will be set by FragmentManager. Which means it can be saved after saveInstance.
         DialogAddFragment dialogAddFragment = new DialogAddFragment();
         dialogAddFragment.setTargetFragment(this, REQUEST_CODE_DETAIL);
-        dialogAddFragment.show(getFragmentManager(),"add");
+        dialogAddFragment.show(getFragmentManager(), "add");
     }
 
     @Override
@@ -146,12 +121,22 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        switch (requestCode){
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
             case REQUEST_CODE_DETAIL:
-                if(resultCode == RESULT_OK){
-                    presenter.addDetail(data.getStringExtra("mountNumber"),data.getBooleanExtra("isAdd",false));
+                if (resultCode == RESULT_OK) {
+                    presenter.addDetail(data.getStringExtra("mountNumber"), data.getBooleanExtra("isAdd", false));
                 }
         }
     }
+
+    public void upDateActivity() {
+        if(getActivity() == null) return;
+        ImageView imageView = (ImageView) getActivity().findViewById(R.id.image_over_lay);
+        Picasso.with(getContext()).load(Integer.valueOf(account.getAccountPicUrl())).resize(400,800).into(imageView);
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setOnClickListener(v -> showAddDetailDialog());
+        detailRecyclerList.smoothScrollToPosition(0);
+    }
+
 }
