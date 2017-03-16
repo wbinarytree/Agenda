@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.phoenix.soft.agenda.detail.DetailFragment;
 import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.repos.AccountRepository;
 
 import java.util.List;
 
@@ -20,9 +19,9 @@ public class AccountPagerAdapter extends FragmentPagerAdapter {
     private List<Account> accounts;
     private SparseArray<DetailFragment> detailFragments;
 
-    public AccountPagerAdapter(FragmentManager fm, AccountRepository repository) {
+    public AccountPagerAdapter(FragmentManager fm, List<Account> accounts) {
         super(fm);
-        accounts = repository.getAccountList();
+        this.accounts = accounts;
         detailFragments = new SparseArray<>();
     }
 

@@ -1,3 +1,4 @@
+/*
 package com.phoenix.soft.agenda.account;
 
 import android.content.res.Configuration;
@@ -58,10 +59,6 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account_list, container, false);
         bind = ButterKnife.bind(this, view);
-        fab = ((MainActivity) getActivity()).getFab();
-        fab.setOnClickListener(v -> presenter.addAccount(null));
-        toolbar = ((MainActivity) getActivity()).getToolbar();
-        toolbar.setOnClickListener(v -> AccountListFragment.this.showError());
         RxBus.getInstance().send(new Events.ToolbarChangeEvent(false));
         return view;
     }
@@ -148,3 +145,4 @@ public class AccountListFragment extends Fragment implements AccountContract.Vie
         }
     }
 }
+*/
