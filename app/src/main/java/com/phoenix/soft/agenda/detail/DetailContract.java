@@ -1,5 +1,6 @@
 package com.phoenix.soft.agenda.detail;
 
+import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Detail;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public interface DetailContract {
     interface View {
-        void showDetailList(List<Detail> detailList);
+        void showDetailList(Account account);
         void showAddDetailDialog();
         void updateList();
         void showNoDetail();

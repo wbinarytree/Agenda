@@ -27,7 +27,7 @@ public class DetailPresenter implements DetailContract.Presenter {
 
     @Override
     public void loadDetailList() {
-        view.showDetailList(details);
+        view.showDetailList(account);
     }
 
     @Override
