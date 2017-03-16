@@ -86,5 +86,7 @@ dependencies {
 
     //test
     compile 'com.facebook.stetho:stetho:1.4.2'
+    //firebase
+    compile 'com.google.firebase:firebase-auth:10.0.1'
 
 }
