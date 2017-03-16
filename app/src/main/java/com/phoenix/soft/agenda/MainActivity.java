@@ -1,5 +1,6 @@
 package com.phoenix.soft.agenda;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -12,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.phoenix.soft.agenda.account.AccountListFragment;
 import com.phoenix.soft.agenda.account.AccountPagerAdapter;
@@ -33,7 +36,9 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R2.id.tab_bar)
     TabLayout tabLayout;
     private int count = 0;
-    private Disposable subscribe;
     private AccountPagerAdapter adapter;
+    private ViewPager.OnPageChangeListener pageChangeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,19 +69,12 @@ public class MainActivity extends AppCompatActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-//            toolbar.setTitle(getResources().getString(R.string.title_main));
         }
-
-/*        if (savedInstanceState == null) {
-            Fragment fragment = new AccountListFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_content, fragment, AccountListFragment.TAG)
-                    .commit();
-        }*/
-
         adapter = new AccountPagerAdapter(getSupportFragmentManager(), new TestAccountRepository(this));
         viewPager.setAdapter(adapter);
+
+        RxViewPager.pageSelections(viewPager).subscribe(position -> adapter.getFragment(position).upDateActivity());
+
 
         RxBus.getInstance().toObservable()
                 .subscribeOn(Schedulers.io())
@@ -86,15 +84,18 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "onCreate: message Receive");
                     }
                 });
-        subscribe = RxView.clicks(fab)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o -> {
-                  ((DetailFragment) adapter.getCurrentItem()).FabClick();
-                });
+//        subscribe = RxView.clicks(fab)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem()).FabClick());
+
         tabLayout.setupWithViewPager(viewPager);
 
     }
 
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+    }
 
     public FloatingActionButton getFab() {
         return fab;
@@ -146,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         //need to dispose here. Otherwise the observable will running forever.
-        subscribe.dispose();
     }
 }
 
