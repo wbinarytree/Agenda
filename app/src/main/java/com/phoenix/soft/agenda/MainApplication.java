@@ -3,6 +3,7 @@ package com.phoenix.soft.agenda;
 import android.app.Application;
 
 import com.facebook.stetho.Stetho;
+import com.google.firebase.FirebaseApp;
 import com.phoenix.soft.agenda.dagger.AppComponent;
 import com.phoenix.soft.agenda.dagger.AppModule;
 import com.phoenix.soft.agenda.dagger.DaggerAppComponent;

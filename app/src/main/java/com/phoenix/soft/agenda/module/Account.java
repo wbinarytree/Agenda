@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import org.joda.money.Money;
 
 import java.io.Serializable;
@@ -13,8 +16,9 @@ import java.util.List;
 /**
  * Created by yaoda on 22/02/17.
  */
-
+@IgnoreExtraProperties
 public class Account implements Parcelable,Serializable {
+    @Exclude
     public static final Parcelable.Creator<Account> CREATOR = new Parcelable.Creator<Account>() {
         @Override
         public Account createFromParcel(Parcel source) {
@@ -29,8 +33,11 @@ public class Account implements Parcelable,Serializable {
     private String accountName;
     private String accountPicUrl;
     private long accountID;
+    @Exclude
     private List<Detail> detailList;
+    @Exclude
     private Money income;
+    @Exclude
     private Money outcome;
 
     public Account() {
@@ -93,12 +100,12 @@ public class Account implements Parcelable,Serializable {
     public void setOutcome(Money outcome) {
         this.outcome = outcome;
     }
-
+    @Exclude
     @Override
     public int describeContents() {
         return 0;
     }
-
+    @Exclude
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.accountName);
