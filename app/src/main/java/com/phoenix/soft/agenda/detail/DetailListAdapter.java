@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phoenix.soft.agenda.R;
-import com.phoenix.soft.agenda.R2;
+import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Detail;
 
@@ -40,6 +40,7 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public DetailListAdapter(Account account) {
         this.details = account.getDetailList();
+        this.account = account;
     }
 
     @Override
@@ -58,7 +59,7 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if(holder instanceof ItemHolder){
             ItemHolder itemHolder = (ItemHolder) holder;
             Context context = itemHolder.tvDesc.getContext();
-            Detail detail = details.get(position);
+            Detail detail = details.get(position-1);
             itemHolder.tvDate.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(detail
                     .getDate()));
             itemHolder.tvDesc.setText(context.getText(R.string.tmp_detail_desc));
@@ -108,13 +109,13 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public static class ItemHolder extends RecyclerView.ViewHolder {
-        @BindView(R2.id.tv_detail_desc)
+        @BindView(R.id.tv_detail_desc)
         TextView tvDesc;
-        @BindView(R2.id.tv_date)
+        @BindView(R.id.tv_date)
         TextView tvDate;
-        @BindView(R2.id.tv_number)
+        @BindView(R.id.tv_number)
         TextView tvNumber;
-        @BindView(R2.id.tv_title_type)
+        @BindView(R.id.tv_title_type)
         TextView tvTitle;
 
         public ItemHolder(View v) {
@@ -125,13 +126,13 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     class HeaderHolder extends RecyclerView.ViewHolder {
-        @BindView(R2.id.tv_income)
+        @BindView(R.id.tv_income)
         TextView tvIncome;
-        @BindView(R2.id.tv_outcome)
+        @BindView(R.id.tv_outcome)
         TextView tvOutcome;
-        @BindView(R2.id.tv_total)
+        @BindView(R.id.tv_total)
         TextView tvTotal;
-        @BindView(R2.id.account_card)
+        @BindView(R.id.account_card)
         CardView cardView;
 
         public HeaderHolder(View v) {

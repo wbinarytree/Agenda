@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.phoenix.soft.agenda.MainActivity;
 import com.phoenix.soft.agenda.R;
-import com.phoenix.soft.agenda.R2;
+import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.Utils;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Detail;
@@ -38,7 +38,7 @@ import static android.app.Activity.RESULT_OK;
 public class DetailFragment extends Fragment implements DetailContract.View, MainActivity.FabClick {
     public final static String TAG = "DETAIL_FRAGMENT";
     private static final int REQUEST_CODE_DETAIL = 0xF1;
-    @BindView(R2.id.detail_list)
+    @BindView(R.id.detail_list)
     RecyclerView detailRecyclerList;
     private Unbinder bind;
     private DetailContract.Presenter presenter;

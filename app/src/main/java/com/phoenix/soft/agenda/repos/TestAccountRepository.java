@@ -83,6 +83,16 @@ public class TestAccountRepository implements AccountRepository {
         return account;
     }
 
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void end() {
+
+    }
+
     private List<Account> createList() {
         String[] names = {"CashAccount", "BankAccount", "RestaurantAccount"};
         String[] urls = {String.valueOf(R.drawable.download), String.valueOf(R.drawable.download_1),String.valueOf(R.drawable.akti510)};

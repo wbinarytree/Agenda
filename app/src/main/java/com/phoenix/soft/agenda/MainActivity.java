@@ -16,16 +16,15 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
-import com.jakewharton.rxbinding2.support.v7.widget.RxToolbar;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.phoenix.soft.agenda.account.AccountContract;
 import com.phoenix.soft.agenda.account.AccountPagerAdapter;
 import com.phoenix.soft.agenda.account.AccountPresenter;
-import com.phoenix.soft.agenda.detail.DetailContract;
 import com.phoenix.soft.agenda.hidden.HiddenActivity;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Events;
 import com.phoenix.soft.agenda.repos.AccountRepository;
+import com.phoenix.soft.agenda.repos.FirebaseAccountRepository;
 import com.phoenix.soft.agenda.rxbus.RxBus;
 import com.squareup.picasso.Picasso;
 
@@ -41,19 +40,19 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements AccountContract.View {
     private static final String TAG = "MainActivity";
-    @BindView(R2.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton fab;
-    @BindView(R2.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R2.id.image_over_lay)
+    @BindView(R.id.image_over_lay)
     ImageView imageToolBar;
-    @BindView(R2.id.appbar)
+    @BindView(R.id.appbar)
     AppBarLayout appbar;
-    @BindView(R2.id.coll_layout)
+    @BindView(R.id.coll_layout)
     CollapsingToolbarLayout coll;
-    @BindView(R2.id.container_pager)
+    @BindView(R.id.container_pager)
     ViewPager viewPager;
-    @BindView(R2.id.tab_bar)
+    @BindView(R.id.tab_bar)
     TabLayout tabLayout;
     @Inject
     AccountRepository repository;
@@ -62,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     private List<Account> accountList;
     private CompositeDisposable disposable = new CompositeDisposable();
     private AccountContract.Presenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ((MainApplication) getApplication()).getBuilder().inject(this);
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-        presenter = new AccountPresenter(repository,this);
+        presenter = new AccountPresenter(repository, this);
         presenter.loadAccount();
 
         disposable.add(RxBus.getInstance()
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
 
     }
 
-    private void updateViewByPagerContent(int position){
+    private void updateViewByPagerContent(int position) {
         Picasso.with(this)
                .load(Integer.valueOf(accountList.get(position).getAccountPicUrl()))
                .noFade()
@@ -127,7 +127,10 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
                 startActivity(intent);
             }
         } else if (id == R.id.action_plus) {
-
+            FirebaseAccountRepository repo = new FirebaseAccountRepository();
+            repo.start();
+            repo.addAccount(accountList.get(0));
+            repo.end();
         }
 
         return super.onOptionsItemSelected(item);

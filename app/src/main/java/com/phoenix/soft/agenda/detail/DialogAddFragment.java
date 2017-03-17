@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import com.phoenix.soft.agenda.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -22,10 +25,10 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class DialogAddFragment extends DialogFragment {
-
-    private EditText mount;
-    private TextView textView;
-    private RadioGroup radioGroup;
+    @BindView(R.id.et_mount)
+    EditText mount;
+    @BindView(R.id.rd_group)
+    RadioGroup radioGroup;
 
 
     @NonNull
@@ -33,7 +36,7 @@ public class DialogAddFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_detail, null);
-
+        ButterKnife.bind(this,view);
         AlertDialog mDialog = new AlertDialog.Builder(getContext())
                 .setTitle("New Income/Expenses")
                 .setPositiveButton("add", null)
@@ -41,9 +44,6 @@ public class DialogAddFragment extends DialogFragment {
                 .setView(view)
                 .create();
         mDialog.setOnShowListener(dialog -> ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> addDetail()));
-        mount = (EditText) view.findViewById(R.id.et_mount);
-        textView = (TextView) view.findViewById(R.id.tv_mount);
-        radioGroup = (RadioGroup) view.findViewById(R.id.rd_group);
         mount.setOnEditorActionListener((v1, actionId, event) -> {
             addDetail();
             return true;
@@ -59,7 +59,7 @@ public class DialogAddFragment extends DialogFragment {
     private void addDetail() {
         String mountNumber = mount.getText().toString();
         if (mountNumber.equals("")) {
-            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.orangeRed));
+            mount.setError("Enter Number");
         } else {
             boolean isAdd = false;
             switch (radioGroup.getCheckedRadioButtonId()) {

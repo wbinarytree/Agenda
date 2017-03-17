@@ -12,6 +12,7 @@ public interface AccountRepository {
     List<Account> getAccountList();
     boolean addAccount(Account account);
     boolean delAccount(Account account);
-
     Account getRandomAccount();
+    void start();
+    void end();
 }
