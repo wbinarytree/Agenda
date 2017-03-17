@@ -26,7 +26,7 @@ import android.widget.ImageView;
 
 import com.phoenix.soft.agenda.MainActivity;
 import com.phoenix.soft.agenda.R;
-import com.phoenix.soft.agenda.R2;
+import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.Utils;
 import com.phoenix.soft.agenda.detail.DetailFragment;
 import com.phoenix.soft.agenda.module.Account;
@@ -42,9 +42,9 @@ import butterknife.Unbinder;
 
 public class AccountListFragment extends Fragment implements AccountContract.View {
     public static final String TAG = "ACCOUNT_LIST_FRAGMENT";
-    @BindView(R2.id.account_list)
+    @BindView(R.id.account_list)
     RecyclerView accountRecyclerView;
-    @BindView(R2.id.layout_loading)
+    @BindView(R.id.layout_loading)
     FrameLayout loadingProcess;
     private FloatingActionButton fab;
     private Toolbar toolbar;

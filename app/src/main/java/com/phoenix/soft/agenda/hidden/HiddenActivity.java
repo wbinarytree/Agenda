@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.phoenix.soft.agenda.R;
-import com.phoenix.soft.agenda.R2;
+import com.phoenix.soft.agenda.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
  */
 
 public class HiddenActivity extends AppCompatActivity {
-    @BindView(R2.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R2.id.tab_bar)
+    @BindView(R.id.tab_bar)
     TabLayout tabbar;
-    @BindView(R2.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager viewPager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

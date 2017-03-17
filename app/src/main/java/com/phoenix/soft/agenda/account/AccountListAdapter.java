@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phoenix.soft.agenda.R;
-import com.phoenix.soft.agenda.R2;
+import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.module.Account;
 
 import java.util.List;
@@ -76,17 +76,17 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R2.id.tv_income)
+        @BindView(R.id.tv_income)
         TextView tvIncome;
-        @BindView(R2.id.tv_outcome)
+        @BindView(R.id.tv_outcome)
         TextView tvOutcome;
-        @BindView(R2.id.tv_total)
+        @BindView(R.id.tv_total)
         TextView tvTotal;
-        @BindView(R2.id.account_card)
+        @BindView(R.id.account_card)
         CardView cardView;
-        @BindView(R2.id.imageView)
+        @BindView(R.id.imageView)
         ImageView imageView;
-        @BindView(R2.id.iv_del)
+        @BindView(R.id.iv_del)
         ImageView ivDel;
 
 

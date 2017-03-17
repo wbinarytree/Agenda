@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.phoenix.soft.agenda.module.firebase.AccountFire;
 
 import org.joda.money.Money;
 
@@ -114,5 +115,10 @@ public class Account implements Parcelable,Serializable {
         dest.writeList(this.detailList);
         dest.writeSerializable(this.income);
         dest.writeSerializable(this.outcome);
+    }
+
+    public AccountFire toAccountFire(){
+        //accountFire.setDetailList();
+        return new AccountFire(getAccountName(),getAccountPicUrl(),getAccountID(),getIncome().toString(),getOutcome().toString());
     }
 }
