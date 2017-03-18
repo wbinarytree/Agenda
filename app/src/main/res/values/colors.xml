@@ -6,8 +6,8 @@
     <color name="limeGreen">#32CD32</color>
     <color name="orangeRed">#FF4500</color>
 <!--Theme_1-->
+    <color name="primary_trans">#99607D8B</color>
     <color name="primary">#607D8B</color>
-    <color name="primary_trans">#AA607D8B</color>
     <color name="primary_dark">#455A64</color>
     <color name="primary_light">#CFD8DC</color>
     <color name="accent">#03A9F4</color>

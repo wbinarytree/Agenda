@@ -1,5 +1,7 @@
 package com.phoenix.soft.agenda.login;
 
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,9 +16,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,11 +66,35 @@ public class LoginFragment extends Fragment {
             return false;
         });
         //Don\'t have a account? \n Sign up here!
-        SpannableString ss = new SpannableString(getString(R.string.sign_up_long));
+        setupSignIn();
+        btnSignIn.setOnClickListener(view -> {
+            btnSignIn.setImageResource(R.drawable.ic_sync_white_24dp);
+            Animation animation = AnimationUtils.loadAnimation(LoginFragment.this.getContext(), R.anim.rotate);
+            btnSignIn.startAnimation(animation);
+            btnSignIn.setOnClickListener( v1 -> {
+                btnSignIn.clearAnimation();
+                AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getActivity().getDrawable(R.drawable.sync_to_tick);
+                btnSignIn.setImageDrawable(drawable);
+                drawable.start();
+            });
+            LoginFragment.this.attemptLogin();
+        });
+//        RxView.clicks(btnSignIn).subscribe(o -> {
+//
+//        });
+
+        return v;
+    }
+
+    private void setupSignIn() {
+        String string = getString(R.string.sign_up_long);
+        int start = string.indexOf("{");
+        int end = string.indexOf("}")-1;
+        SpannableString ss = new SpannableString(string.replace("{","").replace("}",""));
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View textView) {
-                Toast.makeText(getContext(), "CLICK", Toast.LENGTH_SHORT).show();
+                signUp();
             }
             @Override
             public void updateDrawState(TextPaint ds) {
@@ -72,14 +102,16 @@ public class LoginFragment extends Fragment {
                 ds.setUnderlineText(true);
             }
         };
-        ss.setSpan(clickableSpan, 26, 33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvSignUp.setText(ss);
         tvSignUp.setMovementMethod(LinkMovementMethod.getInstance());
 
-        RxView.clicks(btnSignIn).subscribe(o -> attemptLogin());
-
-        return v;
     }
+
+    private void signUp() {
+
+    }
+
     private void attemptLogin() {
 
         // Reset errors.
