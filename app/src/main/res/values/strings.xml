@@ -34,4 +34,8 @@
     <string name="sign_in_with_google">sign in with google</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_up_long">Don\'t have an account? \n {Sign up} here!</string>
+    <string name="msg_error_login">Email or Password is not validate</string>
+    <string name="username">nickname</string>
+    <string name="error_nick_name">This nickname is now allowed!</string>
+    <string name="title_retry">Retry</string>
 </resources>

@@ -3,6 +3,7 @@ package com.phoenix.soft.agenda.login;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,14 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.R;
+import com.phoenix.soft.agenda.Utils;
 
 import javax.inject.Inject;
 
@@ -26,52 +28,49 @@ import butterknife.ButterKnife;
 
 import static com.phoenix.soft.agenda.Utils.isEmailValid;
 import static com.phoenix.soft.agenda.Utils.isPasswordValid;
+import static com.phoenix.soft.agenda.Utils.isUsername;
 
 /**
- * Created by yaoda on 17/03/17.
+ * Created by phoenix on 2017/3/19.
  */
 
-public class LoginFragment extends Fragment implements AuthActivity.Login {
-    public static final String TAG = "LoginFragment";
+public class SignUpFragment extends Fragment implements AuthActivity.SignUp {
+    public static final String TAG = "SignUpFragment";
     @BindView(R.id.email)
     AutoCompleteTextView etUsername;
     @BindView(R.id.password)
     EditText etPassword;
+    @BindView(R.id.username)
+    EditText etNickName;
     FloatingActionButton fab;
     @Inject
     FirebaseAuth auth;
 
-    public static LoginFragment newInstance() {
-         Bundle args = new Bundle();
-         LoginFragment fragment = new LoginFragment();
+    public static SignUpFragment newInstance() {
+        Bundle args = new Bundle();
+        SignUpFragment fragment = new SignUpFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_login, container, false);
         MainApplication.getFirebaseComponent().inject(this);
-        ButterKnife.bind(this, v);
+        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        ButterKnife.bind(this, view);
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        etPassword.setOnEditorActionListener((textView, id, keyEvent) -> {
-            if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                login();
-                return true;
-            }
-            return false;
-        });
-        return v;
+        return view;
     }
 
-
-
     @Override
-    public void login() {
+    public void signUp() {
         etUsername.setError(null);
         etPassword.setError(null);
+        etNickName.setError(null);
         String email = etUsername.getText().toString();
         String password = etPassword.getText().toString();
+        String nickname = etPassword.getText().toString();
         boolean cancel = false;
         View focusView = null;
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
@@ -87,6 +86,10 @@ public class LoginFragment extends Fragment implements AuthActivity.Login {
             etUsername.setError(getString(R.string.error_invalid_email));
             focusView = etUsername;
             cancel = true;
+        } else if (!isUsername(nickname)) {
+            etNickName.setError(getString(R.string.error_nick_name));
+            focusView = etNickName;
+            cancel = true;
         }
         if (cancel) {
             focusView.requestFocus();
@@ -94,13 +97,17 @@ public class LoginFragment extends Fragment implements AuthActivity.Login {
             fab.setImageResource(R.drawable.ic_sync_white_24dp);
             Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
             fab.startAnimation(animation);
-            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                if (!task.isSuccessful()) {
-                    Toast.makeText(getContext(), R.string.msg_error_login, Toast.LENGTH_SHORT)
-                         .show();
-                    fab.clearAnimation();
-                }
-            });
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> {
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(nickname)
+                            .build();
+                    authResult.getUser().updateProfile(profileUpdates);
+                })
+                .addOnFailureListener(e -> Snackbar.make(getActivity().findViewById(R.id.login_background), Utils
+                        .fromHtml("<font color=\"#ffffff\">Sorry, Sign up fail</font>"), Snackbar.LENGTH_SHORT)
+                                                   .setAction(getString(R.string.title_retry), v -> signUp())
+                                                   .show());
         }
     }
 }

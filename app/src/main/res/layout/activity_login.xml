@@ -1,16 +1,49 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/login_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_back_login"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:id="@+id/login_background"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.phoenix.soft.agenda.login.AuthActivity">
 
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
     </FrameLayout>
-</LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_arrow_forward_white_24dp"
+        app:backgroundTint="@drawable/sel_fab_background"
+        app:layout_anchor="@id/container"
+        app:layout_anchorGravity="bottom|end"
+        />
+
+    <TextView
+        android:id="@+id/tv_sign_up"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/sign_up_long"
+        android:textColor="@color/icons"
+        android:textColorLink="@drawable/sel_sign_up"
+        android:textSize="16sp" />
+</android.support.design.widget.CoordinatorLayout>
