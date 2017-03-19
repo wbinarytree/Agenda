@@ -1,7 +1,6 @@
 package com.phoenix.soft.agenda.repos;
 
 import android.content.Context;
-import android.database.Observable;
 
 import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.db.UserDataHelper;
@@ -12,7 +11,6 @@ import org.joda.money.Money;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +41,6 @@ public class TestAccountRepository implements AccountRepository {
         //userDataHelper = UserDataHelper.getInstance(context);
         //saveDataToDb();
     }
-
 
 
     @Override
@@ -95,7 +92,7 @@ public class TestAccountRepository implements AccountRepository {
 
     private List<Account> createList() {
         String[] names = {"CashAccount", "BankAccount", "RestaurantAccount"};
-        String[] urls = {String.valueOf(R.drawable.download), String.valueOf(R.drawable.download_1),String.valueOf(R.drawable.akti510)};
+        String[] urls = {String.valueOf(R.drawable.img_download), String.valueOf(R.drawable.img_download_1), String.valueOf(R.drawable.akti510)};
         List<Account> list = new ArrayList<>();
         Random r = new Random();
         for (int i = 0; i < 3; i++) {

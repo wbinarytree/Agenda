@@ -1,17 +1,42 @@
 package com.phoenix.soft.agenda.login;
 
+import android.animation.Animator;
 import android.content.Intent;
+import android.graphics.drawable.Animatable2;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.phoenix.soft.agenda.MainActivity;
 import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.R;
+import com.phoenix.soft.agenda.Utils;
+import com.phoenix.soft.agenda.module.firebase.AccountFire;
+import com.phoenix.soft.agenda.repos.FirebaseAccountRepository;
 
 import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.functions.Consumer;
 
 /**
  * A login screen that offers login via email/password.
@@ -19,31 +44,103 @@ import javax.inject.Inject;
 public class AuthActivity extends AppCompatActivity {
 
     private static final String TAG = "AuthActivity";
+    @BindView(R.id.tv_sign_up)
+    TextView tvSignUp;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.login_background)
+    View root;
     @Inject
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MainApplication.getFirebaseComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
+        setupSignUpText();
         mAuthListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
-                // User is signed in
-//                databaseReference.child("Account")
-//                                 .setValue(new AccountFire("BankAccount", "www.google.com", 1));
                 Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                fab.clearAnimation();
+                Utils.viewMoveToCenter(fab, this, new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getDrawable(R.drawable.sync_to_tick);
+                        if (drawable != null) {
+                            fab.setImageDrawable(drawable);
+                            drawable.start();
+                            fab.setClickable(false);
+                        }
+                        new Handler(getMainLooper()).postDelayed(() -> {
+                            FirebaseAccountRepository.getObservable().subscribe(new Consumer<AccountFire>() {
+                                @Override
+                                public void accept(@io.reactivex.annotations.NonNull AccountFire accountFire) throws Exception {
+                                    Log.d(TAG, "accept: ");
+                                }
+                            });
+//                            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+//                            startActivity(intent);
+                        },250);
+                    }
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+
             } else {
-                Log.d(TAG, "onAuthStateChanged:signed_out");
+                if (savedInstanceState == null) {
+                    showLogin();
+                }
             }
         };
-        getSupportFragmentManager().beginTransaction()
-                                   .replace(R.id.container, new LoginFragment())
-                                   .commit();
+    }
+
+    private void showLogin() {
+        FragmentManager fm = getSupportFragmentManager();
+        final LoginFragment loginFragment = fm.findFragmentByTag(LoginFragment.TAG) != null ? (LoginFragment) fm
+                .findFragmentByTag(LoginFragment.TAG) : LoginFragment.newInstance();
+        Fragment fragment = fm.findFragmentById(R.id.container);
+        if (fragment instanceof LoginFragment && fragment.isVisible()) {
+            Log.d(TAG, "showLogin: LoginFragment is shown");
+        } else if (fragment == null) {
+            fm.beginTransaction().add(R.id.container, loginFragment, LoginFragment.TAG).commit();
+            fab.setOnClickListener(view -> loginFragment.login());
+        } else if (fragment instanceof SignUpFragment) {
+            fm.beginTransaction().remove(fragment).show(loginFragment).commit();
+            fab.setOnClickListener(view -> loginFragment.login());
+        }
+        tvSignUp.setVisibility(View.VISIBLE);
+    }
+
+    private void showSignUp(){
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.container);
+        if (fragment instanceof LoginFragment) {
+            SignUpFragment signUpFragment = SignUpFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                                       .hide(fragment)
+                                       .add(R.id.container, signUpFragment, SignUpFragment.TAG)
+                                       .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                       .commit();
+            fab.setOnClickListener(view -> signUpFragment.signUp());
+        }
+        tvSignUp.setVisibility(View.GONE);
     }
 
     @Override
@@ -60,52 +157,45 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
-//    private void SignUp() {
-//
-//        // Reset errors.
-//        etUsername.setError(null);
-//        etPassword.setError(null);
-//
-//        // Store values at the time of the login attempt.
-//        String email = etUsername.getText().toString();
-//        String password = etPassword.getText().toString();
-//
-//        boolean cancel = false;
-//        View focusView = null;
-//
-//        // Check for a valid password, if the user entered one.
-//        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-//            etPassword.setError(getString(R.string.error_invalid_password));
-//            focusView = etPassword;
-//            cancel = true;
-//        }
-//
-//        // Check for a valid email address.
-//        if (TextUtils.isEmpty(email)) {
-//            etUsername.setError(getString(R.string.error_field_required));
-//            focusView = etUsername;
-//            cancel = true;
-//        } else if (!isEmailValid(email)) {
-//            etUsername.setError(getString(R.string.error_invalid_email));
-//            focusView = etUsername;
-//            cancel = true;
-//        }
-//
-//        if (cancel) {
-//            // There was an error; don't attempt login and focus the first
-//            // form field with an error.
-//            focusView.requestFocus();
-//        } else {
-//            firebaseAuth.createUserWithEmailAndPassword(email, password)
-//                        .addOnCompleteListener(this, task -> {
-//                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-//                            if (!task.isSuccessful()) {
-//                                Toast.makeText(AuthActivity.this, "Failed", Toast.LENGTH_SHORT)
-//                                     .show();
-//                            }
-//                        });
-//        }
-}
+    private void setupSignUpText() {
+        String string = getString(R.string.sign_up_long);
+        int start = string.indexOf("{");
+        int end = string.indexOf("}") - 1;
+        SpannableString ss = new SpannableString(string.replace("{", "").replace("}", ""));
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                showSignUp();
+            }
 
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(true);
+            }
+        };
+        ss.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvSignUp.setText(ss);
+        tvSignUp.setMovementMethod(LinkMovementMethod.getInstance());
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if (!(fragment instanceof LoginFragment)) {
+            showLogin();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    interface Login {
+        void login();
+    }
+    interface SignUp{
+        void signUp();
+    }
+}
 
 

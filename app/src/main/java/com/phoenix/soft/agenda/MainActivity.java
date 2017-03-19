@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         presenter = new AccountPresenter(repository, this);
         presenter.loadAccount();
 
+
         disposable.add(RxBus.getInstance()
                             .toObservable()
                             .subscribeOn(Schedulers.io())
@@ -120,8 +121,8 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         } else if (id == R.id.action_icon) {
             count++;
             if (count == 15) {
-                Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">Activted Hidden Mode</font>"), Snackbar.LENGTH_SHORT);
-                snackbar.show();
+                Snackbar.make(findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">Activted Hidden Mode</font>"), Snackbar.LENGTH_SHORT)
+                        .show();
                 count = 0;
                 Intent intent = new Intent(this, HiddenActivity.class);
                 startActivity(intent);
