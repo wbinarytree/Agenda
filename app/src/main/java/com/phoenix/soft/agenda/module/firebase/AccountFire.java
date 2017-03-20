@@ -12,8 +12,9 @@ import java.util.List;
  * Created by phoenix on 2017/3/17.
  */
 @IgnoreExtraProperties
-public class AccountFire {
+public class AccountFire implements FirebaseKey {
 
+    private String key;
     private String accountName;
     private String accountPicUrl;
     private long accountID;
@@ -38,6 +39,16 @@ public class AccountFire {
         this.accountID = accountID;
     }
 
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     @Exclude
     public Account toAccount() {
         Account account = new Account();
@@ -46,6 +57,7 @@ public class AccountFire {
         account.setAccountName(getAccountName());
         account.setIncome(Money.parse(getIncome()));
         account.setOutcome(Money.parse(getOutcome()));
+        account.setKey(getKey());
         // account.setDetailList();
         return account;
     }

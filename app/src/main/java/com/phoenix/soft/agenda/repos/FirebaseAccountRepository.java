@@ -1,8 +1,6 @@
 package com.phoenix.soft.agenda.repos;
 
 import android.support.v4.util.ArrayMap;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -10,7 +8,6 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.firebase.AccountFire;
@@ -21,10 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
-import io.reactivex.android.MainThreadDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -35,17 +29,21 @@ public class FirebaseAccountRepository extends Observable<AccountFire> implement
     private static List<Account> accounts;
     private static List<AccountFire> remoteAccount;
     private static ArrayMap<String, AccountFire> accountArray;
-    private Observable<AccountFire> observable;
-    private Observer<AccountFire> observer;
     @Inject
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authStateListener;
     @Inject
     @Named("Account")
     DatabaseReference accountRef;
+    private Observable<AccountFire> observable;
+    private Observer<AccountFire> observer;
 
     public FirebaseAccountRepository() {
         accountArray = new ArrayMap<>(10);
+    }
+
+    public static Observable<AccountFire> getObservable() {
+        return new FirebaseAccountRepository();
     }
 
     @Override
@@ -54,10 +52,6 @@ public class FirebaseAccountRepository extends Observable<AccountFire> implement
         Listener listener = new Listener(observer);
         accountRef.child("account").addChildEventListener(listener);
         observer.onSubscribe(listener);
-    }
-
-    public static Observable<AccountFire> getObservable(){
-        return new FirebaseAccountRepository();
     }
 
     @Override
@@ -97,7 +91,13 @@ public class FirebaseAccountRepository extends Observable<AccountFire> implement
         auth.addAuthStateListener(authStateListener);
 
     }
-    private class Listener implements Disposable,ChildEventListener {
+
+    @Override
+    public void end() {
+        auth.removeAuthStateListener(authStateListener);
+    }
+
+    private class Listener implements Disposable, ChildEventListener {
         Observer<? super AccountFire> observer;
 
         public Listener(Observer<? super AccountFire> observer) {
@@ -139,10 +139,5 @@ public class FirebaseAccountRepository extends Observable<AccountFire> implement
         public void onCancelled(DatabaseError databaseError) {
 
         }
-    }
-
-    @Override
-    public void end() {
-        auth.removeAuthStateListener(authStateListener);
     }
 }

@@ -41,6 +41,17 @@ public class Account implements Parcelable,Serializable {
     @Exclude
     private Money outcome;
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    @Exclude
+    private String key;
+
     public Account() {
     }
 
@@ -119,6 +130,9 @@ public class Account implements Parcelable,Serializable {
 
     public AccountFire toAccountFire(){
         //accountFire.setDetailList();
-        return new AccountFire(getAccountName(),getAccountPicUrl(),getAccountID(),getIncome().toString(),getOutcome().toString());
+        AccountFire accountFire = new AccountFire(getAccountName(), getAccountPicUrl(), getAccountID(), getIncome()
+                .toString(), getOutcome().toString());
+        accountFire.setKey(getKey());
+        return accountFire;
     }
 }

@@ -60,7 +60,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Mai
         View view = inflater.inflate(R.layout.fragment_detail_list, container, false);
         bind = ButterKnife.bind(this, view);
         account = (Account) getArguments().get("detail");
-        presenter = new DetailPresenter(account, this);
+        presenter = new DetailPresenter(account.getKey(), this);
         presenter.loadDetailList();
         setRetainInstance(true);
         Log.d(TAG, "onCreateView: ");
@@ -79,7 +79,8 @@ public class DetailFragment extends Fragment implements DetailContract.View, Mai
     }
 
     @Override
-    public void showDetailList(Account account) {
+    public void showDetailList(List<Detail> details) {
+        account.setDetailList(details);
         detailListAdapter = new DetailListAdapter(account);
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         detailRecyclerList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));

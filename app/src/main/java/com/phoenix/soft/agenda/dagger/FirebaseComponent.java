@@ -1,10 +1,14 @@
 package com.phoenix.soft.agenda.dagger;
 
 import com.phoenix.soft.agenda.MainApplication;
+import com.phoenix.soft.agenda.account.AccountPresenter;
+import com.phoenix.soft.agenda.detail.DetailPresenter;
 import com.phoenix.soft.agenda.login.AuthActivity;
 import com.phoenix.soft.agenda.login.LoginFragment;
 import com.phoenix.soft.agenda.login.SignUpFragment;
+import com.phoenix.soft.agenda.repos.FireAccountRepository;
 import com.phoenix.soft.agenda.repos.FirebaseAccountRepository;
+import com.phoenix.soft.agenda.repos.FirebaseObservable;
 
 import javax.inject.Singleton;
 
@@ -21,4 +25,9 @@ public interface FirebaseComponent {
     void inject(AuthActivity activity);
     void inject(LoginFragment loginFragment);
     void inject(SignUpFragment signUpFragment);
+    void inject(FireAccountRepository repo);
+
+    void inject(AccountPresenter accountPresenter);
+
+    void inject(DetailPresenter detailPresenter);
 }

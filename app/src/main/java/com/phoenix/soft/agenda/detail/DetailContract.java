@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface DetailContract {
     interface View {
-        void showDetailList(Account account);
+        void showDetailList(List<Detail> details);
         void showAddDetailDialog();
         void updateList();
         void showNoDetail();
