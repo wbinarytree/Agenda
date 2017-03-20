@@ -3,8 +3,10 @@ package com.phoenix.soft.agenda.dagger;
 import android.content.Context;
 
 import com.phoenix.soft.agenda.repos.AccountRepository;
+import com.phoenix.soft.agenda.repos.FireAccountRepository;
 import com.phoenix.soft.agenda.repos.TestAccountRepository;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -32,5 +34,11 @@ public class AppModule {
     @Singleton
     AccountRepository provideAccoutRepo(Context context) {
         return new TestAccountRepository(context);
+    }
+    @Provides
+    @Singleton
+    @Named("Firebase")
+    AccountRepository provideFirebaseAccoutRepo() {
+        return new FireAccountRepository();
     }
 }

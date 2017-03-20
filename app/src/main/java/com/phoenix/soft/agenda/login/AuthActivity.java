@@ -2,18 +2,14 @@ package com.phoenix.soft.agenda.login;
 
 import android.animation.Animator;
 import android.content.Intent;
-import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -29,14 +25,12 @@ import com.phoenix.soft.agenda.MainActivity;
 import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.Utils;
-import com.phoenix.soft.agenda.module.firebase.AccountFire;
 import com.phoenix.soft.agenda.repos.FirebaseAccountRepository;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.functions.Consumer;
 
 /**
  * A login screen that offers login via email/password.
@@ -82,14 +76,9 @@ public class AuthActivity extends AppCompatActivity {
                             fab.setClickable(false);
                         }
                         new Handler(getMainLooper()).postDelayed(() -> {
-                            FirebaseAccountRepository.getObservable().subscribe(new Consumer<AccountFire>() {
-                                @Override
-                                public void accept(@io.reactivex.annotations.NonNull AccountFire accountFire) throws Exception {
-                                    Log.d(TAG, "accept: ");
-                                }
-                            });
-//                            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-//                            startActivity(intent);
+                            //FirebaseAccountRepository.getObservable().subscribe(accountFire -> Log.d(TAG, "accept: "));
+                            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+                            startActivity(intent);
                         },250);
                     }
                     @Override
@@ -120,10 +109,10 @@ public class AuthActivity extends AppCompatActivity {
             Log.d(TAG, "showLogin: LoginFragment is shown");
         } else if (fragment == null) {
             fm.beginTransaction().add(R.id.container, loginFragment, LoginFragment.TAG).commit();
-            fab.setOnClickListener(view -> loginFragment.login());
+            fab.setOnClickListener(loginFragment::onFabClick);
         } else if (fragment instanceof SignUpFragment) {
             fm.beginTransaction().remove(fragment).show(loginFragment).commit();
-            fab.setOnClickListener(view -> loginFragment.login());
+            fab.setOnClickListener(loginFragment::onFabClick);
         }
         tvSignUp.setVisibility(View.VISIBLE);
     }
@@ -138,7 +127,7 @@ public class AuthActivity extends AppCompatActivity {
                                        .add(R.id.container, signUpFragment, SignUpFragment.TAG)
                                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                        .commit();
-            fab.setOnClickListener(view -> signUpFragment.signUp());
+            fab.setOnClickListener(signUpFragment::onFabClick);
         }
         tvSignUp.setVisibility(View.GONE);
     }
@@ -190,11 +179,8 @@ public class AuthActivity extends AppCompatActivity {
         }
     }
 
-    interface Login {
-        void login();
-    }
-    interface SignUp{
-        void signUp();
+    interface FabClick{
+        void onFabClick(View v);
     }
 }
 

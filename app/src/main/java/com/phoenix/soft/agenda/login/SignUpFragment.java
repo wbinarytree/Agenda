@@ -34,7 +34,7 @@ import static com.phoenix.soft.agenda.Utils.isUsername;
  * Created by phoenix on 2017/3/19.
  */
 
-public class SignUpFragment extends Fragment implements AuthActivity.SignUp {
+public class SignUpFragment extends Fragment implements AuthActivity.FabClick {
     public static final String TAG = "SignUpFragment";
     @BindView(R.id.email)
     AutoCompleteTextView etUsername;
@@ -64,7 +64,7 @@ public class SignUpFragment extends Fragment implements AuthActivity.SignUp {
     }
 
     @Override
-    public void signUp() {
+    public void onFabClick(View view) {
         etUsername.setError(null);
         etPassword.setError(null);
         etNickName.setError(null);
@@ -106,7 +106,7 @@ public class SignUpFragment extends Fragment implements AuthActivity.SignUp {
                 })
                 .addOnFailureListener(e -> Snackbar.make(getActivity().findViewById(R.id.login_background), Utils
                         .fromHtml("<font color=\"#ffffff\">Sorry, Sign up fail</font>"), Snackbar.LENGTH_SHORT)
-                                                   .setAction(getString(R.string.title_retry), v -> signUp())
+                                                   .setAction(getString(R.string.title_retry), v -> onFabClick(v))
                                                    .show());
         }
     }

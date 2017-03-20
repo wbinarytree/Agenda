@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @BindView(R.id.tab_bar)
     TabLayout tabLayout;
     @Inject
+    @Named("Firebase")
     AccountRepository repository;
     private int count = 0;
     private AccountPagerAdapter adapter;
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         presenter.loadAccount();
 
 
+        // TODO: 20/03/17 Pass detail message to account
         disposable.add(RxBus.getInstance()
                             .toObservable()
                             .subscribeOn(Schedulers.io())
@@ -140,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        repository.end();
         //need to dispose here. Otherwise the observable will running forever.
         disposable.clear();
     }

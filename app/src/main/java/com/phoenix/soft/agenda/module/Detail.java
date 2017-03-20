@@ -3,6 +3,8 @@ package com.phoenix.soft.agenda.module;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.phoenix.soft.agenda.module.firebase.DetailFire;
+
 import org.joda.money.Money;
 
 import java.io.Serializable;
@@ -18,6 +20,7 @@ public class Detail implements Serializable, Parcelable {
     private Money money;
     private String desc;
     private String title;
+    private String key;
 
     public long getDetailId() {
         return detailId;
@@ -96,4 +99,18 @@ public class Detail implements Serializable, Parcelable {
             return new Detail[size];
         }
     };
+
+    public DetailFire toDetailFire(){
+        DetailFire detailFire = new DetailFire(getDate().toString(),getMoney().toString(),getDesc(),getTitle());
+        detailFire.setKey(getKey());
+        return detailFire;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 }

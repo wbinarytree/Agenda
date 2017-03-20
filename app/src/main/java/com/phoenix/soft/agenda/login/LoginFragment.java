@@ -31,7 +31,7 @@ import static com.phoenix.soft.agenda.Utils.isPasswordValid;
  * Created by yaoda on 17/03/17.
  */
 
-public class LoginFragment extends Fragment implements AuthActivity.Login {
+public class LoginFragment extends Fragment implements AuthActivity.FabClick {
     public static final String TAG = "LoginFragment";
     @BindView(R.id.email)
     AutoCompleteTextView etUsername;
@@ -56,7 +56,7 @@ public class LoginFragment extends Fragment implements AuthActivity.Login {
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         etPassword.setOnEditorActionListener((textView, id, keyEvent) -> {
             if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                login();
+                onFabClick(textView);
                 return true;
             }
             return false;
@@ -67,7 +67,7 @@ public class LoginFragment extends Fragment implements AuthActivity.Login {
 
 
     @Override
-    public void login() {
+    public void onFabClick(View v) {
         etUsername.setError(null);
         etPassword.setError(null);
         String email = etUsername.getText().toString();
