@@ -10,88 +10,99 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_margin="8dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
         <LinearLayout
+            android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_income_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/income_title"
-                android:textColor="@color/limeGreen"
-                android:textSize="18sp"
-                android:typeface="serif" />
-
-            <TextView
-                android:id="@+id/tv_income"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:text="@string/tmp_cost" />
+                android:layout_weight="10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_income_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/income_title"
+                    android:textColor="@color/limeGreen"
+                    android:textSize="18sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/tv_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="@string/tmp_cost" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_outcome_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/outcome_title"
+                    android:textColor="@color/orangeRed"
+                    android:textSize="18sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/tv_outcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/tmp_cost" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_total_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/total_title"
+                    android:textSize="18sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/tv_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/tmp_cost" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/detail_chart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_outcome_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/outcome_title"
-                android:textColor="@color/orangeRed"
-                android:textSize="18sp"
-                android:typeface="serif" />
-
-            <TextView
-                android:id="@+id/tv_outcome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/tmp_cost" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_total_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/total_title"
-                android:textSize="18sp"
-                android:typeface="serif" />
-
-            <TextView
-                android:id="@+id/tv_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/tmp_cost" />
-
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
+
 </android.support.v7.widget.CardView>
