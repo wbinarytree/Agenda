@@ -28,7 +28,7 @@ public interface AccountContract {
 
         void modifyAccount();
 
-        void deleteAccount();
+        void deleteAccount(Account account);
 
     }
 }

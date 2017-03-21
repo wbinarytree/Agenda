@@ -7,7 +7,7 @@ import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Detail;
 import com.phoenix.soft.agenda.module.firebase.DetailFire;
-import com.phoenix.soft.agenda.repos.FirebaseObservable;
+import com.phoenix.soft.agenda.rxfirebase.RxDatabase;
 
 import org.joda.money.Money;
 
@@ -51,33 +51,36 @@ public class DetailPresenter implements DetailContract.Presenter {
     @Override
     public void loadDetailList() {
 
-        FirebaseObservable<DetailFire> observable = new FirebaseObservable<>(DetailFire.class, 10, "detail/" + key, dbRef);
-        observable.subscribe(new DisposableObserver<DetailFire>() {
-            @Override
-            public void onNext(DetailFire detailFire) {
-                try {
-                    details.add(detailFire.toDetail());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Log.d(TAG, "onNext: ");
-            }
+        RxDatabase.limitToFirst(DetailFire.class, dbRef.child("detail")
+                                                       .child(key)
+                                                       .limitToFirst(10)
+                                                       .orderByChild("date"))
+                  .subscribe(new DisposableObserver<DetailFire>() {
+                      @Override
+                      public void onNext(DetailFire detailFire) {
+                          try {
+                              details.add(detailFire.toDetail());
+                          } catch (ParseException e) {
+                              e.printStackTrace();
+                          }
+                          Log.d(TAG, "onNext: ");
+                      }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.d(TAG, "onError: ");
-                view.showError("Error");
-            }
+                      @Override
+                      public void onError(Throwable e) {
+                          Log.d(TAG, "onError: ");
+                          view.showError("Error");
+                      }
 
-            @Override
-            public void onComplete() {
+                      @Override
+                      public void onComplete() {
 //                if (details.isEmpty()) {
 //                    view.showNoDetail();
 //                } else {
 //                }
-                view.showDetailList(details);
-            }
-        });
+                          view.showDetailList(details);
+                      }
+                  });
     }
 
     @Override

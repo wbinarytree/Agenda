@@ -25,6 +25,7 @@ import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Events;
 import com.phoenix.soft.agenda.repos.AccountRepository;
 import com.phoenix.soft.agenda.repos.FirebaseAccountRepository;
+import com.phoenix.soft.agenda.repos.FirebaseRxAccountRepository;
 import com.phoenix.soft.agenda.rxbus.RxBus;
 import com.squareup.picasso.Picasso;
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-        presenter = new AccountPresenter(repository, this);
+        presenter = new AccountPresenter(new FirebaseRxAccountRepository(), this);
         presenter.loadAccount();
 
 
