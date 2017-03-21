@@ -77,18 +77,6 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         presenter = new AccountPresenter(new FirebaseRxAccountRepository(), this);
         presenter.loadAccount();
 
-
-        // TODO: 20/03/17 Pass detail message to account
-        disposable.add(RxBus.getInstance()
-                            .toObservable()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(o -> {
-                                if (o instanceof Events.ToolbarChangeEvent) {
-                                    Log.d(TAG, "onCreate: message Receive");
-                                }
-                            }));
-
         disposable.add(RxView.clicks(fab)
                              .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem())
                                                     .onClick()));
@@ -156,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         viewPager.setAdapter(adapter);
         disposable.add(RxViewPager.pageSelections(viewPager)
                                   .subscribe(this::updateViewByPagerContent));
+
 
     }
 
