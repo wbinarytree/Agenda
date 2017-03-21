@@ -8,7 +8,7 @@ import com.phoenix.soft.agenda.login.LoginFragment;
 import com.phoenix.soft.agenda.login.SignUpFragment;
 import com.phoenix.soft.agenda.repos.FireAccountRepository;
 import com.phoenix.soft.agenda.repos.FirebaseAccountRepository;
-import com.phoenix.soft.agenda.repos.FirebaseObservable;
+import com.phoenix.soft.agenda.repos.FirebaseRxAccountRepository;
 
 import javax.inject.Singleton;
 
@@ -30,4 +30,6 @@ public interface FirebaseComponent {
     void inject(AccountPresenter accountPresenter);
 
     void inject(DetailPresenter detailPresenter);
+
+    void inject(FirebaseRxAccountRepository firebaseRxAccountRepository);
 }
