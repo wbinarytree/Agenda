@@ -1,4 +1,4 @@
-package com.phoenix.soft.agenda.detail;
+package com.phoenix.soft.agenda.transaction;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.phoenix.soft.agenda.R;
 
@@ -24,7 +22,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by yaoda on 13/03/17.
  */
 
-public class DialogAddFragment extends DialogFragment {
+public class TransactionAddDialogFragment extends DialogFragment {
     @BindView(R.id.et_mount)
     EditText mount;
     @BindView(R.id.rd_group)
@@ -43,9 +41,9 @@ public class DialogAddFragment extends DialogFragment {
                 .setNegativeButton("cancel", null)
                 .setView(view)
                 .create();
-        mDialog.setOnShowListener(dialog -> ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> addDetail()));
+        mDialog.setOnShowListener(dialog -> ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> addtranscation()));
         mount.setOnEditorActionListener((v1, actionId, event) -> {
-            addDetail();
+            addtranscation();
             return true;
         });
         return mDialog;
@@ -56,7 +54,7 @@ public class DialogAddFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void addDetail() {
+    private void addtranscation() {
         String mountNumber = mount.getText().toString();
         if (mountNumber.equals("")) {
             mount.setError("Enter Number");

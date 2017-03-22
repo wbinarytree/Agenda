@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import com.phoenix.soft.agenda.detail.DetailFragment;
+import com.phoenix.soft.agenda.transaction.TransactionFragment;
 import com.phoenix.soft.agenda.module.Account;
 
 import java.util.List;
@@ -17,17 +17,17 @@ import java.util.List;
 
 public class AccountPagerAdapter extends FragmentPagerAdapter {
     private List<Account> accounts;
-    private SparseArray<DetailFragment> detailFragments;
+    private SparseArray<TransactionFragment> transactionFragments;
 
     public AccountPagerAdapter(FragmentManager fm, List<Account> accounts) {
         super(fm);
         this.accounts = accounts;
-        detailFragments = new SparseArray<>();
+        transactionFragments = new SparseArray<>();
     }
 
     @Override
     public Fragment getItem(int position) {
-        return DetailFragment.newInstance(accounts.get(position));
+        return TransactionFragment.newInstance(accounts.get(position));
     }
 
     @Override
@@ -38,15 +38,15 @@ public class AccountPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        DetailFragment o = (DetailFragment) super.instantiateItem(container, position);
-        detailFragments.put(position, o);
+        TransactionFragment o = (TransactionFragment) super.instantiateItem(container, position);
+        transactionFragments.put(position, o);
         return o;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         super.destroyItem(container, position, object);
-        detailFragments.remove(position);
+        transactionFragments.remove(position);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class AccountPagerAdapter extends FragmentPagerAdapter {
         return POSITION_NONE;
     }
 
-    public DetailFragment getFragment(int position) {
-        return detailFragments.get(position);
+    public TransactionFragment getFragment(int position) {
+        return transactionFragments.get(position);
     }
 }

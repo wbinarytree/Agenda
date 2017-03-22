@@ -92,7 +92,7 @@ public class FireAccountRepository implements AccountRepository {
         List<Account> accountList = new ArrayList<>(accountMap.size());
         for (AccountFire accountFire : accountMap.values()) {
             Account e = accountFire.toAccount();
-            e.setDetailList(Collections.emptyList());
+            e.setTransactionList(Collections.emptyList());
             accountList.add(e);
         }
         return accountList;

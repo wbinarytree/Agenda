@@ -5,7 +5,7 @@ import android.content.Context;
 import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.db.UserDataHelper;
 import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.module.Detail;
+import com.phoenix.soft.agenda.module.Transaction;
 
 import org.joda.money.Money;
 
@@ -68,14 +68,14 @@ public class TestAccountRepository implements AccountRepository {
         account.setAccountID(r.nextLong());
         account.setIncome(Money.parse("USD " + r.nextInt()));
         account.setOutcome(Money.parse("USD " + r.nextInt()));
-        ArrayList<Detail> details = new ArrayList<>();
+        ArrayList<Transaction> transactions = new ArrayList<>();
         for (int j = 0; j < 10; j++) {
-            Detail detail = new Detail();
-            detail.setMoney(Money.parse("USD " + r.nextInt()));
-            detail.setDate(new Date(Math.abs(System.currentTimeMillis() - r.nextLong())));
-            details.add(detail);
+            Transaction transaction = new Transaction();
+            transaction.setMoney(Money.parse("USD " + r.nextInt()));
+            transaction.setDate(new Date(Math.abs(System.currentTimeMillis() - r.nextLong())));
+            transactions.add(transaction);
         }
-        account.setDetailList(details);
+        account.setTransactionList(transactions);
         addAccount(account);
         return account;
     }
@@ -102,14 +102,14 @@ public class TestAccountRepository implements AccountRepository {
             account.setAccountPicUrl(urls[i]);
             account.setIncome(Money.parse("USD " + r.nextInt()));
             account.setOutcome(Money.parse("USD " + r.nextInt()));
-            ArrayList<Detail> details = new ArrayList<>();
+            ArrayList<Transaction> transactions = new ArrayList<>();
             for (int j = 0; j < 10; j++) {
-                Detail detail = new Detail();
-                detail.setMoney(Money.parse("USD " + r.nextInt()));
-                detail.setDate(new Date(Math.abs(System.currentTimeMillis() - r.nextLong())));
-                details.add(detail);
+                Transaction transaction = new Transaction();
+                transaction.setMoney(Money.parse("USD " + r.nextInt()));
+                transaction.setDate(new Date(Math.abs(System.currentTimeMillis() - r.nextLong())));
+                transactions.add(transaction);
             }
-            account.setDetailList(details);
+            account.setTransactionList(transactions);
             list.add(account);
         }
         return list;

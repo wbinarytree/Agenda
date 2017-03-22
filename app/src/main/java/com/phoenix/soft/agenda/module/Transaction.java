@@ -3,7 +3,7 @@ package com.phoenix.soft.agenda.module;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.phoenix.soft.agenda.module.firebase.DetailFire;
+import com.phoenix.soft.agenda.module.firebase.TransactionFire;
 
 import org.joda.money.Money;
 
@@ -14,20 +14,20 @@ import java.util.Date;
  * Created by yaoda on 22/02/17.
  */
 
-public class Detail implements Serializable, Parcelable {
-    private long detailId;
+public class Transaction implements Serializable, Parcelable {
+    private long id;
     private Date date;
     private Money money;
     private String desc;
     private String title;
     private String key;
 
-    public long getDetailId() {
-        return detailId;
+    public long getId() {
+        return id;
     }
 
-    public void setDetailId(long detailId) {
-        this.detailId = detailId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Date getDate() {
@@ -69,18 +69,18 @@ public class Detail implements Serializable, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.detailId);
+        dest.writeLong(this.id);
         dest.writeLong(this.date != null ? this.date.getTime() : -1);
         dest.writeSerializable(this.money);
         dest.writeString(this.desc);
         dest.writeString(this.title);
     }
 
-    public Detail() {
+    public Transaction() {
     }
 
-    protected Detail(Parcel in) {
-        this.detailId = in.readLong();
+    protected Transaction(Parcel in) {
+        this.id = in.readLong();
         long tmpDate = in.readLong();
         this.date = tmpDate == -1 ? null : new Date(tmpDate);
         this.money = (Money) in.readSerializable();
@@ -88,22 +88,22 @@ public class Detail implements Serializable, Parcelable {
         this.title = in.readString();
     }
 
-    public static final Creator<Detail> CREATOR = new Creator<Detail>() {
+    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
         @Override
-        public Detail createFromParcel(Parcel source) {
-            return new Detail(source);
+        public Transaction createFromParcel(Parcel source) {
+            return new Transaction(source);
         }
 
         @Override
-        public Detail[] newArray(int size) {
-            return new Detail[size];
+        public Transaction[] newArray(int size) {
+            return new Transaction[size];
         }
     };
 
-    public DetailFire toDetailFire(){
-        DetailFire detailFire = new DetailFire(getDate().toString(),getMoney().toString(),getDesc(),getTitle());
-        detailFire.setKey(getKey());
-        return detailFire;
+    public TransactionFire toTransactionFire(){
+        TransactionFire transactionFire = new TransactionFire(getDate().toString(),getMoney().toString(),getDesc(),getTitle());
+        transactionFire.setKey(getKey());
+        return transactionFire;
     }
 
     public String getKey() {

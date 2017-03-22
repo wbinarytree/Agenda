@@ -7,6 +7,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.phoenix.soft.agenda.repos.FirebaseRxAccountRepository;
+import com.phoenix.soft.agenda.repos.RxAccountRepository;
 
 import java.io.FilterReader;
 
@@ -38,6 +40,12 @@ public class FirebaseModule {
     @Singleton
     FirebaseUser provideUser(FirebaseAuth auth){
         return auth.getCurrentUser();
+    }
+
+    @Provides
+    @Singleton
+    RxAccountRepository provideRxRepo(@Named("Account") DatabaseReference dbref){
+        return new FirebaseRxAccountRepository(dbref);
     }
 
 }
