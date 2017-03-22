@@ -1,8 +1,9 @@
-package com.phoenix.soft.agenda.detail;
+package com.phoenix.soft.agenda.transaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,12 +16,9 @@ import android.view.ViewGroup;
 
 import com.phoenix.soft.agenda.MainActivity;
 import com.phoenix.soft.agenda.R;
-import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.Utils;
 import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.module.Detail;
-import com.phoenix.soft.agenda.module.Events;
-import com.phoenix.soft.agenda.rxbus.RxBus;
+import com.phoenix.soft.agenda.module.Transaction;
 
 import java.util.List;
 
@@ -35,20 +33,20 @@ import static android.app.Activity.RESULT_OK;
  * Created by yaoda on 23/02/17.
  */
 
-public class DetailFragment extends Fragment implements DetailContract.View, MainActivity.FabClick {
+public class TransactionFragment extends Fragment implements TransactionContract.View, MainActivity.FabClick {
     public final static String TAG = "DETAIL_FRAGMENT";
     private static final int REQUEST_CODE_DETAIL = 0xF1;
     @BindView(R.id.detail_list)
     RecyclerView detailRecyclerList;
     private Unbinder bind;
-    private DetailContract.Presenter presenter;
-    private DetailListAdapter detailListAdapter;
+    private TransactionContract.Presenter presenter;
+    private TransactionListAdapter transactionListAdapter;
     private Account account;
 
-    public static DetailFragment newInstance(Account account) {
+    public static TransactionFragment newInstance(Account account) {
         Bundle args = new Bundle();
         args.putParcelable("detail", account);
-        DetailFragment fragment = new DetailFragment();
+        TransactionFragment fragment = new TransactionFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,7 +58,7 @@ public class DetailFragment extends Fragment implements DetailContract.View, Mai
         View view = inflater.inflate(R.layout.fragment_detail_list, container, false);
         bind = ButterKnife.bind(this, view);
         account = (Account) getArguments().get("detail");
-        presenter = new DetailPresenter(account.getKey(), this);
+        presenter = new TransactionPresenter(account.getKey(), this);
         presenter.loadDetailList();
         setRetainInstance(true);
         Log.d(TAG, "onCreateView: ");
@@ -79,33 +77,43 @@ public class DetailFragment extends Fragment implements DetailContract.View, Mai
     }
 
     @Override
-    public void showDetailList(List<Detail> details) {
-        account.setDetailList(details);
-        detailListAdapter = new DetailListAdapter(account);
+    public void showTransactionList(List<Transaction> transactions) {
+        account.setTransactionList(transactions);
+        transactionListAdapter = new TransactionListAdapter(account);
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         detailRecyclerList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        detailRecyclerList.setAdapter(detailListAdapter);
+        detailRecyclerList.setAdapter(transactionListAdapter);
         detailRecyclerList.setLayoutManager(layout);
         detailRecyclerList.setItemAnimator(new SlideInLeftAnimator());
-        RxBus.getInstance().send(new Events.ToolbarChangeEvent(true));
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        detailRecyclerList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    fab.hide();
+                } else if (dy < 0) {
+                    fab.show();
+                }
+            }
+        });
     }
 
     @Override
     public void showAddDetailDialog() {
         //Target Fragment will be set by FragmentManager. Which means it can be saved after saveInstance.
-        DialogAddFragment dialogAddFragment = new DialogAddFragment();
+        TransactionAddDialogFragment dialogAddFragment = new TransactionAddDialogFragment();
         dialogAddFragment.setTargetFragment(this, REQUEST_CODE_DETAIL);
         dialogAddFragment.show(getFragmentManager(), "add");
     }
 
     @Override
     public void updateList() {
-        detailListAdapter.notifyItemInserted(0);
+        transactionListAdapter.notifyItemInserted(0);
         detailRecyclerList.scrollToPosition(0);
     }
 
     @Override
-    public void showNoDetail() {
+    public void showNoTransaction() {
 
     }
 

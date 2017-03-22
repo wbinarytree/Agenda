@@ -10,7 +10,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -18,27 +17,22 @@ import android.widget.ImageView;
 import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.phoenix.soft.agenda.account.AccountContract;
+import com.phoenix.soft.agenda.account.AccountDetailFragment;
 import com.phoenix.soft.agenda.account.AccountPagerAdapter;
 import com.phoenix.soft.agenda.account.AccountPresenter;
 import com.phoenix.soft.agenda.hidden.HiddenActivity;
 import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.module.Events;
-import com.phoenix.soft.agenda.repos.AccountRepository;
 import com.phoenix.soft.agenda.repos.FirebaseAccountRepository;
-import com.phoenix.soft.agenda.repos.FirebaseRxAccountRepository;
-import com.phoenix.soft.agenda.rxbus.RxBus;
+import com.phoenix.soft.agenda.repos.RxAccountRepository;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements AccountContract.View {
     private static final String TAG = "MainActivity";
@@ -56,37 +50,41 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     ViewPager viewPager;
     @BindView(R.id.tab_bar)
     TabLayout tabLayout;
-    @Inject
-    @Named("Firebase")
-    AccountRepository repository;
+
     private int count = 0;
     private AccountPagerAdapter adapter;
     private List<Account> accountList;
     private CompositeDisposable disposable = new CompositeDisposable();
     private AccountContract.Presenter presenter;
-
+    @Inject
+    RxAccountRepository rxAccountRepository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ((MainApplication) getApplication()).getBuilder().inject(this);
+        MainApplication.getFirebaseComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-        presenter = new AccountPresenter(new FirebaseRxAccountRepository(), this);
+        presenter = new AccountPresenter(rxAccountRepository, this);
         presenter.loadAccount();
 
         disposable.add(RxView.clicks(fab)
                              .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem())
                                                     .onClick()));
         tabLayout.setupWithViewPager(viewPager);
+        getSupportFragmentManager().beginTransaction()
+                                   .replace(R.id.container_detail, AccountDetailFragment
+                                           .newInstance())
+                                   .commit();
 
     }
 
     private void updateViewByPagerContent(int position) {
         Picasso.with(this)
-               .load(Integer.valueOf(accountList.get(position).getAccountPicUrl()))
+               .load(Integer.valueOf(accountList.get(position)
+                                                .getAccountPicUrl()))
                .noFade()
                .resize(400, 800)
                .into(imageToolBar);
@@ -132,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        repository.end();
+        rxAccountRepository.end();
         //need to dispose here. Otherwise the observable will running forever.
         disposable.clear();
     }
@@ -143,7 +141,12 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         adapter = new AccountPagerAdapter(getSupportFragmentManager(), this.accountList);
         viewPager.setAdapter(adapter);
         disposable.add(RxViewPager.pageSelections(viewPager)
-                                  .subscribe(this::updateViewByPagerContent));
+                                  .subscribe(position -> {
+                                      if (!fab.isShown()) {
+                                          fab.show();
+                                      }
+                                      updateViewByPagerContent(position);
+                                  }));
 
 
     }
@@ -166,6 +169,10 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     public void showModifyAccount() {
         // TODO: 16/03/17
+    }
+
+    public RxAccountRepository getRepo() {
+        return this.rxAccountRepository;
     }
 
     public interface FabClick {

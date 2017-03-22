@@ -20,7 +20,7 @@ public class AccountFire implements FirebaseKey {
     private long accountID;
     private String income;
     private String outcome;
-    private List<DetailFire> detailList;
+    private List<TransactionFire> detailList;
 
     public AccountFire(String accountName, String accountPicUrl, long accountID, String income, String outcome) {
         this.accountName = accountName;
@@ -58,15 +58,15 @@ public class AccountFire implements FirebaseKey {
         account.setIncome(Money.parse(getIncome()));
         account.setOutcome(Money.parse(getOutcome()));
         account.setKey(getKey());
-        // account.setDetailList();
+        // account.setTransactionList();
         return account;
     }
 
-    public List<DetailFire> getDetailList() {
+    public List<TransactionFire> getDetailList() {
         return detailList;
     }
 
-    public void setDetailList(List<DetailFire> detailList) {
+    public void setDetailList(List<TransactionFire> detailList) {
         this.detailList = detailList;
     }
 

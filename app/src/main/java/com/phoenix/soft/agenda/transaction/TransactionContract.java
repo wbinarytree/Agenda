@@ -1,7 +1,6 @@
-package com.phoenix.soft.agenda.detail;
+package com.phoenix.soft.agenda.transaction;
 
-import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.module.Detail;
+import com.phoenix.soft.agenda.module.Transaction;
 
 import java.util.List;
 
@@ -9,12 +8,12 @@ import java.util.List;
  * Created by yaoda on 23/02/17.
  */
 
-public interface DetailContract {
+public interface TransactionContract {
     interface View {
-        void showDetailList(List<Detail> details);
+        void showTransactionList(List<Transaction> transactions);
         void showAddDetailDialog();
         void updateList();
-        void showNoDetail();
+        void showNoTransaction();
         void showError(String errorMessage);
     }
 

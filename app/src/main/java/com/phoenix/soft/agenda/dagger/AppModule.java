@@ -35,6 +35,7 @@ public class AppModule {
     AccountRepository provideAccoutRepo(Context context) {
         return new TestAccountRepository(context);
     }
+
     @Provides
     @Singleton
     @Named("Firebase")

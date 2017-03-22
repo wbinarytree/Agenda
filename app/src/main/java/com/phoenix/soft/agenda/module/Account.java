@@ -35,7 +35,7 @@ public class Account implements Parcelable,Serializable {
     private String accountPicUrl;
     private long accountID;
     @Exclude
-    private List<Detail> detailList;
+    private List<Transaction> transactionList;
     @Exclude
     private Money income;
     @Exclude
@@ -59,8 +59,8 @@ public class Account implements Parcelable,Serializable {
         this.accountName = in.readString();
         this.accountPicUrl = in.readString();
         this.accountID = in.readLong();
-        this.detailList = new ArrayList<>();
-        in.readList(this.detailList, Detail.class.getClassLoader());
+        this.transactionList = new ArrayList<>();
+        in.readList(this.transactionList, Transaction.class.getClassLoader());
         this.income = (Money) in.readSerializable();
         this.outcome = (Money) in.readSerializable();
     }
@@ -89,12 +89,12 @@ public class Account implements Parcelable,Serializable {
         this.accountID = accountID;
     }
 
-    public List<Detail> getDetailList() {
-        return this.detailList;
+    public List<Transaction> getTransactionList() {
+        return this.transactionList;
     }
 
-    public void setDetailList(@NonNull List<Detail> detailList) {
-        this.detailList = detailList;
+    public void setTransactionList(@NonNull List<Transaction> transactionList) {
+        this.transactionList = transactionList;
     }
 
     public Money getIncome() {
@@ -123,13 +123,13 @@ public class Account implements Parcelable,Serializable {
         dest.writeString(this.accountName);
         dest.writeString(this.accountPicUrl);
         dest.writeLong(this.accountID);
-        dest.writeList(this.detailList);
+        dest.writeList(this.transactionList);
         dest.writeSerializable(this.income);
         dest.writeSerializable(this.outcome);
     }
 
     public AccountFire toAccountFire(){
-        //accountFire.setDetailList();
+        //accountFire.setTransactionList();
         AccountFire accountFire = new AccountFire(getAccountName(), getAccountPicUrl(), getAccountID(), getIncome()
                 .toString(), getOutcome().toString());
         accountFire.setKey(getKey());

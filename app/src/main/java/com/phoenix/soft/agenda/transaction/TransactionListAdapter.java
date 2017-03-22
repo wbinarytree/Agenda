@@ -1,8 +1,7 @@
-package com.phoenix.soft.agenda.detail;
+package com.phoenix.soft.agenda.transaction;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,18 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.charts.PieChart;
 import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.module.Detail;
+import com.phoenix.soft.agenda.module.Transaction;
 
 import org.joda.money.Money;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,17 +27,17 @@ import butterknife.ButterKnife;
  * Created by yaoda on 23/02/17.
  */
 
-public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = -1;
-    private List<Detail> details;
+    private List<Transaction> transactions;
     private Account account;
 
-    public DetailListAdapter(List<Detail> details) {
-        this.details = details;
+    public TransactionListAdapter(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
-    public DetailListAdapter(Account account) {
-        this.details = account.getDetailList();
+    public TransactionListAdapter(Account account) {
+        this.transactions = account.getTransactionList();
         this.account = account;
     }
 
@@ -52,10 +47,12 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             View view = LayoutInflater.from(parent.getContext())
                                       .inflate(R.layout.item_balance_header, parent, false);
             return new HeaderHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext())
+                                      .inflate(R.layout.item_detail_list, parent, false);
+            return new ItemHolder(view);
         }
-        View view = LayoutInflater.from(parent.getContext())
-                                  .inflate(R.layout.item_detail_list, parent, false);
-        return new ItemHolder(view);
+
     }
 
     @Override
@@ -64,11 +61,11 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             ItemHolder itemHolder = (ItemHolder) holder;
             Context context = itemHolder.tvDesc.getContext();
-            Detail detail = details.get(position - 1);
+            Transaction transaction = transactions.get(position);
             itemHolder.tvDate.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale
-                    .getDefault()).format(detail.getDate()));
+                    .getDefault()).format(transaction.getDate()));
             itemHolder.tvDesc.setText(context.getText(R.string.tmp_detail_desc));
-            Money money = detail.getMoney();
+            Money money = transaction.getMoney();
             if (money.toString().contains("-")) {
                 //holder.tvTitle.setText(holder.tvTitle.getContext().getText(R.string.outcome_title));
                 String text = "- " + money.toString().replace("-", " ");
@@ -82,52 +79,47 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
 
         } else if (holder instanceof HeaderHolder) {
-            HeaderHolder headerHolder = (HeaderHolder) holder;
-            Context context = headerHolder.cardView.getContext();
-            headerHolder.tvIncome.setText(account.getIncome().toString());
-            headerHolder.tvOutcome.setText(account.getOutcome().toString());
-            String total = account.getIncome()
-                                  .minus(account.getOutcome())
-                                  .toString();
-            if (total.contains("-")) {
-                headerHolder.tvTotal.setTextColor(ContextCompat.getColor(context, R.color.orangeRed));
-            } else {
-                headerHolder.tvTotal.setTextColor(ContextCompat.getColor(context, R.color.limeGreen));
-            }
-            headerHolder.tvTotal.setText(total);
-            ViewCompat.setTransitionName(headerHolder.cardView, "accountCard" + String
-                    .valueOf(position));
-            List<Entry> entries = new ArrayList<>();
-            float i = 0f;
-            for(Detail detail:details){
-                entries.add(new Entry(Float.valueOf(detail.getMoney().getAmount().toString()),i++));
-            }
-            LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
-            dataSet.setColor(R.color.colorAccent);
-            LineData lineData = new LineData(dataSet);
-            headerHolder.chart.setData(lineData);
-            headerHolder.chart.invalidate();
-            //holder.cardView.setOnClickListener(v -> view.showDetails(account, position));
-//            headerHolder.cardView.setOnLongClickListener(v -> {
-//                view.showModifyAccount();
-//                return true;
-//            });
+//            HeaderHolder headerHolder = (HeaderHolder) holder;
+//            Context context = headerHolder.cardView.getContext();
+//            headerHolder.tvIncome.setText(account.getIncome().toString());
+//            headerHolder.tvOutcome.setText(account.getOutcome().toString());
+//            String total = account.getIncome()
+//                                  .minus(account.getOutcome())
+//                                  .toString();
+//            if (total.contains("-")) {
+//                headerHolder.tvTotal.setTextColor(ContextCompat.getColor(context, R.color.orangeRed));
+//            } else {
+//                headerHolder.tvTotal.setTextColor(ContextCompat.getColor(context, R.color.limeGreen));
+//            }
+//            headerHolder.tvTotal.setText(total);
+//            ViewCompat.setTransitionName(headerHolder.cardView, "accountCard" + String
+//                    .valueOf(position));
+//
+//            List<PieEntry> entries = new ArrayList<>(transactions.size());
+//            for(Transaction transaction : transactions){
+//                entries.add(new PieEntry(transaction.getMoney().getAmount().floatValue()));
+//            }
+//            PieDataSet set = new PieDataSet(entries, "Details");
+//            set.setHighlightEnabled(true);
+//            set.setColors(ColorTemplate.VORDIPLOM_COLORS);
+//            PieData data = new PieData(set);
+//            headerHolder.chart.setData(data);
         }
 
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) return TYPE_HEADER;
+//        if (position == 0) return TYPE_HEADER;
         return super.getItemViewType(position);
     }
 
     @Override
     public int getItemCount() {
-        return details.size() + 1;
+        return transactions.size();
     }
 
-    public static class ItemHolder extends RecyclerView.ViewHolder {
+    static class ItemHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_detail_desc)
         TextView tvDesc;
         @BindView(R.id.tv_date)
@@ -137,7 +129,7 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.tv_title_type)
         TextView tvTitle;
 
-        public ItemHolder(View v) {
+        ItemHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
         }
@@ -153,7 +145,7 @@ public class DetailListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.account_card)
         CardView cardView;
         @BindView(R.id.detail_chart)
-        LineChart chart;
+        PieChart chart;
 
         public HeaderHolder(View v) {
             super(v);

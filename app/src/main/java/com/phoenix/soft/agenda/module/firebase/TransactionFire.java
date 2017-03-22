@@ -2,11 +2,10 @@ package com.phoenix.soft.agenda.module.firebase;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
-import com.phoenix.soft.agenda.module.Detail;
+import com.phoenix.soft.agenda.module.Transaction;
 
 import org.joda.money.Money;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +14,7 @@ import java.util.Date;
  * Created by yaoda on 17/03/17.
  */
 @IgnoreExtraProperties
-public class DetailFire implements FirebaseKey {
+public class TransactionFire implements FirebaseKey {
     private String date;
     private String money;
     private String desc;
@@ -23,11 +22,11 @@ public class DetailFire implements FirebaseKey {
     @Exclude
     private String key;
 
-    public DetailFire() {
+    public TransactionFire() {
 
     }
 
-    public DetailFire(String date, String money, String desc, String title) {
+    public TransactionFire(String date, String money, String desc, String title) {
 
         this.date = date;
         this.money = money;
@@ -77,15 +76,15 @@ public class DetailFire implements FirebaseKey {
         this.key = key;
     }
 
-    public Detail toDetail() throws ParseException {
-        Detail detail = new Detail();
+    public Transaction toTransaction() throws ParseException {
+        Transaction transaction = new Transaction();
         SimpleDateFormat parser=new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
         Date date = parser.parse(getDate());
-        detail.setDate(date);
-        detail.setDesc(getDesc());
-        detail.setTitle(getTitle());
-        detail.setMoney(Money.parse(getMoney()));
-        detail.setKey(getKey());
-        return detail;
+        transaction.setDate(date);
+        transaction.setDesc(getDesc());
+        transaction.setTitle(getTitle());
+        transaction.setMoney(Money.parse(getMoney()));
+        transaction.setKey(getKey());
+        return transaction;
     }
 }

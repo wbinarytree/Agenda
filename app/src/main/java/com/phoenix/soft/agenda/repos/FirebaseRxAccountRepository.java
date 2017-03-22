@@ -2,16 +2,12 @@ package com.phoenix.soft.agenda.repos;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
-import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.firebase.AccountFire;
 import com.phoenix.soft.agenda.rxfirebase.RxDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -21,12 +17,10 @@ import io.reactivex.Single;
  */
 
 public class FirebaseRxAccountRepository implements RxAccountRepository {
-    @Inject
-    @Named("Account")
     DatabaseReference dbRef;
 
-    public FirebaseRxAccountRepository() {
-        MainApplication.getFirebaseComponent().inject(this);
+    public FirebaseRxAccountRepository(DatabaseReference dbRef) {
+        this.dbRef = dbRef;
     }
 
     @Override

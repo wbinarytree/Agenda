@@ -1,12 +1,12 @@
-package com.phoenix.soft.agenda.detail;
+package com.phoenix.soft.agenda.transaction;
 
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.module.Detail;
-import com.phoenix.soft.agenda.module.firebase.DetailFire;
+import com.phoenix.soft.agenda.module.Transaction;
+import com.phoenix.soft.agenda.module.firebase.TransactionFire;
 import com.phoenix.soft.agenda.rxfirebase.RxDatabase;
 
 import org.joda.money.Money;
@@ -24,42 +24,42 @@ import io.reactivex.observers.DisposableObserver;
 /**
  * Created by yaoda on 23/02/17.
  */
-public class DetailPresenter implements DetailContract.Presenter {
+public class TransactionPresenter implements TransactionContract.Presenter {
 
-    private static final String TAG = "DetailPresenter";
-    private final List<Detail> details;
-    private final DetailContract.View view;
+    private static final String TAG = "TransactionPresenter";
+    private final List<Transaction> transactions;
+    private final TransactionContract.View view;
     @Inject
     @Named("Account")
     DatabaseReference dbRef;
     private Account account;
     private String key;
 
-    public DetailPresenter(Account account, DetailContract.View view) {
+    public TransactionPresenter(Account account, TransactionContract.View view) {
         this.account = account;
-        this.details = account.getDetailList();
+        this.transactions = account.getTransactionList();
         this.view = view;
     }
 
-    public DetailPresenter(String key, DetailContract.View view) {
+    public TransactionPresenter(String key, TransactionContract.View view) {
         MainApplication.getFirebaseComponent().inject(this);
         this.key = key;
-        details = new ArrayList<>();
+        transactions = new ArrayList<>();
         this.view = view;
     }
 
     @Override
     public void loadDetailList() {
 
-        RxDatabase.limitToFirst(DetailFire.class, dbRef.child("detail")
-                                                       .child(key)
-                                                       .limitToFirst(10)
-                                                       .orderByChild("date"))
-                  .subscribe(new DisposableObserver<DetailFire>() {
+        RxDatabase.limitToFirst(TransactionFire.class, dbRef.child("transaction")
+                                                            .child(key)
+                                                            .limitToFirst(10)
+                                                            .orderByChild("date"))
+                  .subscribe(new DisposableObserver<TransactionFire>() {
                       @Override
-                      public void onNext(DetailFire detailFire) {
+                      public void onNext(TransactionFire transactionFire) {
                           try {
-                              details.add(detailFire.toDetail());
+                              transactions.add(transactionFire.toTransaction());
                           } catch (ParseException e) {
                               e.printStackTrace();
                           }
@@ -74,11 +74,11 @@ public class DetailPresenter implements DetailContract.Presenter {
 
                       @Override
                       public void onComplete() {
-//                if (details.isEmpty()) {
-//                    view.showNoDetail();
+//                if (transactions.isEmpty()) {
+//                    view.showNoTransaction();
 //                } else {
 //                }
-                          view.showDetailList(details);
+                          view.showTransactionList(transactions);
                       }
                   });
     }
@@ -87,15 +87,15 @@ public class DetailPresenter implements DetailContract.Presenter {
     public void addDetail(String number, boolean add) {
         // TODO: 03/03/17 currency selector
         Money money = add ? Money.parse("USD " + number) : Money.parse("USD " + "-" + number);
-        Detail detail = new Detail();
-        detail.setMoney(money);
-        detail.setDate(new Date());
-        detail.setDesc("temp desc");
-        details.add(0, detail);
-        dbRef.child("detail")
+        Transaction transaction = new Transaction();
+        transaction.setMoney(money);
+        transaction.setDate(new Date());
+        transaction.setDesc("temp desc");
+        transactions.add(0, transaction);
+        dbRef.child("transaction")
              .child(key)
              .push()
-             .setValue(detail.toDetailFire())
+             .setValue(transaction.toTransactionFire())
              .addOnSuccessListener(aVoid -> Log.d(TAG, "onSuccess: "));
         view.updateList();
     }
