@@ -80,7 +80,7 @@ public class TransactionFragment extends Fragment implements TransactionContract
     public void showTransactionList(List<Transaction> transactions) {
         account.setTransactionList(transactions);
         transactionListAdapter = new TransactionListAdapter(account);
-        LinearLayoutManager layout = new LinearLayoutManager(getContext());
+        LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         detailRecyclerList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         detailRecyclerList.setAdapter(transactionListAdapter);
         detailRecyclerList.setLayoutManager(layout);

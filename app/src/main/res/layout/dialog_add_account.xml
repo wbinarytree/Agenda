@@ -14,33 +14,32 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/et_mount"
+            android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:inputType="numberDecimal"
+            android:layout_height="wrap_content"
+            android:hint="@string/account_name"
+            android:imeOptions="actionNext"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_mount"
+            android:layout_width="match_parent"
+            android:inputType="number|numberSigned"
             android:layout_height="wrap_content"
             android:hint="@string/mount"
             android:imeOptions="actionDone"
             android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
-    <RadioGroup
-        android:id="@+id/rd_group"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/rd_income"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/income_title" />
-
-        <android.support.v7.widget.AppCompatRadioButton
-            android:checked="true"
-            android:id="@+id/rd_outcome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/outcome_title" />
-    </RadioGroup>
 
 </LinearLayout>

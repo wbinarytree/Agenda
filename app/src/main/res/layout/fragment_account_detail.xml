@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/primary_light"
               android:orientation="vertical">
+
     <android.support.v7.widget.CardView
         android:id="@+id/account_card"
         android:layout_width="match_parent"
@@ -15,15 +17,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/detail_chart"
+                android:layout_width="120dp"
+                android:layout_height="120dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -35,7 +42,7 @@
                         android:id="@+id/tv_income_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="right"
                         android:gravity="center"
                         android:text="@string/income_title"
                         android:textColor="@color/limeGreen"
@@ -46,7 +53,7 @@
                         android:id="@+id/tv_income"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"
+                        android:layout_gravity="right"
                         android:text="@string/tmp_cost"/>
 
                 </LinearLayout>
@@ -61,8 +68,7 @@
                         android:id="@+id/tv_outcome_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
+                        android:layout_gravity="right"
                         android:text="@string/outcome_title"
                         android:textColor="@color/orangeRed"
                         android:textSize="18sp"
@@ -72,7 +78,7 @@
                         android:id="@+id/tv_outcome"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="right"
                         android:gravity="center"
                         android:text="@string/tmp_cost"/>
 
@@ -88,8 +94,7 @@
                         android:id="@+id/tv_total_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
+                        android:layout_gravity="right"
                         android:text="@string/total_title"
                         android:textSize="18sp"
                         android:typeface="serif"/>
@@ -98,20 +103,15 @@
                         android:id="@+id/tv_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
+                        android:layout_gravity="right"
                         android:text="@string/tmp_cost"/>
 
                 </LinearLayout>
-
             </LinearLayout>
 
-<!--
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/detail_chart"
-                android:layout_width="match_parent"
-                android:layout_height="240dp"/>-->
+
         </LinearLayout>
+
 
     </android.support.v7.widget.CardView>
 </LinearLayout>
