@@ -11,8 +11,8 @@ import io.reactivex.Single;
  * Created by yaoda on 21/03/17.
  */
 
-public interface RxAccountRepository {
-    Observable<Account> getAccount();
+public interface RxAccountSource {
+    Single<Account> getAccount(String key);
 
     Single<List<Account>> getAccountList();
 
@@ -21,7 +21,7 @@ public interface RxAccountRepository {
     boolean deleteAccount(Account account);
 
     boolean updateAccount(Account account);
-    void start();
 
-    void end();
+    void refreshAccount();
+
 }

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding2.view.RxView;
+import com.phoenix.soft.agenda.account.AccountAddDialogFragment;
 import com.phoenix.soft.agenda.account.AccountContract;
 import com.phoenix.soft.agenda.account.AccountDetailFragment;
 import com.phoenix.soft.agenda.account.AccountPagerAdapter;
@@ -23,7 +24,7 @@ import com.phoenix.soft.agenda.account.AccountPresenter;
 import com.phoenix.soft.agenda.hidden.HiddenActivity;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.repos.FirebaseAccountRepository;
-import com.phoenix.soft.agenda.repos.RxAccountRepository;
+import com.phoenix.soft.agenda.repos.RxAccountSource;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,14 +51,14 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     ViewPager viewPager;
     @BindView(R.id.tab_bar)
     TabLayout tabLayout;
-
+    @Inject
+    RxAccountSource rxAccountRepository;
     private int count = 0;
     private AccountPagerAdapter adapter;
     private List<Account> accountList;
     private CompositeDisposable disposable = new CompositeDisposable();
     private AccountContract.Presenter presenter;
-    @Inject
-    RxAccountRepository rxAccountRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MainApplication.getFirebaseComponent().inject(this);
@@ -74,20 +75,27 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
                              .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem())
                                                     .onClick()));
         tabLayout.setupWithViewPager(viewPager);
-        getSupportFragmentManager().beginTransaction()
-                                   .replace(R.id.container_detail, AccountDetailFragment
-                                           .newInstance())
-                                   .commit();
+        viewPager.setPageMargin(20);
 
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                                       .replace(R.id.container_detail, AccountDetailFragment.newInstance(), AccountDetailFragment.TAG)
+                                       .commit();
+
+        }
     }
 
     private void updateViewByPagerContent(int position) {
         Picasso.with(this)
-               .load(Integer.valueOf(accountList.get(position)
-                                                .getAccountPicUrl()))
+               .load(Integer.valueOf(accountList.get(position).getAccountPicUrl()))
                .noFade()
                .resize(400, 800)
                .into(imageToolBar);
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(AccountDetailFragment.TAG);
+        if (fragment != null) {
+            fragment.selectChart(position);
+        }
+
     }
 
     @Override
@@ -118,10 +126,8 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
                 startActivity(intent);
             }
         } else if (id == R.id.action_plus) {
-            FirebaseAccountRepository repo = new FirebaseAccountRepository();
-            repo.start();
-            repo.addAccount(accountList.get(0));
-            repo.end();
+            // TODO: 23/03/17
+            AccountAddDialogFragment fragment = new AccountAddDialogFragment();
         }
 
         return super.onOptionsItemSelected(item);
@@ -130,9 +136,12 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        rxAccountRepository.end();
         //need to dispose here. Otherwise the observable will running forever.
         disposable.clear();
+    }
+
+    public List<Account> getAccountList() {
+        return accountList;
     }
 
     @Override
@@ -140,15 +149,16 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         this.accountList = accountList;
         adapter = new AccountPagerAdapter(getSupportFragmentManager(), this.accountList);
         viewPager.setAdapter(adapter);
-        disposable.add(RxViewPager.pageSelections(viewPager)
-                                  .subscribe(position -> {
-                                      if (!fab.isShown()) {
-                                          fab.show();
-                                      }
-                                      updateViewByPagerContent(position);
-                                  }));
-
-
+        disposable.add(RxViewPager.pageSelections(viewPager).subscribe(position -> {
+            if (!fab.isShown()) {
+                fab.show();
+            }
+            updateViewByPagerContent(position);
+        }));
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(AccountDetailFragment.TAG);
+        if (fragment != null) {
+            fragment.showPieChart();
+        }
     }
 
     @Override
@@ -171,7 +181,17 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         // TODO: 16/03/17
     }
 
-    public RxAccountRepository getRepo() {
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    public RxAccountSource getRepo() {
         return this.rxAccountRepository;
     }
 

@@ -36,7 +36,7 @@ public class TransactionAddDialogFragment extends DialogFragment {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_detail, null);
         ButterKnife.bind(this,view);
         AlertDialog mDialog = new AlertDialog.Builder(getContext())
-                .setTitle("New Income/Expenses")
+                .setTitle(R.string.title_transaction_add)
                 .setPositiveButton("add", null)
                 .setNegativeButton("cancel", null)
                 .setView(view)

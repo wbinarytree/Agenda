@@ -19,6 +19,10 @@ public interface AccountContract {
         void updateAccount();
 
         void showModifyAccount();
+
+        void showLoading();
+
+        void hideLoading();
     }
 
     interface Presenter {

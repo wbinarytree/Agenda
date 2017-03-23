@@ -9,28 +9,32 @@ import com.phoenix.soft.agenda.rxfirebase.RxDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
  * Created by yaoda on 21/03/17.
  */
 
-public class FirebaseRxAccountRepository implements RxAccountRepository {
+public class FirebaseRxAccountSource implements RxAccountSource {
     DatabaseReference dbRef;
-
-    public FirebaseRxAccountRepository(DatabaseReference dbRef) {
+    private int position = 0;
+    public FirebaseRxAccountSource(DatabaseReference dbRef) {
         this.dbRef = dbRef;
     }
 
     @Override
-    public Observable<Account> getAccount() {
-        return null;
+    public Single<Account> getAccount(String key) {
+        return RxDatabase.queryOnce(dbRef.child("account").equalTo(key)).flatMap(dataSnapshot -> {
+            AccountFire accountFire = dataSnapshot.getValue(AccountFire.class);
+            accountFire.setKey(dataSnapshot.getKey());
+            return Single.just(accountFire.toAccount());
+        });
     }
 
     @Override
     public Single<List<Account>> getAccountList() {
-        return RxDatabase.queryOnce(dbRef.child("account").limitToFirst(10))
+        return RxDatabase.queryOnce(dbRef.child("account")
+                                         .limitToFirst(10))
                          .flatMap(dataSnapshot -> {
                              List<Account> accounts = new ArrayList<>();
                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -38,6 +42,7 @@ public class FirebaseRxAccountRepository implements RxAccountRepository {
                                  value.setKey(snapshot.getKey());
                                  accounts.add(value.toAccount());
                              }
+                             position += accounts.size();
                              return Single.just(accounts);
                          });
     }
@@ -51,10 +56,7 @@ public class FirebaseRxAccountRepository implements RxAccountRepository {
 
     @Override
     public boolean deleteAccount(Account account) {
-        return dbRef.child("account")
-                    .child(account.getKey())
-                    .removeValue()
-                    .isSuccessful();
+        return dbRef.child("account").child(account.getKey()).removeValue().isSuccessful();
     }
 
     @Override
@@ -66,11 +68,8 @@ public class FirebaseRxAccountRepository implements RxAccountRepository {
     }
 
     @Override
-    public void start() {
+    public void refreshAccount() {
+        position = 0;
     }
 
-    @Override
-    public void end() {
-
-    }
 }

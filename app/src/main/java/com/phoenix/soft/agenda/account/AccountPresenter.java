@@ -1,7 +1,7 @@
 package com.phoenix.soft.agenda.account;
 
 import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.repos.RxAccountRepository;
+import com.phoenix.soft.agenda.repos.RxAccountSource;
 
 import java.util.List;
 
@@ -13,13 +13,12 @@ import io.reactivex.observers.DisposableSingleObserver;
 public class AccountPresenter implements AccountContract.Presenter {
 
     private static final String TAG = "AccountPresenter";
-    private final RxAccountRepository repository;
+    private final RxAccountSource repository;
     private final AccountContract.View view;
     private List<Account> accounts;
 
-    public AccountPresenter(RxAccountRepository repository, AccountContract.View view) {
+    public AccountPresenter(RxAccountSource repository, AccountContract.View view) {
         this.repository = repository;
-        repository.start();
         this.view = view;
 
     }

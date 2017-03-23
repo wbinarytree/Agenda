@@ -7,11 +7,15 @@ import com.phoenix.soft.agenda.BaseContract;
  */
 
 public interface AccountDetailContract {
-    interface View{
+    interface View {
         void showPieChart();
+
         void showWeekDeatail();
+
+        void selectChart(int position);
     }
-    interface Presneter extends BaseContract.BasePresenter{
+
+    interface Presneter extends BaseContract.BasePresenter {
         void loadDetail();
     }
 }

@@ -1,16 +1,13 @@
 package com.phoenix.soft.agenda.dagger;
 
-import android.app.Application;
-
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.phoenix.soft.agenda.repos.FirebaseRxAccountRepository;
-import com.phoenix.soft.agenda.repos.RxAccountRepository;
-
-import java.io.FilterReader;
+import com.phoenix.soft.agenda.repos.FirebaseRxAccountSource;
+import com.phoenix.soft.agenda.repos.FirebaseRxTransactionRepository;
+import com.phoenix.soft.agenda.repos.RxAccountSource;
+import com.phoenix.soft.agenda.repos.RxTransactionRepository;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -44,8 +41,13 @@ public class FirebaseModule {
 
     @Provides
     @Singleton
-    RxAccountRepository provideRxRepo(@Named("Account") DatabaseReference dbref){
-        return new FirebaseRxAccountRepository(dbref);
+    RxAccountSource provideRxRepo(@Named("Account") DatabaseReference dbref){
+        return new FirebaseRxAccountSource(dbref);
+    }
+
+    @Provides
+    RxTransactionRepository provideRxTransRepo(@Named("Account") DatabaseReference dbRef,String key){
+        return new FirebaseRxTransactionRepository(key,dbRef);
     }
 
 }

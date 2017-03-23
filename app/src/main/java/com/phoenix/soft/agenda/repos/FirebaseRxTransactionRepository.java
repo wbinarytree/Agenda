@@ -16,21 +16,21 @@ import io.reactivex.Single;
  */
 
 public class FirebaseRxTransactionRepository implements RxTransactionRepository {
-    private String uid;
     private String accountId;
     private DatabaseReference dbRef;
+    private int size;
 
-    public FirebaseRxTransactionRepository(String uid, String accountId,DatabaseReference dbRef) {
-        this.uid = uid;
+    public FirebaseRxTransactionRepository(String accountId,DatabaseReference dbRef) {
         this.accountId = accountId;
         this.dbRef = dbRef;
+        this.size = 3;
     }
 
     @Override
     public Single<List<Transaction>> getTransactionList() {
-        return RxDatabase.queryOnce(dbRef.child(uid)
-                                         .child("transaction")
+        return RxDatabase.queryOnce(dbRef.child("transaction")
                                          .child(accountId)
+                                         .startAt(size)
                                          .limitToFirst(20))
                          .flatMap(dataSnapshot -> {
                              List<Transaction> transactions = new ArrayList<>();
@@ -39,6 +39,7 @@ public class FirebaseRxTransactionRepository implements RxTransactionRepository 
                                  value.setKey(snapshot.getKey());
                                  transactions.add(value.toTransaction());
                              }
+                             size += transactions.size();
                              return Single.just(transactions);
                          });
     }

@@ -50,7 +50,6 @@ public class TransactionPresenter implements TransactionContract.Presenter {
 
     @Override
     public void loadDetailList() {
-
         RxDatabase.limitToFirst(TransactionFire.class, dbRef.child("transaction")
                                                             .child(key)
                                                             .limitToFirst(10)
