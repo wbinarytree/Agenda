@@ -4,6 +4,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Query;
 import com.phoenix.soft.agenda.module.firebase.FirebaseKey;
 
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -19,10 +20,8 @@ public final class RxDatabase {
         return Observable.just("");
     }
 
-    public static Single<DataSnapshot> queryOnce(Query query) {
+    public static Maybe<DataSnapshot> queryOnce(Query query) {
         return new SingleQueryObservable(query);
     }
-
-
 
 }

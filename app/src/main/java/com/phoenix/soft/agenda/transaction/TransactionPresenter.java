@@ -28,24 +28,24 @@ public class TransactionPresenter implements TransactionContract.Presenter {
 
     private static final String TAG = "TransactionPresenter";
     private final List<Transaction> transactions;
-    private final TransactionContract.View view;
     @Inject
     @Named("Account")
     DatabaseReference dbRef;
+    private TransactionContract.View view;
     private Account account;
     private String key;
 
-    public TransactionPresenter(Account account, TransactionContract.View view) {
+    public TransactionPresenter(Account account) {
         this.account = account;
         this.transactions = account.getTransactionList();
-        this.view = view;
+
     }
 
-    public TransactionPresenter(String key, TransactionContract.View view) {
+    public TransactionPresenter(String key) {
         MainApplication.getFirebaseComponent().inject(this);
         this.key = key;
         transactions = new ArrayList<>();
-        this.view = view;
+
     }
 
     @Override
@@ -97,5 +97,17 @@ public class TransactionPresenter implements TransactionContract.Presenter {
              .setValue(transaction.toTransactionFire())
              .addOnSuccessListener(aVoid -> Log.d(TAG, "onSuccess: "));
         view.updateList();
+    }
+
+
+    @Override
+    public void attachView(TransactionContract.View view) {
+        this.view = view;
+
+    }
+
+    @Override
+    public void detachView() {
+        this.view = null;
     }
 }

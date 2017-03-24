@@ -8,8 +8,8 @@ public interface BaseContract {
     public interface BaseView{
 
     }
-    public interface BasePresenter{
-        void start();
-        void destory();
+    public interface BasePresenter<T extends BaseView>{
+        void attachView(T view);
+        void detachView();
     }
 }

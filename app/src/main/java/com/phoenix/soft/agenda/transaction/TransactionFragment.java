@@ -58,11 +58,20 @@ public class TransactionFragment extends Fragment implements TransactionContract
         View view = inflater.inflate(R.layout.fragment_detail_list, container, false);
         bind = ButterKnife.bind(this, view);
         account = (Account) getArguments().get("detail");
-        presenter = new TransactionPresenter(account.getKey(), this);
-        presenter.loadDetailList();
         setRetainInstance(true);
         Log.d(TAG, "onCreateView: ");
         return view;
+    }
+
+    public void setPresenter(TransactionContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.attachView(this);
+        presenter.loadDetailList();
     }
 
     @Override
@@ -73,6 +82,7 @@ public class TransactionFragment extends Fragment implements TransactionContract
     @Override
     public void onDestroy() {
         super.onDestroy();
+        presenter.detachView();
         bind.unbind();
     }
 

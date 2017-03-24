@@ -5,6 +5,13 @@ import com.phoenix.soft.agenda.repos.RxAccountSource;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiConsumer;
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 
 /**
@@ -14,33 +21,32 @@ public class AccountPresenter implements AccountContract.Presenter {
 
     private static final String TAG = "AccountPresenter";
     private final RxAccountSource repository;
-    private final AccountContract.View view;
+    private AccountContract.View view;
     private List<Account> accounts;
 
-    public AccountPresenter(RxAccountSource repository, AccountContract.View view) {
+    @Inject
+    public AccountPresenter(RxAccountSource repository) {
         this.repository = repository;
-        this.view = view;
-
     }
 
     @Override
     public void loadAccount() {
+        view.showLoading();
         repository.getAccountList()
-                  .subscribe(new DisposableSingleObserver<List<Account>>() {
+                  .doOnEvent((accountList, throwable) -> view.hideLoading())
+                  .subscribe(new DisposableMaybeObserver<List<Account>>() {
                       @Override
                       public void onSuccess(List<Account> accountList) {
                           accounts = accountList;
-                          if (accounts.isEmpty()) {
-                              view.showNoAccount();
-                          } else {
-                              view.showAccountList(accounts);
-                          }
-
+                          view.showAccountList(accounts);
                       }
-
                       @Override
                       public void onError(Throwable e) {
                           view.showError();
+                      }
+                      @Override
+                      public void onComplete() {
+                          view.showNoAccount();
                       }
                   });
     }
@@ -48,6 +54,7 @@ public class AccountPresenter implements AccountContract.Presenter {
     @Override
     public void addAccount(Account account) {
         repository.addAccount(account);
+        view.updateAccount(account);
     }
 
     @Override
@@ -57,5 +64,15 @@ public class AccountPresenter implements AccountContract.Presenter {
     @Override
     public void deleteAccount(Account account) {
         repository.deleteAccount(account);
+    }
+
+    @Override
+    public void attachView(AccountContract.View view) {
+        this.view = view;
+    }
+
+    @Override
+    public void detachView() {
+        this.view = null;
     }
 }

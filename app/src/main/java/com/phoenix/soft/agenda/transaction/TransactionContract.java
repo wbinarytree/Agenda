@@ -1,5 +1,6 @@
 package com.phoenix.soft.agenda.transaction;
 
+import com.phoenix.soft.agenda.BaseContract;
 import com.phoenix.soft.agenda.module.Transaction;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  */
 
 public interface TransactionContract {
-    interface View {
+    interface View extends BaseContract.BaseView {
         void showTransactionList(List<Transaction> transactions);
         void showAddDetailDialog();
         void updateList();
@@ -17,7 +18,7 @@ public interface TransactionContract {
         void showError(String errorMessage);
     }
 
-    interface Presenter {
+    interface Presenter extends BaseContract.BasePresenter<View> {
         void loadDetailList();
         void addDetail(String number, boolean add);
     }

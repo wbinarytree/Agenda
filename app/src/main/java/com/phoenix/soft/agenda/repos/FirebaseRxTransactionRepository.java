@@ -9,6 +9,7 @@ import com.phoenix.soft.agenda.rxfirebase.RxDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 /**
@@ -27,12 +28,12 @@ public class FirebaseRxTransactionRepository implements RxTransactionRepository 
     }
 
     @Override
-    public Single<List<Transaction>> getTransactionList() {
+    public Maybe<List<Transaction>> getTransactionList() {
         return RxDatabase.queryOnce(dbRef.child("transaction")
                                          .child(accountId)
                                          .startAt(size)
                                          .limitToFirst(20))
-                         .flatMap(dataSnapshot -> {
+                         .map(dataSnapshot -> {
                              List<Transaction> transactions = new ArrayList<>();
                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                  TransactionFire value = snapshot.getValue(TransactionFire.class);
@@ -40,7 +41,7 @@ public class FirebaseRxTransactionRepository implements RxTransactionRepository 
                                  transactions.add(value.toTransaction());
                              }
                              size += transactions.size();
-                             return Single.just(transactions);
+                             return transactions;
                          });
     }
 

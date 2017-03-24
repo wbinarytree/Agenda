@@ -25,7 +25,6 @@ import com.phoenix.soft.agenda.MainActivity;
 import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.R;
 import com.phoenix.soft.agenda.Utils;
-import com.phoenix.soft.agenda.repos.FirebaseAccountRepository;
 
 import javax.inject.Inject;
 
