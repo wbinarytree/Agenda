@@ -4,6 +4,7 @@ import com.phoenix.soft.agenda.module.Transaction;
 
 import java.util.List;
 
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 /**
@@ -11,7 +12,7 @@ import io.reactivex.Single;
  */
 
 public interface RxTransactionRepository {
-    Single<List<Transaction>> getTransactionList();
+    Maybe<List<Transaction>> getTransactionList();
     boolean addTransaction(Transaction transaction);
     boolean deleteTransaction(Transaction transaction);
     boolean updateTransaction(Transaction transaction);

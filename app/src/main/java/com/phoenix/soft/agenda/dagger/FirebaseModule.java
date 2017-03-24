@@ -8,6 +8,7 @@ import com.phoenix.soft.agenda.repos.FirebaseRxAccountSource;
 import com.phoenix.soft.agenda.repos.FirebaseRxTransactionRepository;
 import com.phoenix.soft.agenda.repos.RxAccountSource;
 import com.phoenix.soft.agenda.repos.RxTransactionRepository;
+import com.phoenix.soft.agenda.repos.source.RxAccountRepository;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -41,9 +42,16 @@ public class FirebaseModule {
 
     @Provides
     @Singleton
-    RxAccountSource provideRxRepo(@Named("Account") DatabaseReference dbref){
+    FirebaseRxAccountSource provideRxRepo(@Named("Account") DatabaseReference dbref){
         return new FirebaseRxAccountSource(dbref);
     }
+
+    @Provides
+    @Singleton
+    RxAccountSource provideRxSource(FirebaseRxAccountSource repo){
+        return  new RxAccountRepository(null,repo);
+    }
+
 
     @Provides
     RxTransactionRepository provideRxTransRepo(@Named("Account") DatabaseReference dbRef,String key){

@@ -1,6 +1,5 @@
 package com.phoenix.soft.agenda;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -8,22 +7,29 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
+import com.jakewharton.rxbinding2.view.RxMenuItem;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.phoenix.soft.agenda.account.AccountAddDialogFragment;
 import com.phoenix.soft.agenda.account.AccountContract;
 import com.phoenix.soft.agenda.account.AccountDetailFragment;
 import com.phoenix.soft.agenda.account.AccountPagerAdapter;
 import com.phoenix.soft.agenda.account.AccountPresenter;
-import com.phoenix.soft.agenda.hidden.HiddenActivity;
+import com.phoenix.soft.agenda.account.di.DaggerAccountPresenterComponent;
 import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.repos.FirebaseAccountRepository;
 import com.phoenix.soft.agenda.repos.RxAccountSource;
 import com.squareup.picasso.Picasso;
 
@@ -33,6 +39,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Maybe;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity implements AccountContract.View {
@@ -51,29 +58,39 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     ViewPager viewPager;
     @BindView(R.id.tab_bar)
     TabLayout tabLayout;
+    @BindView(R.id.container_error)
+    LinearLayout errorLayout;
+    @BindView(R.id.container_no_account)
+    LinearLayout noAccoutLayout;
+    @BindView(R.id.container_detail)
+    FrameLayout detailContainer;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
     @Inject
     RxAccountSource rxAccountRepository;
+    @Inject
+    AccountPresenter presenter;
     private int count = 0;
     private AccountPagerAdapter adapter;
     private List<Account> accountList;
     private CompositeDisposable disposable = new CompositeDisposable();
-    private AccountContract.Presenter presenter;
+    private boolean isExpand;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        MainApplication.getFirebaseComponent().inject(this);
+        DaggerAccountPresenterComponent.builder()
+                                       .firebaseComponent(MainApplication.getFirebaseComponent())
+                                       .build()
+                                       .inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-        presenter = new AccountPresenter(rxAccountRepository, this);
-        presenter.loadAccount();
-
-        disposable.add(RxView.clicks(fab)
-                             .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem())
-                                                    .onClick()));
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setPageMargin(20);
 
@@ -81,8 +98,17 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
             getSupportFragmentManager().beginTransaction()
                                        .replace(R.id.container_detail, AccountDetailFragment.newInstance(), AccountDetailFragment.TAG)
                                        .commit();
-
         }
+
+        appbar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> isExpand = verticalOffset == 0);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.attachView(this);
+        presenter.loadAccount();
     }
 
     private void updateViewByPagerContent(int position) {
@@ -94,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(AccountDetailFragment.TAG);
         if (fragment != null) {
             fragment.selectChart(position);
+
         }
 
     }
@@ -102,33 +129,34 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        disposable.add(RxMenuItem.clicks(menu.findItem(R.id.action_icon))
+                                 .subscribe(objects -> appbar.setExpanded(!isExpand)));
+        disposable.add(RxMenuItem.clicks(menu.findItem(R.id.action_plus)).subscribe(o -> {
+            AccountAddDialogFragment fragment = new AccountAddDialogFragment();
+            fragment.show(getSupportFragmentManager(), AccountAddDialogFragment.TAG);
+        }));
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
         } else if (id == R.id.action_icon) {
-            count++;
-            if (count == 15) {
-                Snackbar.make(findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">Activted Hidden Mode</font>"), Snackbar.LENGTH_SHORT)
-                        .show();
-                count = 0;
-                Intent intent = new Intent(this, HiddenActivity.class);
-                startActivity(intent);
-            }
+
         } else if (id == R.id.action_plus) {
-            // TODO: 23/03/17
-            AccountAddDialogFragment fragment = new AccountAddDialogFragment();
+
         }
+        //hide hidden mode for now
+//        if (objects.size() > 20) {
+//            Snackbar.make(findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">Activted Hidden Mode</font>"), Snackbar.LENGTH_SHORT)
+//                    .show();
+//            count = 0;
+//            Intent intent = new Intent(this, HiddenActivity.class);
+//            startActivity(intent);
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -136,12 +164,16 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //need to dispose here. Otherwise the observable will running forever.
         disposable.clear();
+        presenter.detachView();
     }
 
-    public List<Account> getAccountList() {
-        return accountList;
+    public AccountContract.Presenter getPresenter() {
+        return presenter;
+    }
+
+    public Maybe<List<Account>> getAccountList() {
+        return Maybe.defer(() -> Maybe.just(accountList));
     }
 
     @Override
@@ -158,22 +190,41 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(AccountDetailFragment.TAG);
         if (fragment != null) {
             fragment.showPieChart();
+            detailContainer.setVisibility(View.VISIBLE);
+            appbar.setExpanded(true, true);
         }
+        disposable.add(RxView.clicks(fab)
+                             .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem())
+                                                    .onClick()));
     }
 
     @Override
     public void showNoAccount() {
-
+        appbar.setExpanded(false);
+        noAccoutLayout.setVisibility(View.VISIBLE);
+        fab.setOnClickListener(v -> {
+        });
     }
 
     @Override
     public void showError() {
-
+        appbar.setExpanded(false);
+        Snackbar.make(findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">" + getString(R.string.error_title_sync) + "</font>"), Snackbar.LENGTH_SHORT)
+                .setAction(getString(R.string.title_retry), v -> presenter.loadAccount())
+                .show();
+        errorLayout.setVisibility(View.VISIBLE);
+        detailContainer.setVisibility(View.GONE);
+        fab.setImageResource(R.drawable.ic_replay_white_24dp);
+        fab.setOnClickListener(v -> presenter.loadAccount());
     }
 
     @Override
-    public void updateAccount() {
-        // TODO: 16/03/17
+    public void updateAccount(Account account) {
+        viewPager.getAdapter().notifyDataSetChanged();
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(AccountDetailFragment.TAG);
+        if (fragment != null) {
+            fragment.updateChart(account);
+        }
     }
 
     @Override
@@ -183,12 +234,20 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
 
     @Override
     public void showLoading() {
-
+        errorLayout.setVisibility(View.GONE);
+        detailContainer.setVisibility(View.GONE);
+        noAccoutLayout.setVisibility(View.GONE);
+        fab.setImageResource(R.drawable.ic_sync_white_24dp);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        fab.startAnimation(animation);
     }
 
     @Override
     public void hideLoading() {
-
+        errorLayout.setVisibility(View.GONE);
+        detailContainer.setVisibility(View.VISIBLE);
+        fab.setImageResource(R.drawable.ic_add_white_24dp);
+        fab.clearAnimation();
     }
 
     public RxAccountSource getRepo() {

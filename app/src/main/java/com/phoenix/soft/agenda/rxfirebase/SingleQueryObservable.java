@@ -8,15 +8,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import io.reactivex.Single;
-import io.reactivex.SingleObserver;
+import io.reactivex.Maybe;
+import io.reactivex.MaybeObserver;
 import io.reactivex.disposables.Disposable;
 
 /**
  * Created by yaoda on 21/03/17.
  */
 
-final class SingleQueryObservable extends Single<DataSnapshot> {
+final class SingleQueryObservable extends Maybe<DataSnapshot> {
     private Query query;
 
     SingleQueryObservable(Query query) {
@@ -25,19 +25,19 @@ final class SingleQueryObservable extends Single<DataSnapshot> {
     }
 
     @Override
-    protected void subscribeActual(SingleObserver<? super DataSnapshot> observer) {
+    protected void subscribeActual(MaybeObserver<? super DataSnapshot> observer) {
         Listener listener = new Listener(observer, query);
         query.addListenerForSingleValueEvent(listener);
         observer.onSubscribe(listener);
     }
 
-    static final class Listener implements Disposable, ValueEventListener {
-        private final SingleObserver<? super DataSnapshot> observer;
+    private static final class Listener implements Disposable, ValueEventListener {
+        private final MaybeObserver<? super DataSnapshot> observer;
         private final Query query;
         private final AtomicBoolean unsubscribed = new AtomicBoolean();
 
 
-        Listener(SingleObserver<? super DataSnapshot> observer, Query query) {
+        Listener(MaybeObserver<? super DataSnapshot> observer, Query query) {
 
             this.observer = observer;
             this.query = query;
@@ -46,7 +46,11 @@ final class SingleQueryObservable extends Single<DataSnapshot> {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             if (!isDisposed()) {
-                observer.onSuccess(dataSnapshot);
+                if (dataSnapshot.getValue() == null) {
+                    observer.onComplete();
+                } else {
+                    observer.onSuccess(dataSnapshot);
+                }
             }
         }
 

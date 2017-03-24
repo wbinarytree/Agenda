@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.facebook.stetho.Stetho;
 import com.google.firebase.auth.FirebaseAuth;
-import com.phoenix.soft.agenda.dagger.AppComponent;
 import com.phoenix.soft.agenda.dagger.DaggerFirebaseComponent;
 import com.phoenix.soft.agenda.dagger.FirebaseComponent;
 
@@ -19,17 +18,13 @@ public class MainApplication extends Application {
 
     private static FirebaseComponent firebaseComponent;
 
-    public AppComponent getBuilder() {
-        return builder;
-    }
-
     public FirebaseAuth  getAuth() {
         return mAuth;
     }
 
     @Inject
     FirebaseAuth mAuth;
-    private AppComponent builder;
+
 
     public static FirebaseComponent getFirebaseComponent() {
         return firebaseComponent;
@@ -41,6 +36,5 @@ public class MainApplication extends Application {
         Stetho.initializeWithDefaults(this);
         firebaseComponent = DaggerFirebaseComponent.create();
         firebaseComponent.inject(this);
-
     }
 }

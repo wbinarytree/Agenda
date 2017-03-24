@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.phoenix.soft.agenda.transaction.TransactionFragment;
 import com.phoenix.soft.agenda.module.Account;
+import com.phoenix.soft.agenda.transaction.TransactionPresenter;
 
 import java.util.List;
 
@@ -27,7 +28,9 @@ public class AccountPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return TransactionFragment.newInstance(accounts.get(position));
+        TransactionFragment transactionFragment = TransactionFragment.newInstance(accounts.get(position));
+        transactionFragment.setPresenter(new TransactionPresenter(accounts.get(position).getKey()));
+        return transactionFragment;
     }
 
     @Override

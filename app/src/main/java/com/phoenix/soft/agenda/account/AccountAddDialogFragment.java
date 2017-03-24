@@ -6,11 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 
+import com.phoenix.soft.agenda.MainActivity;
 import com.phoenix.soft.agenda.R;
+import com.phoenix.soft.agenda.module.Account;
+
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,10 +28,10 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class AccountAddDialogFragment extends DialogFragment {
-    private final String TAG = "AddAccountDialog";
-    @BindView(R.id.et_name)
-    EditText mount;
+    public static final String TAG = "AddAccountDialog";
     @BindView(R.id.et_mount)
+    EditText mount;
+    @BindView(R.id.et_name)
     EditText name;
 
 
@@ -33,7 +39,7 @@ public class AccountAddDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_detail, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_account, null);
         ButterKnife.bind(this, view);
         AlertDialog mDialog = new AlertDialog.Builder(getContext()).setTitle(R.string.title_transaction_add)
                                                                    .setPositiveButton("add", null)
@@ -58,9 +64,13 @@ public class AccountAddDialogFragment extends DialogFragment {
         } else if(accountName.equals("")){
             name.setError("Enter Name");
         }else{
-            Intent intent = new Intent().putExtra("mountNumber", mountNumber)
-                                        .putExtra("name", accountName);
-            onActivityResult(getTargetRequestCode(),RESULT_OK,intent);
+            MainActivity activity = (MainActivity)getActivity();
+            Account account = new Account();
+            account.setAccountName(accountName);
+            account.setIncome(Money.parse("USD " + mountNumber));
+            account.setOutcome(Money.zero(CurrencyUnit.USD));
+            account.setAccountPicUrl("123");
+            activity.getPresenter().addAccount(account);
             getDialog().dismiss();
         }
     }

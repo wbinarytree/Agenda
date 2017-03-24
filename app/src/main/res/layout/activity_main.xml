@@ -6,14 +6,18 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="start">
+    tools:context=".MainActivity"
+    >
 
+    <!--
+    tools:openDrawer="start"
+-->
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:background="@color/primary_light"
+        android:fitsSystemWindows="true"
         tools:context="com.phoenix.soft.agenda.MainActivity">
 
         <!--When use toolbar only without parallax window.
@@ -47,6 +51,52 @@
         </android.support.v4.view.ViewPager>
 
 
+        <LinearLayout
+            android:id="@+id/container_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_cloud_off_black_60dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/error_title_sync"
+                android:textColor="#33000000"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_no_account"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_person_add_white_60dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/title_no_account"
+                android:textColor="#33000000"/>
+        </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
