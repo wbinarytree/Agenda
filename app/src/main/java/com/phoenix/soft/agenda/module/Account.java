@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.phoenix.soft.agenda.module.firebase.AccountFire;
+import com.phoenix.soft.agenda.rxfirebase.FirebaseModule;
 
 import org.joda.money.Money;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by yaoda on 22/02/17.
  */
 @IgnoreExtraProperties
-public class Account implements Parcelable,Serializable {
+public class Account implements Parcelable,Serializable,FirebaseModule.ToFire<AccountFire> {
     @Exclude
     public static final Parcelable.Creator<Account> CREATOR = new Parcelable.Creator<Account>() {
         @Override
@@ -134,5 +135,10 @@ public class Account implements Parcelable,Serializable {
                 .toString(), getOutcome().toString());
         accountFire.setKey(getKey());
         return accountFire;
+    }
+
+    @Override
+    public AccountFire toFire() {
+        return this.toAccountFire();
     }
 }

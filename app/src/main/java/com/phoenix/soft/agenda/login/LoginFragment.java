@@ -24,8 +24,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.phoenix.soft.agenda.Utils.isEmailValid;
-import static com.phoenix.soft.agenda.Utils.isPasswordValid;
+import static com.phoenix.soft.agenda.utils.Utils.isEmailValid;
+import static com.phoenix.soft.agenda.utils.Utils.isPasswordValid;
 
 /**
  * Created by yaoda on 17/03/17.

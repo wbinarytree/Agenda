@@ -4,7 +4,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.phoenix.soft.agenda.repos.FirebaseRxAccountSource;
+import com.phoenix.soft.agenda.repos.RxSource;
+import com.phoenix.soft.agenda.repos.RxTransactionSource;
+import com.phoenix.soft.agenda.repos.TransactionRxSource;
+import com.phoenix.soft.agenda.repos.source.FirebaseRxAccountSource;
 import com.phoenix.soft.agenda.repos.FirebaseRxTransactionRepository;
 import com.phoenix.soft.agenda.repos.RxAccountSource;
 import com.phoenix.soft.agenda.repos.RxTransactionRepository;
@@ -30,7 +33,7 @@ public class FirebaseModule {
     @Provides
     @Singleton
     @Named("Account")
-    DatabaseReference provideAccoutDatabaseRef(FirebaseUser user){
+    DatabaseReference provideAccountDatabaseRef(FirebaseUser user){
         return FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid());
     }
 
@@ -42,8 +45,8 @@ public class FirebaseModule {
 
     @Provides
     @Singleton
-    FirebaseRxAccountSource provideRxRepo(@Named("Account") DatabaseReference dbref){
-        return new FirebaseRxAccountSource(dbref);
+    FirebaseRxAccountSource provideRxRepo(@Named("Account") DatabaseReference dbRef){
+        return new FirebaseRxAccountSource(dbRef);
     }
 
     @Provides
@@ -56,6 +59,11 @@ public class FirebaseModule {
     @Provides
     RxTransactionRepository provideRxTransRepo(@Named("Account") DatabaseReference dbRef,String key){
         return new FirebaseRxTransactionRepository(key,dbRef);
+    }
+
+    @Provides
+    TransactionRxSource provideRxTransSoure(@Named("Account") DatabaseReference dbRef,String key){
+        return new TransactionRxSource(key,dbRef);
     }
 
 }

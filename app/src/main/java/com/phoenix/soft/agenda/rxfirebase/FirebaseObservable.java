@@ -4,7 +4,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.phoenix.soft.agenda.module.firebase.FirebaseKey;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -17,7 +16,7 @@ import io.reactivex.disposables.Disposable;
  */
 
 
-final class FirebaseObservable<T extends FirebaseKey> extends Observable<T> {
+final class FirebaseObservable<T extends FirebaseModule> extends Observable<T> {
 
 
     private final Class<T> tClass;
@@ -36,7 +35,7 @@ final class FirebaseObservable<T extends FirebaseKey> extends Observable<T> {
         observer.onSubscribe(listener);
     }
 
-    static final class Listener<T extends FirebaseKey> implements Disposable, ValueEventListener {
+    static final class Listener<T extends FirebaseModule> implements Disposable, ValueEventListener {
         private final Observer<? super T> observer;
         private final Query query;
         private final AtomicBoolean unsubscribed = new AtomicBoolean();

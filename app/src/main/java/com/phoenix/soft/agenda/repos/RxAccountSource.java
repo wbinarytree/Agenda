@@ -15,6 +15,8 @@ public interface RxAccountSource {
 
     Maybe<List<Account>> getAccountList();
 
+    Maybe<List<Account>> getAccountListFrom(String key,int num);
+
     boolean addAccount(Account account);
 
     boolean deleteAccount(Account account);

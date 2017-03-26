@@ -1,4 +1,4 @@
-package com.phoenix.soft.agenda;
+package com.phoenix.soft.agenda.utils;
 
 import android.animation.Animator;
 import android.app.Activity;

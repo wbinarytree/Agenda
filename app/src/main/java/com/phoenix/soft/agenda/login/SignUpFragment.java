@@ -13,22 +13,21 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.R;
-import com.phoenix.soft.agenda.Utils;
+import com.phoenix.soft.agenda.utils.Utils;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.phoenix.soft.agenda.Utils.isEmailValid;
-import static com.phoenix.soft.agenda.Utils.isPasswordValid;
-import static com.phoenix.soft.agenda.Utils.isUsername;
+import static com.phoenix.soft.agenda.utils.Utils.isEmailValid;
+import static com.phoenix.soft.agenda.utils.Utils.isPasswordValid;
+import static com.phoenix.soft.agenda.utils.Utils.isUsername;
 
 /**
  * Created by phoenix on 2017/3/19.
