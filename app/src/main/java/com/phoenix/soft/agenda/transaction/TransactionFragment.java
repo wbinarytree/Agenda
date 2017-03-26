@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.phoenix.soft.agenda.MainActivity;
 import com.phoenix.soft.agenda.R;
-import com.phoenix.soft.agenda.Utils;
+import com.phoenix.soft.agenda.utils.Utils;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Transaction;
 

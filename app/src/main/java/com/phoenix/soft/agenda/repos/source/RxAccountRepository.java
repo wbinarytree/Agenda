@@ -47,6 +47,11 @@ public class RxAccountRepository implements RxAccountSource {
         return getAndSaveRemoteAccounts();
     }
 
+    @Override
+    public Maybe<List<Account>> getAccountListFrom(String key, int num) {
+        return null;
+    }
+
     private Maybe<List<Account>> getAndSaveRemoteAccounts() {
         return remoteSource.getAccountList().map(accountList -> {
             mCachedAccounts = accountList;
@@ -57,7 +62,7 @@ public class RxAccountRepository implements RxAccountSource {
     @Override
     public boolean addAccount(@NonNull Account account) {
         //||localSource.addAccount(account)
-        return remoteSource.addAccount(account)||mCachedAccounts.add(account);
+        return remoteSource.addAccount(account) || mCachedAccounts.add(account);
     }
 
     @Override

@@ -1,9 +1,10 @@
-package com.phoenix.soft.agenda.repos;
+package com.phoenix.soft.agenda.repos.source;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.firebase.AccountFire;
+import com.phoenix.soft.agenda.repos.RxAccountSource;
 import com.phoenix.soft.agenda.rxfirebase.RxDatabase;
 
 import java.util.ArrayList;
@@ -16,16 +17,17 @@ import io.reactivex.Maybe;
  */
 
 public class FirebaseRxAccountSource implements RxAccountSource {
-    DatabaseReference dbRef;
+    private DatabaseReference dbRef;
     private int position = 0;
+    private static final String ACCOUNT = "account";
 
     public FirebaseRxAccountSource(DatabaseReference dbRef) {
-        this.dbRef = dbRef;
+        this.dbRef = dbRef.child(ACCOUNT);
     }
 
     @Override
     public Maybe<Account> getAccount(String key) {
-        return RxDatabase.queryOnce(dbRef.child("account").equalTo(key)).map(dataSnapshot -> {
+        return RxDatabase.queryOnce(dbRef.equalTo(key)).map(dataSnapshot -> {
             AccountFire accountFire = dataSnapshot.getValue(AccountFire.class);
             accountFire.setKey(dataSnapshot.getKey());
             return accountFire.toAccount();
@@ -34,7 +36,7 @@ public class FirebaseRxAccountSource implements RxAccountSource {
 
     @Override
     public Maybe<List<Account>> getAccountList() {
-        return RxDatabase.queryOnce(dbRef.child("account").limitToFirst(10)).map(dataSnapshot -> {
+        return RxDatabase.queryOnce(dbRef.limitToFirst(10)).map(dataSnapshot -> {
             List<Account> accounts = new ArrayList<>();
             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                 AccountFire value = snapshot.getValue(AccountFire.class);
@@ -47,23 +49,35 @@ public class FirebaseRxAccountSource implements RxAccountSource {
     }
 
     @Override
+    public Maybe<List<Account>> getAccountListFrom(String key, int num) {
+        return RxDatabase.queryOnce(dbRef.orderByKey().endAt(key).limitToFirst(num))
+                         .map(dataSnapshot -> {
+                             List<Account> accounts = new ArrayList<>();
+                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                 AccountFire value = snapshot.getValue(AccountFire.class);
+                                 value.setKey(snapshot.getKey());
+                                 accounts.add(value.toAccount());
+                             }
+                             position += accounts.size();
+                             return accounts;
+                         });
+    }
+
+    @Override
     public boolean addAccount(Account account) {
-        DatabaseReference account1 = dbRef.child("account").push();
+        DatabaseReference account1 = dbRef.push();
         account.setKey(account1.getKey());
         return account1.setValue(account.toAccountFire()).isSuccessful();
     }
 
     @Override
     public boolean deleteAccount(Account account) {
-        return dbRef.child("account").child(account.getKey()).removeValue().isSuccessful();
+        return dbRef.child(account.getKey()).removeValue().isSuccessful();
     }
 
     @Override
     public boolean updateAccount(Account account) {
-        return dbRef.child("account")
-                    .child(account.getKey())
-                    .setValue(account.toAccountFire())
-                    .isSuccessful();
+        return dbRef.child(account.getKey()).setValue(account.toAccountFire()).isSuccessful();
     }
 
     @Override

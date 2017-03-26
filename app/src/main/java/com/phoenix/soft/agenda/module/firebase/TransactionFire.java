@@ -3,6 +3,7 @@ package com.phoenix.soft.agenda.module.firebase;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.phoenix.soft.agenda.module.Transaction;
+import com.phoenix.soft.agenda.rxfirebase.FirebaseModule;
 
 import org.joda.money.Money;
 
@@ -14,32 +15,43 @@ import java.util.Date;
  * Created by yaoda on 17/03/17.
  */
 @IgnoreExtraProperties
-public class TransactionFire implements FirebaseKey {
-    private String date;
+public class TransactionFire implements FirebaseModule<Transaction> {
+    //    new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+    private static final SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+    private Date date;
     private String money;
     private String desc;
     private String title;
     @Exclude
     private String key;
 
+    //for firebase
     public TransactionFire() {
 
     }
 
     public TransactionFire(String date, String money, String desc, String title) {
 
-        this.date = date;
+        try {
+            this.date = parser.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         this.money = money;
         this.desc = desc;
         this.title = title;
     }
 
     public String getDate() {
-        return date;
+        return date.toString();
     }
 
     public void setDate(String date) {
-        this.date = date;
+        try {
+            this.date = parser.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getMoney() {
@@ -76,11 +88,20 @@ public class TransactionFire implements FirebaseKey {
         this.key = key;
     }
 
+    @Override
+    public Transaction toModule() {
+        Transaction transaction = null;
+        try {
+            transaction = toTransaction();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return transaction;
+    }
+
     public Transaction toTransaction() throws ParseException {
         Transaction transaction = new Transaction();
-        SimpleDateFormat parser=new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
-        Date date = parser.parse(getDate());
-        transaction.setDate(date);
+        transaction.setDate(this.date);
         transaction.setDesc(getDesc());
         transaction.setTitle(getTitle());
         transaction.setMoney(Money.parse(getMoney()));

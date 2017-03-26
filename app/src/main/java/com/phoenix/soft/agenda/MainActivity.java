@@ -31,6 +31,7 @@ import com.phoenix.soft.agenda.account.AccountPresenter;
 import com.phoenix.soft.agenda.account.di.DaggerAccountPresenterComponent;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.repos.RxAccountSource;
+import com.phoenix.soft.agenda.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @BindView(R.id.container_error)
     LinearLayout errorLayout;
     @BindView(R.id.container_no_account)
-    LinearLayout noAccoutLayout;
+    LinearLayout noAccountLayout;
     @BindView(R.id.container_detail)
     FrameLayout detailContainer;
     @BindView(R.id.drawer_layout)
@@ -201,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     public void showNoAccount() {
         appbar.setExpanded(false);
-        noAccoutLayout.setVisibility(View.VISIBLE);
+        noAccountLayout.setVisibility(View.VISIBLE);
         fab.setOnClickListener(v -> {
         });
     }
@@ -213,7 +214,6 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
                 .setAction(getString(R.string.title_retry), v -> presenter.loadAccount())
                 .show();
         errorLayout.setVisibility(View.VISIBLE);
-        detailContainer.setVisibility(View.GONE);
         fab.setImageResource(R.drawable.ic_replay_white_24dp);
         fab.setOnClickListener(v -> presenter.loadAccount());
     }
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     public void showLoading() {
         errorLayout.setVisibility(View.GONE);
         detailContainer.setVisibility(View.GONE);
-        noAccoutLayout.setVisibility(View.GONE);
+        noAccountLayout.setVisibility(View.GONE);
         fab.setImageResource(R.drawable.ic_sync_white_24dp);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
         fab.startAnimation(animation);
@@ -244,8 +244,6 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
 
     @Override
     public void hideLoading() {
-        errorLayout.setVisibility(View.GONE);
-        detailContainer.setVisibility(View.VISIBLE);
         fab.setImageResource(R.drawable.ic_add_white_24dp);
         fab.clearAnimation();
     }

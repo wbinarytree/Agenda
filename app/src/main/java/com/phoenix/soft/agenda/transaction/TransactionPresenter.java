@@ -3,6 +3,7 @@ package com.phoenix.soft.agenda.transaction;
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Transaction;
@@ -34,6 +35,9 @@ public class TransactionPresenter implements TransactionContract.Presenter {
     private TransactionContract.View view;
     private Account account;
     private String key;
+    private String end = "";
+    private boolean isFirst = true;
+
 
     public TransactionPresenter(Account account) {
         this.account = account;
@@ -45,41 +49,88 @@ public class TransactionPresenter implements TransactionContract.Presenter {
         MainApplication.getFirebaseComponent().inject(this);
         this.key = key;
         transactions = new ArrayList<>();
-
     }
 
     @Override
     public void loadDetailList() {
-        RxDatabase.limitToFirst(TransactionFire.class, dbRef.child("transaction")
-                                                            .child(key)
-                                                            .limitToFirst(10)
-                                                            .orderByChild("date"))
-                  .subscribe(new DisposableObserver<TransactionFire>() {
-                      @Override
-                      public void onNext(TransactionFire transactionFire) {
-                          try {
-                              transactions.add(transactionFire.toTransaction());
-                          } catch (ParseException e) {
-                              e.printStackTrace();
+        Query transaction;
+        List<Transaction> list = new ArrayList<>();
+        if (isFirst) {
+            transaction = dbRef.child("transaction").child(key).orderByKey().limitToLast(5);
+            RxDatabase.limitToFirst(TransactionFire.class, transaction)
+                      .subscribe(new DisposableObserver<TransactionFire>() {
+                          @Override
+                          public void onNext(TransactionFire transactionFire) {
+
+                              try {
+                                  list.add(0, transactionFire.toTransaction());
+
+                              } catch (ParseException e) {
+                                  e.printStackTrace();
+                              }
+
+                              Log.d(TAG, "onNext: ");
                           }
-                          Log.d(TAG, "onNext: ");
-                      }
 
-                      @Override
-                      public void onError(Throwable e) {
-                          Log.d(TAG, "onError: ");
-                          view.showError("Error");
-                      }
+                          @Override
+                          public void onError(Throwable e) {
+                              Log.d(TAG, "onError: ");
+                              view.showError("Error");
+                          }
 
-                      @Override
-                      public void onComplete() {
+                          @Override
+                          public void onComplete() {
 //                if (transactions.isEmpty()) {
 //                    view.showNoTransaction();
 //                } else {
 //                }
-                          view.showTransactionList(transactions);
-                      }
-                  });
+                              isFirst = false;
+                              end = list.get(0).getKey();
+                              transactions.addAll(list);
+                              view.showTransactionList(transactions);
+
+                          }
+                      });
+        } else {
+            transaction = dbRef.child("transaction")
+                               .child(key)
+                               .orderByKey()
+                               .endAt(end)
+                               .limitToLast(5);
+            RxDatabase.limitToFirst(TransactionFire.class, transaction)
+                      .skipLast(1)
+                      .subscribe(new DisposableObserver<TransactionFire>() {
+                          @Override
+                          public void onNext(TransactionFire transactionFire) {
+                              try {
+                                  list.add(0, transactionFire.toTransaction());
+                              } catch (ParseException e) {
+                                  e.printStackTrace();
+                              }
+
+                              Log.d(TAG, "onNext: ");
+                          }
+
+                          @Override
+                          public void onError(Throwable e) {
+                              Log.d(TAG, "onError: ");
+                              view.showError("Error");
+                          }
+
+                          @Override
+                          public void onComplete() {
+//                if (transactions.isEmpty()) {
+//                    view.showNoTransaction();
+//                } else {
+//                }
+                              end = list.get(0).getKey();
+                              transactions.addAll(list);
+                              view.showTransactionList(transactions);
+                          }
+                      });
+
+        }
+
     }
 
     @Override

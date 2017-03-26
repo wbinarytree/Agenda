@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.phoenix.soft.agenda.module.firebase.TransactionFire;
+import com.phoenix.soft.agenda.rxfirebase.FirebaseModule;
 
 import org.joda.money.Money;
 
@@ -14,7 +15,7 @@ import java.util.Date;
  * Created by yaoda on 22/02/17.
  */
 
-public class Transaction implements Serializable, Parcelable {
+public class Transaction implements Serializable, Parcelable,FirebaseModule.ToFire<TransactionFire> {
     private long id;
     private Date date;
     private Money money;
@@ -112,5 +113,10 @@ public class Transaction implements Serializable, Parcelable {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @Override
+    public TransactionFire toFire() {
+        return this.toTransactionFire();
     }
 }
