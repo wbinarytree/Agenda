@@ -1,12 +1,9 @@
 package com.phoenix.soft.agenda.account;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
@@ -20,8 +17,6 @@ import org.joda.money.Money;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by yaoda on 13/03/17.
@@ -61,10 +56,10 @@ public class AccountAddDialogFragment extends DialogFragment {
         String accountName = name.getText().toString();
         if (mountNumber.equals("")) {
             mount.setError("Enter Number");
-        } else if(accountName.equals("")){
+        } else if (accountName.equals("")) {
             name.setError("Enter Name");
-        }else{
-            MainActivity activity = (MainActivity)getActivity();
+        } else {
+            MainActivity activity = (MainActivity) getActivity();
             Account account = new Account();
             account.setAccountName(accountName);
             account.setIncome(Money.parse("USD " + mountNumber));

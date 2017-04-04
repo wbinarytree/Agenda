@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Maybe;
-import io.reactivex.Single;
 
 /**
  * Created by yaoda on 22/03/17.
@@ -21,7 +20,7 @@ public class FirebaseRxTransactionRepository implements RxTransactionRepository 
     private DatabaseReference dbRef;
     private int size;
 
-    public FirebaseRxTransactionRepository(String accountId,DatabaseReference dbRef) {
+    public FirebaseRxTransactionRepository(String accountId, DatabaseReference dbRef) {
         this.accountId = accountId;
         this.dbRef = dbRef;
         this.size = 3;
@@ -29,10 +28,7 @@ public class FirebaseRxTransactionRepository implements RxTransactionRepository 
 
     @Override
     public Maybe<List<Transaction>> getTransactionList() {
-        return RxDatabase.queryOnce(dbRef.child("transaction")
-                                         .child(accountId)
-                                         .startAt(size)
-                                         .limitToFirst(20))
+        return RxDatabase.queryOnce(dbRef.child("transaction").child(accountId).startAt(size).limitToFirst(20))
                          .map(dataSnapshot -> {
                              List<Transaction> transactions = new ArrayList<>();
                              for (DataSnapshot snapshot : dataSnapshot.getChildren()) {

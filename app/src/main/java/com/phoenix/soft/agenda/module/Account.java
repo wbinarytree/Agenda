@@ -19,7 +19,7 @@ import java.util.List;
  * Created by yaoda on 22/02/17.
  */
 @IgnoreExtraProperties
-public class Account implements Parcelable,Serializable,FirebaseModule.ToFire<AccountFire> {
+public class Account implements Parcelable,Serializable,FirebaseModule.ToFire<AccountFire,Account> {
     @Exclude
     public static final Parcelable.Creator<Account> CREATOR = new Parcelable.Creator<Account>() {
         @Override

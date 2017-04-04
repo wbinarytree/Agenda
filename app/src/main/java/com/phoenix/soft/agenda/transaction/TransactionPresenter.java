@@ -53,83 +53,84 @@ public class TransactionPresenter implements TransactionContract.Presenter {
 
     @Override
     public void loadDetailList() {
-        Query transaction;
-        List<Transaction> list = new ArrayList<>();
-        if (isFirst) {
-            transaction = dbRef.child("transaction").child(key).orderByKey().limitToLast(5);
-            RxDatabase.limitToFirst(TransactionFire.class, transaction)
-                      .subscribe(new DisposableObserver<TransactionFire>() {
-                          @Override
-                          public void onNext(TransactionFire transactionFire) {
-
-                              try {
-                                  list.add(0, transactionFire.toTransaction());
-
-                              } catch (ParseException e) {
-                                  e.printStackTrace();
-                              }
-
-                              Log.d(TAG, "onNext: ");
-                          }
-
-                          @Override
-                          public void onError(Throwable e) {
-                              Log.d(TAG, "onError: ");
-                              view.showError("Error");
-                          }
-
-                          @Override
-                          public void onComplete() {
-//                if (transactions.isEmpty()) {
-//                    view.showNoTransaction();
-//                } else {
-//                }
-                              isFirst = false;
-                              end = list.get(0).getKey();
-                              transactions.addAll(list);
-                              view.showTransactionList(transactions);
-
-                          }
-                      });
-        } else {
-            transaction = dbRef.child("transaction")
-                               .child(key)
-                               .orderByKey()
-                               .endAt(end)
-                               .limitToLast(5);
-            RxDatabase.limitToFirst(TransactionFire.class, transaction)
-                      .skipLast(1)
-                      .subscribe(new DisposableObserver<TransactionFire>() {
-                          @Override
-                          public void onNext(TransactionFire transactionFire) {
-                              try {
-                                  list.add(0, transactionFire.toTransaction());
-                              } catch (ParseException e) {
-                                  e.printStackTrace();
-                              }
-
-                              Log.d(TAG, "onNext: ");
-                          }
-
-                          @Override
-                          public void onError(Throwable e) {
-                              Log.d(TAG, "onError: ");
-                              view.showError("Error");
-                          }
-
-                          @Override
-                          public void onComplete() {
-//                if (transactions.isEmpty()) {
-//                    view.showNoTransaction();
-//                } else {
-//                }
-                              end = list.get(0).getKey();
-                              transactions.addAll(list);
-                              view.showTransactionList(transactions);
-                          }
-                      });
-
-        }
+        // TODO: 04/04/17
+//        Query transaction;
+//        List<Transaction> list = new ArrayList<>();
+//        if (isFirst) {
+//            transaction = dbRef.child("transaction").child(key).orderByKey().limitToLast(5);
+//            RxDatabase.limitToFirst(TransactionFire.class, transaction)
+//                      .subscribe(new DisposableObserver<TransactionFire>() {
+//                          @Override
+//                          public void onNext(TransactionFire transactionFire) {
+//
+//                              try {
+//                                  list.add(0, transactionFire.toTransaction());
+//
+//                              } catch (ParseException e) {
+//                                  e.printStackTrace();
+//                              }
+//
+//                              Log.d(TAG, "onNext: ");
+//                          }
+//
+//                          @Override
+//                          public void onError(Throwable e) {
+//                              Log.d(TAG, "onError: ");
+//                              view.showError("Error");
+//                          }
+//
+//                          @Override
+//                          public void onComplete() {
+////                if (transactions.isEmpty()) {
+////                    view.showNoTransaction();
+////                } else {
+////                }
+//                              isFirst = false;
+//                              end = list.get(0).getKey();
+//                              transactions.addAll(list);
+//                              view.showTransactionList(transactions);
+//
+//                          }
+//                      });
+//        } else {
+//            transaction = dbRef.child("transaction")
+//                               .child(key)
+//                               .orderByKey()
+//                               .endAt(end)
+//                               .limitToLast(5);
+//            RxDatabase.limitToFirst(TransactionFire.class, transaction)
+//                      .skipLast(1)
+//                      .subscribe(new DisposableObserver<TransactionFire>() {
+//                          @Override
+//                          public void onNext(TransactionFire transactionFire) {
+//                              try {
+//                                  list.add(0, transactionFire.toTransaction());
+//                              } catch (ParseException e) {
+//                                  e.printStackTrace();
+//                              }
+//
+//                              Log.d(TAG, "onNext: ");
+//                          }
+//
+//                          @Override
+//                          public void onError(Throwable e) {
+//                              Log.d(TAG, "onError: ");
+//                              view.showError("Error");
+//                          }
+//
+//                          @Override
+//                          public void onComplete() {
+////                if (transactions.isEmpty()) {
+////                    view.showNoTransaction();
+////                } else {
+////                }
+//                              end = list.get(0).getKey();
+//                              transactions.addAll(list);
+//                              view.showTransactionList(transactions);
+//                          }
+//                      });
+//
+//        }
 
     }
 

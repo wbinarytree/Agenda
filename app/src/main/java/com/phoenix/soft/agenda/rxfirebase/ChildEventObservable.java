@@ -20,7 +20,8 @@ final class ChildEventObservable<T> extends Observable<T> {
     protected void subscribeActual(Observer<? super T> observer) {
 
     }
-    static final class EventListener implements ChildEventListener,Disposable {
+
+    static final class EventListener implements ChildEventListener, Disposable {
 
         private final Observer observer;
         private final Query query;
@@ -59,7 +60,7 @@ final class ChildEventObservable<T> extends Observable<T> {
 
         @Override
         public void dispose() {
-            unsubscribed.compareAndSet(false,true);
+            unsubscribed.compareAndSet(false, true);
             query.removeEventListener(this);
         }
 
@@ -67,5 +68,7 @@ final class ChildEventObservable<T> extends Observable<T> {
         public boolean isDisposed() {
             return unsubscribed.get();
         }
-    };
+    }
+
+    ;
 }

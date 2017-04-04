@@ -17,9 +17,9 @@ import io.reactivex.Maybe;
  */
 
 public class FirebaseRxAccountSource implements RxAccountSource {
+    private static final String ACCOUNT = "account";
     private DatabaseReference dbRef;
     private int position = 0;
-    private static final String ACCOUNT = "account";
 
     public FirebaseRxAccountSource(DatabaseReference dbRef) {
         this.dbRef = dbRef.child(ACCOUNT);
@@ -50,17 +50,16 @@ public class FirebaseRxAccountSource implements RxAccountSource {
 
     @Override
     public Maybe<List<Account>> getAccountListFrom(String key, int num) {
-        return RxDatabase.queryOnce(dbRef.orderByKey().endAt(key).limitToFirst(num))
-                         .map(dataSnapshot -> {
-                             List<Account> accounts = new ArrayList<>();
-                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                 AccountFire value = snapshot.getValue(AccountFire.class);
-                                 value.setKey(snapshot.getKey());
-                                 accounts.add(value.toAccount());
-                             }
-                             position += accounts.size();
-                             return accounts;
-                         });
+        return RxDatabase.queryOnce(dbRef.orderByKey().endAt(key).limitToFirst(num)).map(dataSnapshot -> {
+            List<Account> accounts = new ArrayList<>();
+            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                AccountFire value = snapshot.getValue(AccountFire.class);
+                value.setKey(snapshot.getKey());
+                accounts.add(value.toAccount());
+            }
+            position += accounts.size();
+            return accounts;
+        });
     }
 
     @Override

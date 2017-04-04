@@ -15,5 +15,4 @@ public interface RxTransactionRepository {
     boolean addTransaction(Transaction transaction);
     boolean deleteTransaction(Transaction transaction);
     boolean updateTransaction(Transaction transaction);
-
 }

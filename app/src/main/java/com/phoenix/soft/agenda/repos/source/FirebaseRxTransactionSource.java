@@ -1,16 +1,11 @@
 package com.phoenix.soft.agenda.repos.source;
 
-import android.support.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.phoenix.soft.agenda.module.Transaction;
 import com.phoenix.soft.agenda.module.firebase.TransactionFire;
 import com.phoenix.soft.agenda.repos.RxTransactionSource;
 import com.phoenix.soft.agenda.rxfirebase.RxDatabase;
 
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Maybe;
@@ -25,8 +20,8 @@ import static com.phoenix.soft.agenda.rxfirebase.RxDatabase.fireParserList;
 
 public class FirebaseRxTransactionSource implements RxTransactionSource {
     private final static String TRANSACTION = "transaction";
-    private final DatabaseReference dbRef;
     private final static int queryNum = 10;
+    private final DatabaseReference dbRef;
 
     public FirebaseRxTransactionSource(DatabaseReference dbRef) {
         this.dbRef = dbRef.child(TRANSACTION);

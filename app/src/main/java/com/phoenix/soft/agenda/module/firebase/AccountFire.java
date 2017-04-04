@@ -15,6 +15,7 @@ import java.util.List;
 @IgnoreExtraProperties
 public class AccountFire implements FirebaseModule<Account> {
 
+    @Exclude
     private String key;
     private String accountName;
     private String accountPicUrl;

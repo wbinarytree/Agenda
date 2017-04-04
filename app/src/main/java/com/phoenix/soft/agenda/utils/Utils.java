@@ -2,15 +2,12 @@ package com.phoenix.soft.agenda.utils;
 
 import android.animation.Animator;
 import android.app.Activity;
-import android.content.Context;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Patterns;
 import android.view.View;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -21,17 +18,17 @@ public class Utils {
     private static final String USERNAME_PATTERN = "^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$";
 
     @SuppressWarnings("deprecation")
-    public static Spanned fromHtml(String html){
+    public static Spanned fromHtml(String html) {
         Spanned result;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+            result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
         } else {
             result = Html.fromHtml(html);
         }
         return result;
     }
 
-    public static void viewMoveToCenter(View view, Activity context, Animator.AnimatorListener listener){
+    public static void viewMoveToCenter(View view, Activity context, Animator.AnimatorListener listener) {
         DisplayMetrics dm = new DisplayMetrics();
         context.getWindowManager().getDefaultDisplay().getMetrics(dm);
         int originalPos[] = new int[2];

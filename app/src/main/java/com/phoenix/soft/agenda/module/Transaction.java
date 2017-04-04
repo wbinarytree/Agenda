@@ -15,7 +15,7 @@ import java.util.Date;
  * Created by yaoda on 22/02/17.
  */
 
-public class Transaction implements Serializable, Parcelable,FirebaseModule.ToFire<TransactionFire> {
+public class Transaction implements Serializable, Parcelable,FirebaseModule.ToFire<TransactionFire,Transaction> {
     private long id;
     private Date date;
     private Money money;

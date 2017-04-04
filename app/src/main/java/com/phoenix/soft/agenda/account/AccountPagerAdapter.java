@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import com.phoenix.soft.agenda.transaction.TransactionFragment;
 import com.phoenix.soft.agenda.module.Account;
+import com.phoenix.soft.agenda.transaction.TransactionFragment;
 import com.phoenix.soft.agenda.transaction.TransactionPresenter;
 
 import java.util.List;

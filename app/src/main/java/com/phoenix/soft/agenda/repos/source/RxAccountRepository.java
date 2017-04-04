@@ -1,18 +1,13 @@
 package com.phoenix.soft.agenda.repos.source;
 
 import android.support.annotation.NonNull;
-import android.util.ArrayMap;
 
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.repos.RxAccountSource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Maybe;
-import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.functions.Function;
 
 
 /**

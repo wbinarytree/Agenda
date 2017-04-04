@@ -4,9 +4,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.phoenix.soft.agenda.repos.RxSource;
-import com.phoenix.soft.agenda.repos.RxTransactionSource;
 import com.phoenix.soft.agenda.repos.TransactionRxSource;
+import com.phoenix.soft.agenda.repos.source.AccountSourceRealTime;
+import com.phoenix.soft.agenda.repos.source.AccountSourceRealTimeFirebase;
 import com.phoenix.soft.agenda.repos.source.FirebaseRxAccountSource;
 import com.phoenix.soft.agenda.repos.FirebaseRxTransactionRepository;
 import com.phoenix.soft.agenda.repos.RxAccountSource;
@@ -34,6 +34,7 @@ public class FirebaseModule {
     @Singleton
     @Named("Account")
     DatabaseReference provideAccountDatabaseRef(FirebaseUser user){
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         return FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid());
     }
 
@@ -64,6 +65,12 @@ public class FirebaseModule {
     @Provides
     TransactionRxSource provideRxTransSoure(@Named("Account") DatabaseReference dbRef,String key){
         return new TransactionRxSource(key,dbRef);
+    }
+
+    @Singleton
+    @Provides
+    AccountSourceRealTime provideRealTimeSource(@Named("Account") DatabaseReference dbRef){
+        return new AccountSourceRealTimeFirebase(dbRef);
     }
 
 }

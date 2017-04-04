@@ -1,18 +1,12 @@
 package com.phoenix.soft.agenda.account;
 
 import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.repos.RxAccountSource;
-
-import java.util.List;
+import com.phoenix.soft.agenda.repos.source.AccountSourceRealTime;
 
 import javax.inject.Inject;
 
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiConsumer;
-import io.reactivex.functions.Consumer;
-import io.reactivex.observers.DisposableMaybeObserver;
-import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by yaoda on 22/02/17.
@@ -20,41 +14,36 @@ import io.reactivex.observers.DisposableSingleObserver;
 public class AccountPresenter implements AccountContract.Presenter {
 
     private static final String TAG = "AccountPresenter";
-    private final RxAccountSource repository;
     private AccountContract.View view;
-    private List<Account> accounts;
+    private CompositeDisposable compositeDisposable;
+    private AccountSourceRealTime realTimeRepo;
 
     @Inject
-    public AccountPresenter(RxAccountSource repository) {
-        this.repository = repository;
+    public AccountPresenter(AccountSourceRealTime realTime) {
+        this.realTimeRepo = realTime;
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
     public void loadAccount() {
         view.showLoading();
-        repository.getAccountList()
-                  .doOnEvent((accountList, throwable) -> view.hideLoading())
-                  .subscribe(new DisposableMaybeObserver<List<Account>>() {
-                      @Override
-                      public void onSuccess(List<Account> accountList) {
-                          accounts = accountList;
-                          view.showAccountList(accounts);
-                      }
-                      @Override
-                      public void onError(Throwable e) {
-                          view.showError();
-                      }
-                      @Override
-                      public void onComplete() {
-                          view.showNoAccount();
-                      }
-                  });
+        compositeDisposable.add(realTimeRepo.getAccountList()
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .doOnEach(disposable -> view.hideLoading())
+                                            .subscribe(accounts -> {
+                                                if (accounts.isEmpty()) {
+                                                    view.showNoAccount();
+                                                } else {
+                                                    view.showAccountList(accounts);
+                                                }
+                                            }, throwable -> view.showError()));
+
     }
 
     @Override
     public void addAccount(Account account) {
-        repository.addAccount(account);
-        view.updateAccount(account);
+        realTimeRepo.addAccount(account);
+//        view.updateAccount(account);
     }
 
     @Override
@@ -63,7 +52,7 @@ public class AccountPresenter implements AccountContract.Presenter {
 
     @Override
     public void deleteAccount(Account account) {
-        repository.deleteAccount(account);
+        realTimeRepo.deleteAccount(account);
     }
 
     @Override
@@ -74,5 +63,6 @@ public class AccountPresenter implements AccountContract.Presenter {
     @Override
     public void detachView() {
         this.view = null;
+        compositeDisposable.clear();
     }
 }
