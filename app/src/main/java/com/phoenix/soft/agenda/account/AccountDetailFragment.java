@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -27,7 +26,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.observers.DisposableMaybeObserver;
 
 /**
  * Created by yaoda on 22/03/17.
@@ -64,27 +62,12 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
     @Override
     public void showPieChart() {
         ((MainActivity) getActivity()).getAccountList()
-                                      .map(this::setUpEntries)
-                                      .map(this::setupPieData)
-                                      .subscribe(new DisposableMaybeObserver<PieData>() {
-                                          @Override
-                                          public void onSuccess(PieData pieData) {
-                                              pieChart.setData(pieData);
-                                              pieChart.highlightValue(new Highlight(0, 0, 0));
-                                              pieChart.invalidate();
-                                          }
-
-                                          @Override
-                                          public void onError(Throwable e) {
-                                              showError();
-                                          }
-
-                                          @Override
-                                          public void onComplete() {
-                                              showNoChart();
-                                          }
-                                      });
-
+                                      .map(accountList -> setupPieData(setUpEntries(accountList)))
+                                      .subscribe(pieData -> {
+                                          pieChart.setData(pieData);
+                                          pieChart.highlightValue(new Highlight(0, 0, 0));
+                                          pieChart.invalidate();
+                                      }, throwable -> showError(), this::showNoChart);
 
     }
 
@@ -138,5 +121,6 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
         dataSet.addEntry(new PieEntry(minus.getAmount().floatValue(), account.getAccountName()));
         pieChart.notifyDataSetChanged();
         pieChart.invalidate();
+
     }
 }

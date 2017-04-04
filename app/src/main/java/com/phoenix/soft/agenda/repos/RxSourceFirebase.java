@@ -10,7 +10,7 @@ import io.reactivex.Maybe;
  * Created by awang on 2017/3/26.
  */
 
-public interface RxSource<T extends FirebaseModule.ToFire> {
+public interface RxSourceFirebase<T extends FirebaseModule.ToFire> {
     Maybe<T> getValue(String key);
 
     Maybe<List<T>> getValueList();

@@ -89,7 +89,11 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawerLayout,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         tabLayout.setupWithViewPager(viewPager);
@@ -97,7 +101,9 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                                       .replace(R.id.container_detail, AccountDetailFragment.newInstance(), AccountDetailFragment.TAG)
+                                       .replace(R.id.container_detail,
+                                               AccountDetailFragment.newInstance(),
+                                               AccountDetailFragment.TAG)
                                        .commit();
         }
 
@@ -118,7 +124,8 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
                .noFade()
                .resize(400, 800)
                .into(imageToolBar);
-        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(AccountDetailFragment.TAG);
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
+                AccountDetailFragment.TAG);
         if (fragment != null) {
             fragment.selectChart(position);
 
@@ -188,15 +195,15 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
             }
             updateViewByPagerContent(position);
         }));
-        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(AccountDetailFragment.TAG);
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
+                AccountDetailFragment.TAG);
         if (fragment != null) {
             fragment.showPieChart();
             detailContainer.setVisibility(View.VISIBLE);
             appbar.setExpanded(true, true);
         }
         disposable.add(RxView.clicks(fab)
-                             .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem())
-                                                    .onClick()));
+                             .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem()).onClick()));
     }
 
     @Override
@@ -210,7 +217,9 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     public void showError() {
         appbar.setExpanded(false);
-        Snackbar.make(findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">" + getString(R.string.error_title_sync) + "</font>"), Snackbar.LENGTH_SHORT)
+        Snackbar.make(findViewById(R.id.coordinator),
+                Utils.fromHtml("<font color=\"#ffffff\">" + getString(R.string.error_title_sync) + "</font>"),
+                Snackbar.LENGTH_SHORT)
                 .setAction(getString(R.string.title_retry), v -> presenter.loadAccount())
                 .show();
         errorLayout.setVisibility(View.VISIBLE);
@@ -221,7 +230,8 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     public void updateAccount(Account account) {
         viewPager.getAdapter().notifyDataSetChanged();
-        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(AccountDetailFragment.TAG);
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
+                AccountDetailFragment.TAG);
         if (fragment != null) {
             fragment.updateChart(account);
         }

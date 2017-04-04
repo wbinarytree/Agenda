@@ -8,7 +8,8 @@ public interface FirebaseModule<T extends FirebaseModule.ToFire> {
     String getKey();
     void setKey(String key);
     T toModule();
-    interface ToFire<T extends FirebaseModule>{
+    interface ToFire<T extends FirebaseModule<V>,V extends ToFire>{
         T toFire();
     }
 }
+

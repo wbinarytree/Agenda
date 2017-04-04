@@ -30,15 +30,15 @@ final class FirebaseObservable<T extends FirebaseModule> extends Observable<T> {
 
     @Override
     protected void subscribeActual(Observer<? super T> observer) {
-        Listener listener = new Listener<>(observer, query, tClass);
+        Listener<T> listener = new Listener<>(observer, query, tClass);
         query.addListenerForSingleValueEvent(listener);
         observer.onSubscribe(listener);
     }
 
-    static final class Listener<T extends FirebaseModule> implements Disposable, ValueEventListener {
+    private static final class Listener<T extends FirebaseModule> implements Disposable, ValueEventListener {
         private final Observer<? super T> observer;
         private final Query query;
-        private final AtomicBoolean unsubscribed = new AtomicBoolean();
+        private final AtomicBoolean unSubscribed = new AtomicBoolean();
         private Class<T> tClass;
 
         Listener(Observer<? super T> observer, Query query, Class<T> tClass) {
@@ -51,12 +51,12 @@ final class FirebaseObservable<T extends FirebaseModule> extends Observable<T> {
         @Override
         public void dispose() {
             query.removeEventListener(this);
-            unsubscribed.compareAndSet(false, true);
+            unSubscribed.compareAndSet(false, true);
         }
 
         @Override
         public boolean isDisposed() {
-            return unsubscribed.get();
+            return unSubscribed.get();
         }
 
 

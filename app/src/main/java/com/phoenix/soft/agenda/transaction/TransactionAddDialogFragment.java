@@ -34,14 +34,14 @@ public class TransactionAddDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_detail, null);
-        ButterKnife.bind(this,view);
-        AlertDialog mDialog = new AlertDialog.Builder(getContext())
-                .setTitle(R.string.title_transaction_add)
-                .setPositiveButton("add", null)
-                .setNegativeButton("cancel", null)
-                .setView(view)
-                .create();
-        mDialog.setOnShowListener(dialog -> ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> addtranscation()));
+        ButterKnife.bind(this, view);
+        AlertDialog mDialog = new AlertDialog.Builder(getContext()).setTitle(R.string.title_transaction_add)
+                                                                   .setPositiveButton("add", null)
+                                                                   .setNegativeButton("cancel", null)
+                                                                   .setView(view)
+                                                                   .create();
+        mDialog.setOnShowListener(dialog -> ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                                                                  .setOnClickListener(v -> addtranscation()));
         mount.setOnEditorActionListener((v1, actionId, event) -> {
             addtranscation();
             return true;
@@ -68,9 +68,7 @@ public class TransactionAddDialogFragment extends DialogFragment {
                     isAdd = false;
                     break;
             }
-            Intent intent = new Intent()
-                    .putExtra("mountNumber", mountNumber)
-                    .putExtra("isAdd", isAdd);
+            Intent intent = new Intent().putExtra("mountNumber", mountNumber).putExtra("isAdd", isAdd);
             getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
             getDialog().dismiss();
         }

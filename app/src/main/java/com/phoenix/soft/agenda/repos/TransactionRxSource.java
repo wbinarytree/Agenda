@@ -16,7 +16,7 @@ import static com.phoenix.soft.agenda.rxfirebase.RxDatabase.fireParserList;
  * Created by awang on 2017/3/26.
  */
 
-public class TransactionRxSource implements RxSource<Transaction> {
+public class TransactionRxSource implements RxSourceFirebase<Transaction> {
     private final static String TRANSACTION = "transaction";
     private final DatabaseReference dbRef;
     private final static int queryNum = 10;

@@ -3,6 +3,7 @@ package com.phoenix.soft.agenda.dagger;
 import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.account.AccountPresenter;
 import com.phoenix.soft.agenda.repos.RxAccountSource;
+import com.phoenix.soft.agenda.repos.source.AccountSourceRealTime;
 import com.phoenix.soft.agenda.transaction.TransactionPresenter;
 import com.phoenix.soft.agenda.login.AuthActivity;
 import com.phoenix.soft.agenda.login.LoginFragment;
@@ -24,4 +25,5 @@ public interface FirebaseComponent {
     void inject(SignUpFragment signUpFragment);
     void inject(TransactionPresenter detailPresenter);
     RxAccountSource getAccountRepo();
+    AccountSourceRealTime getRealtimeRepo();
 }

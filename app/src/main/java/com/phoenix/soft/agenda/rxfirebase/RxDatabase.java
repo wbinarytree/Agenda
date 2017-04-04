@@ -4,6 +4,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Maybe;
@@ -26,8 +27,8 @@ public final class RxDatabase {
         return new SingleQueryObservable(query);
     }
 
-    public static <V extends FirebaseModule.ToFire<T>, T extends FirebaseModule<V>> List<V> fireParserList(DataSnapshot dataSnapshot, Class<T> tClass) {
-        List<V> vList = new ArrayList<>();
+    public static <V extends FirebaseModule.ToFire<T, V>, T extends FirebaseModule<V>> List<V> fireParserList(DataSnapshot dataSnapshot, Class<T> tClass) {
+        List<V> vList = Collections.synchronizedList(new ArrayList<V>());
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
             T fire = snapshot.getValue(tClass);
             fire.setKey(dataSnapshot.getKey());
@@ -36,7 +37,7 @@ public final class RxDatabase {
         return vList;
     }
 
-    public static <V extends FirebaseModule.ToFire<T>, T extends FirebaseModule<V>> V fireParser(DataSnapshot dataSnapshot, Class<T> tClass) {
+    public static <V extends FirebaseModule.ToFire<T, V>, T extends FirebaseModule<V>> V fireParser(DataSnapshot dataSnapshot, Class<T> tClass) {
         T fire = dataSnapshot.getValue(tClass);
         fire.setKey(dataSnapshot.getKey());
 
