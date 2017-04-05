@@ -14,17 +14,17 @@ import io.reactivex.Observable;
  * Created by yaoda on 04/04/17.
  */
 
-public class AccountSourceRealTimeImpl implements AccountSourceRealTime {
+public class AccountSourceRTImpl implements AccountSourceRT {
     private List<Account> actual;
     private Relay<List<Account>> accountsSubject;
 
 
-    public AccountSourceRealTimeImpl() {
+    public AccountSourceRTImpl() {
         actual = new ArrayList<>();
         accountsSubject = BehaviorRelay.createDefault(actual).toSerialized();
     }
 
-    public AccountSourceRealTimeImpl(List<Account> accounts) {
+    public AccountSourceRTImpl(List<Account> accounts) {
         actual = accounts;
         accountsSubject = BehaviorRelay.createDefault(actual).toSerialized();
     }
@@ -70,6 +70,11 @@ public class AccountSourceRealTimeImpl implements AccountSourceRealTime {
         if (remove) {
             accountsSubject.accept(actual);
         }
+        return null;
+    }
+
+    @Override
+    public Observable<Object> getAccountUpdate() {
         return null;
     }
 }

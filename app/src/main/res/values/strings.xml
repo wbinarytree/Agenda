@@ -45,6 +45,7 @@
     <string name="title_transaction_add">New Income/Expense</string>
     <string name="account_name">Account Name</string>
     <string name="error_title_sync">Sorry, We meet some errors with Syncing</string>
+    <string name="title_sync_done">Sync finished</string>
     <string name="title_no_account">You don\'t have an account yet!\n  Press the add button on top to add your account!</string>
     <string name="title_add_account">add_account</string>
     <string name="title_about">About Costy</string>
