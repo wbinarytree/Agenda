@@ -17,4 +17,8 @@
     <color name="divider">#BDBDBD</color>
     <color name="transparent">#00000000</color>
 
+    <color name="dark_icon_half_alpha">#4d000000</color> <!-- 30% black-->
+    <color name="dark_icon">#99000000</color> <!-- 60% black-->
+
+
 </resources>

@@ -5,8 +5,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.phoenix.soft.agenda.repos.TransactionRxSource;
-import com.phoenix.soft.agenda.repos.source.AccountSourceRealTime;
-import com.phoenix.soft.agenda.repos.source.AccountSourceRealTimeFirebase;
+import com.phoenix.soft.agenda.repos.source.AccountSourceRT;
+import com.phoenix.soft.agenda.repos.source.AccountSourceRTFirebase;
 import com.phoenix.soft.agenda.repos.source.FirebaseRxAccountSource;
 import com.phoenix.soft.agenda.repos.FirebaseRxTransactionRepository;
 import com.phoenix.soft.agenda.repos.RxAccountSource;
@@ -69,8 +69,8 @@ public class FirebaseModule {
 
     @Singleton
     @Provides
-    AccountSourceRealTime provideRealTimeSource(@Named("Account") DatabaseReference dbRef){
-        return new AccountSourceRealTimeFirebase(dbRef);
+    AccountSourceRT provideRealTimeSource(@Named("Account") DatabaseReference dbRef){
+        return new AccountSourceRTFirebase(dbRef);
     }
 
 }

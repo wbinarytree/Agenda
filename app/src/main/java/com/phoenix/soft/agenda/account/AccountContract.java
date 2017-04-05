@@ -17,6 +17,8 @@ public interface AccountContract   {
 
         void showError();
 
+        void update();
+
         void updateAccount(Account account);
 
         void showModifyAccount();

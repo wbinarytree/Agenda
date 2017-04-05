@@ -1,5 +1,6 @@
 package com.phoenix.soft.agenda;
 
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -170,8 +171,8 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         disposable.clear();
         presenter.detachView();
     }
@@ -184,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         return Maybe.defer(() -> Maybe.just(accountList));
     }
 
+    // TODO: 05/04/17 define update/show
     @Override
     public void showAccountList(List<Account> accountList) {
         this.accountList = accountList;
@@ -228,6 +230,11 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     }
 
     @Override
+    public void update() {
+        viewPager.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
     public void updateAccount(Account account) {
         viewPager.getAdapter().notifyDataSetChanged();
         AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
@@ -250,12 +257,22 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         fab.setImageResource(R.drawable.ic_sync_white_24dp);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
         fab.startAnimation(animation);
+//        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getDrawable(R.drawable.avd_uploading);
+//        fab.setBackgroundDrawable(drawable);
+//        if (drawable != null) {
+//            fab.setImageDrawable(drawable);
+//            drawable.start();
+//        }
     }
 
     @Override
     public void hideLoading() {
         fab.setImageResource(R.drawable.ic_add_white_24dp);
         fab.clearAnimation();
+        Snackbar.make(findViewById(R.id.coordinator),
+                Utils.fromHtml("<font color=\"#ffffff\">" + getString(R.string.title_sync_done) + "</font>"),
+                Snackbar.LENGTH_SHORT)
+                .show();
     }
 
     public RxAccountSource getRepo() {

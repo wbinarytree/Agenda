@@ -37,6 +37,7 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
     public static final String TAG = "AccountDetailFragment";
     @BindView(R.id.detail_chart)
     PieChart pieChart;
+    private List<Highlight> highlights;
 
     public static AccountDetailFragment newInstance() {
         Bundle args = new Bundle();
@@ -48,7 +49,6 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_account_detail, container, false);
         ButterKnife.bind(this, view);
         pieChart.setEntryLabelColor(R.color.primary_dark);
@@ -65,7 +65,7 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
                                       .map(accountList -> setupPieData(setUpEntries(accountList)))
                                       .subscribe(pieData -> {
                                           pieChart.setData(pieData);
-                                          pieChart.highlightValue(new Highlight(0, 0, 0));
+                                          selectChart(0);
                                           pieChart.invalidate();
                                       }, throwable -> showError(), this::showNoChart);
 
@@ -83,6 +83,10 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
 
     @NonNull
     private PieData setupPieData(List<PieEntry> pieEntries) {
+        highlights = new ArrayList<>(pieEntries.size());
+        for (int i = 0; i < pieEntries.size(); i++) {
+            highlights.add(new Highlight(i, 0, 0));
+        }
         PieDataSet dataSet = new PieDataSet(pieEntries, getString(R.string.title_summary));
         dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
         dataSet.setValueTextColor(R.color.primary_dark);
@@ -93,14 +97,14 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
     }
 
     @Override
-    public void showWeekDeatail() {
+    public void showWeeklyDetail() {
 
     }
 
     @Override
     public void selectChart(int position) {
-        if (pieChart != null && pieChart.getData() != null) {
-            pieChart.highlightValue(new Highlight(position, 0, 0));
+        if (pieChart != null && pieChart.getData() != null && position <= highlights.size()) {
+            pieChart.highlightValue(highlights.get(position));
         }
     }
 
@@ -119,8 +123,8 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
         IPieDataSet dataSet = pieChart.getData().getDataSet();
         Money minus = account.getIncome().minus(account.getOutcome());
         dataSet.addEntry(new PieEntry(minus.getAmount().floatValue(), account.getAccountName()));
+        highlights.add(new Highlight(highlights.size(), 0, 0));
         pieChart.notifyDataSetChanged();
         pieChart.invalidate();
-
     }
 }

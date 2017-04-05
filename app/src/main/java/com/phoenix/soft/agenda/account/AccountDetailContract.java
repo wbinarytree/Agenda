@@ -11,7 +11,7 @@ public interface AccountDetailContract {
     interface View {
         void showPieChart();
 
-        void showWeekDeatail();
+        void showWeeklyDetail();
 
         void selectChart(int position);
 
