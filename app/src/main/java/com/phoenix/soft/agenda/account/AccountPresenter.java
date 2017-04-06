@@ -1,9 +1,9 @@
 package com.phoenix.soft.agenda.account;
 
-import android.util.Log;
 
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.repos.source.AccountSourceRT;
+import com.phoenix.soft.agenda.repos.source.ValueEvent;
 
 import java.util.List;
 
@@ -13,7 +13,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
 
 /**
  * Created by yaoda on 22/02/17.
@@ -21,6 +20,7 @@ import io.reactivex.observers.DisposableObserver;
 public class AccountPresenter implements AccountContract.Presenter {
 
     private static final String TAG = "AccountPresenter";
+    private final Observable<ValueEvent<Account>> accountUpdate;
     private AccountContract.View view;
     private CompositeDisposable compositeDisposable;
     private AccountSourceRT realTimeRepo;
@@ -31,21 +31,26 @@ public class AccountPresenter implements AccountContract.Presenter {
         this.realTimeRepo = realTime;
         compositeDisposable = new CompositeDisposable();
         accountList = realTimeRepo.getAccountList();
+        accountUpdate = realTimeRepo.getAccountUpdate();
     }
 
     @Override
     public void loadAccount() {
         view.showLoading();
+
         Disposable subscribe = accountList.observeOn(AndroidSchedulers.mainThread())
                                           .doOnEach(disposable -> view.hideLoading())
+                                          .doAfterNext(accounts -> compositeDisposable.add(accountUpdate.subscribe(
+                                                  value -> view.updateAccount(value.getValue(),
+                                                          value.getType()),
+                                                  throwable -> view.showError())))
                                           .subscribe(accounts -> {
-                                                      if (accounts.isEmpty()) {
-                                                          view.showNoAccount();
-                                                      } else {
-                                                          view.showAccountList(accounts);
-                                                      }
-                                                  },
-                                                  throwable -> view.showError());
+                                              if (accounts.isEmpty()) {
+                                                  view.showNoAccount();
+                                              } else {
+                                                  view.showAccountList(accounts);
+                                              }
+                                          }, throwable -> view.showError());
         compositeDisposable.add(subscribe);
     }
 
@@ -74,4 +79,5 @@ public class AccountPresenter implements AccountContract.Presenter {
         this.view = null;
         compositeDisposable.clear();
     }
+
 }

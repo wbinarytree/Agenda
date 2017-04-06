@@ -4,7 +4,7 @@
     <string name="tmp_cost">$400</string>
     <string name="income_title">Income</string>
     <string name="outcome_title">Expense</string>
-    <string name="total_title">Total</string>
+    <string name="total_title">Current</string>
     <string name="img_desc">account_type</string>
     <string name="loading">loading</string>
     <string name="title_main">Home</string>

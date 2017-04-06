@@ -23,5 +23,5 @@ public interface AccountSourceRT {
 
     Observable<Boolean> deleteAccount(Account account);
 
-    Observable<Object> getAccountUpdate();
+    Observable<ValueEvent<Account>> getAccountUpdate();
 }

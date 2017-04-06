@@ -74,7 +74,7 @@ public class AccountSourceRTImpl implements AccountSourceRT {
     }
 
     @Override
-    public Observable<Object> getAccountUpdate() {
+    public Observable<ValueEvent<Account>> getAccountUpdate() {
         return null;
     }
 }

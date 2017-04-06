@@ -1,5 +1,8 @@
 package com.phoenix.soft.agenda.repos.source;
 
+import android.util.ArrayMap;
+
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,10 +26,13 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
     private static final String ACCOUNT = "account";
     private DatabaseReference dbRef;
     private List<Account> actual;
+    private ArrayMap<String, Account> accountMap;
 
     public AccountSourceRTFirebase(DatabaseReference dbRef) {
         this.dbRef = dbRef.child(ACCOUNT);
+        accountMap = new ArrayMap<>();
     }
+
 
     private static List<Account> parserList(DataSnapshot dataSnapshot) {
         List<Account> vList = Collections.synchronizedList(new ArrayList<Account>());
@@ -42,6 +48,7 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
         return fire.toModule();
     }
 
+    //Keep
     @Override
     public Observable<List<Account>> getAccountList() {
         return Observable.create((ObservableEmitter<DataSnapshot> e) -> {
@@ -50,6 +57,7 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (!e.isDisposed()) {
                         e.onNext(dataSnapshot);
+//                        e.onComplete();
                     }
                 }
 
@@ -60,78 +68,79 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
                     }
                 }
             };
-            dbRef.addValueEventListener(valueEventListener);
+            dbRef.addListenerForSingleValueEvent(valueEventListener);
+//            dbRef.addValueEventListener(valueEventListener);
             e.setCancellable(() -> dbRef.removeEventListener(valueEventListener));
         }).map(dataSnapshot -> {
             this.actual = parserList(dataSnapshot);
+            for (Account account : actual) {
+                accountMap.put(account.getKey(), account);
+            }
             return this.actual;
-        });
+        }).replay(1).autoConnect();
     }
 
     @Override
-    public Observable<Object> getAccountUpdate() {
-        return null;
-//        return GroupedObservable.create(e -> {
-//            ChildEventListener childEventListener = new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                    if (!e.isDisposed()) {
-//                        Account account = parser(dataSnapshot);
-//                        boolean contains = false;
-//                        for (Account a : actual) {
-//                            if (a.getKey().equals(account.getKey())) {
-//                                contains = true;
-//                                break;
-//                            }
-//                        }
-//                        if (!contains) {
-//                            actual.add(account);
-//                            e.onNext(INSTANCE);
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                    if (!e.isDisposed()) {
-//                        Account account = parser(dataSnapshot);
-//                        for (int i = 0; i < actual.size(); i++) {
-//                            if (actual.get(i).getKey().equals(account.getKey())) {
-//                                actual.set(i, account);
-//                                e.onNext(INSTANCE);
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onChildRemoved(DataSnapshot dataSnapshot) {
-//                    if (!e.isDisposed()) {
-//                        Account account = parser(dataSnapshot);
-//                        if (actual.remove(account)) {
-//                            e.onNext(INSTANCE);
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//                    if (!e.isDisposed()) {
-//                        // TODO: 05/04/17
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//                    if (!e.isDisposed()) {
-//                        e.onError(new Throwable(databaseError.getMessage()));
-//                    }
-//                }
-//            };
-//            dbRef.addChildEventListener(childEventListener);
-//            e.setCancellable(() -> dbRef.removeEventListener(childEventListener));
-//        }).share();
+    public Observable<ValueEvent<Account>> getAccountUpdate() {
+        return Observable.create((ObservableEmitter<ValueEvent<Account>> e) -> {
+            ChildEventListener childEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    if (!e.isDisposed()) {
+                        Account account = parser(dataSnapshot);
+                        String key = dataSnapshot.getKey();
+                        if (!accountMap.containsKey(key)) {
+                            actual.add(account);
+                            accountMap.put(key, account);
+                            e.onNext(new ValueEvent<>(account, EventType.TYPE_ADD));
+                        }
+                    }
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    if (!e.isDisposed()) {
+                        Account account = parser(dataSnapshot);
+                        String key = dataSnapshot.getKey();
+                        Account accountInMap = accountMap.get(key);
+                        if (accountInMap != null) {
+                            actual.set(actual.indexOf(accountInMap), account);
+                            accountMap.put(key, account);
+                            e.onNext(new ValueEvent<>(account, EventType.TYPE_UPDATE));
+                        }
+                    }
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    if (!e.isDisposed()) {
+                        Account account = parser(dataSnapshot);
+                        String key = dataSnapshot.getKey();
+                        if (accountMap.containsKey(key)) {
+                            actual.remove(accountMap.get(key));
+                            accountMap.remove(key);
+                            e.onNext(new ValueEvent<>(account, EventType.TYPE_DELETE));
+                        }
+                    }
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    if (!e.isDisposed()) {
+                        // TODO: 05/04/17
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    if (!e.isDisposed()) {
+                        e.onError(new Throwable(databaseError.getMessage()));
+                    }
+                }
+            };
+            dbRef.addChildEventListener(childEventListener);
+            e.setCancellable(() -> dbRef.removeEventListener(childEventListener));
+        }).share();
     }
 
     @Override
@@ -155,7 +164,7 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
             }
         }
         if (position == -1) {
-            return Observable.just(false);
+            return Observable.error(new Throwable("Cant find Account match :" + account.getKey() + "in repository"));
         } else {
             return Observable.just(dbRef.child(actual.toString())
                                         .setValue(account.toAccountFire())

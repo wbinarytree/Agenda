@@ -38,6 +38,8 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
     @BindView(R.id.detail_chart)
     PieChart pieChart;
     private List<Highlight> highlights;
+    private List<Account> accountList;
+
 
     public static AccountDetailFragment newInstance() {
         Bundle args = new Bundle();
@@ -68,11 +70,11 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
                                           selectChart(0);
                                           pieChart.invalidate();
                                       }, throwable -> showError(), this::showNoChart);
-
     }
 
     @NonNull
-    private List<PieEntry> setUpEntries(List<Account> accountList) {
+    private List<PieEntry> setUpEntries(List<Account> list) {
+        this.accountList = list;
         List<PieEntry> entries = new ArrayList<>(accountList.size());
         for (Account account : accountList) {
             Money minus = account.getIncome().minus(account.getOutcome());
@@ -103,8 +105,11 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
 
     @Override
     public void selectChart(int position) {
-        if (pieChart != null && pieChart.getData() != null && position <= highlights.size()) {
+        if (pieChart != null && pieChart.getData() != null && position < highlights.size()) {
             pieChart.highlightValue(highlights.get(position));
+        }
+        if (position < accountList.size()) {
+
         }
     }
 
@@ -119,11 +124,38 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
     }
 
     @Override
-    public void updateChart(Account account) {
+    public void addAccountToChart(Account account) {
         IPieDataSet dataSet = pieChart.getData().getDataSet();
         Money minus = account.getIncome().minus(account.getOutcome());
         dataSet.addEntry(new PieEntry(minus.getAmount().floatValue(), account.getAccountName()));
         highlights.add(new Highlight(highlights.size(), 0, 0));
+        pieChart.notifyDataSetChanged();
+        pieChart.invalidate();
+    }
+
+    @Override
+    public void deleteAccountToChart(Account account) {
+        IPieDataSet dataSet = pieChart.getData().getDataSet();
+        int index = -1;
+        for (int i = 0; i < dataSet.getEntryCount(); i++) {
+            PieEntry entry = dataSet.getEntryForIndex(i);
+            if (entry.getLabel().equals(account.getAccountName())) {
+                index = i;
+            }
+        }
+        if (index != -1) {
+            dataSet.removeEntry(index);
+        }
+        pieChart.notifyDataSetChanged();
+        pieChart.invalidate();
+    }
+
+    @Override
+    public void updateAccountChart(Account account) {
+        IPieDataSet dataSet = pieChart.getData().getDataSet();
+        PieEntry entry = dataSet.getEntryForIndex(accountList.indexOf(account));
+        entry.setY(account.getIncome().minus(account.getOutcome()).getAmount().floatValue());
+        entry.setLabel(account.getAccountName());
         pieChart.notifyDataSetChanged();
         pieChart.invalidate();
     }

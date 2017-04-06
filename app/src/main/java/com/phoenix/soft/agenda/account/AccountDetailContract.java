@@ -19,7 +19,11 @@ public interface AccountDetailContract {
 
         void showError();
 
-        void updateChart(Account account);
+        void updateAccountChart(Account account);
+
+        void addAccountToChart(Account account);
+
+        void deleteAccountToChart(Account account);
     }
 
     interface Presneter extends BaseContract.BasePresenter {

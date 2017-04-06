@@ -2,6 +2,7 @@ package com.phoenix.soft.agenda.account;
 
 import com.phoenix.soft.agenda.BaseContract;
 import com.phoenix.soft.agenda.module.Account;
+import com.phoenix.soft.agenda.repos.source.EventType;
 
 import java.util.List;
 
@@ -19,7 +20,8 @@ public interface AccountContract   {
 
         void update();
 
-        void updateAccount(Account account);
+        void updateAccount(Account account, EventType updateType);
+
 
         void showModifyAccount();
 
