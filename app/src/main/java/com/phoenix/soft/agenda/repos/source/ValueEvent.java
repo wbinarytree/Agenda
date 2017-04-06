@@ -6,18 +6,18 @@ package com.phoenix.soft.agenda.repos.source;
 
 public class ValueEvent<T> {
     private T value;
-    private Notification type;
+    private EventType type;
 
-    public ValueEvent(T value, Notification type) {
+    public ValueEvent(T value, EventType type) {
         this.value = value;
         this.type = type;
     }
 
-    public Notification getType() {
+    public EventType getType() {
         return type;
     }
 
-    public void setType(Notification type) {
+    public void setType(EventType type) {
         this.type = type;
     }
 
