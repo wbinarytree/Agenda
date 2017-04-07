@@ -20,6 +20,7 @@ public interface TransactionContract {
 
     interface Presenter extends BaseContract.BasePresenter<View> {
         void loadDetailList();
-        void addDetail(String number, boolean add);
+
+        void addDetail(Transaction transaction);
     }
 }

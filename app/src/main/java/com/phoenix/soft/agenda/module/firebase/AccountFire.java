@@ -5,6 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.rxfirebase.FirebaseModule;
 
+import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
 import java.util.List;
@@ -22,14 +23,26 @@ public class AccountFire implements FirebaseModule<Account> {
     private long accountID;
     private String income;
     private String outcome;
+    private String currency;
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    @Exclude
     private List<TransactionFire> detailList;
 
-    public AccountFire(String accountName, String accountPicUrl, long accountID, String income, String outcome) {
+    public AccountFire(String accountName, String accountPicUrl, long accountID, String income, String outcome,String currency) {
         this.accountName = accountName;
         this.accountPicUrl = accountPicUrl;
         this.accountID = accountID;
         this.income = income;
         this.outcome = outcome;
+        this.currency = currency;
     }
 
     public AccountFire() {
@@ -65,6 +78,7 @@ public class AccountFire implements FirebaseModule<Account> {
         account.setIncome(Money.parse(getIncome()));
         account.setOutcome(Money.parse(getOutcome()));
         account.setKey(getKey());
+        account.setCurrency(CurrencyUnit.of(currency));
         // account.setTransactionList();
         return account;
     }

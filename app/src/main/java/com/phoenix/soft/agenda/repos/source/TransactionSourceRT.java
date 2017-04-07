@@ -14,6 +14,8 @@ import io.reactivex.Observable;
 public interface TransactionSourceRT {
     Observable<List<Transaction>> getTransactionList();
 
+    Observable<ValueEvent<Transaction>> getTransactionUpdate();
+
     Maybe<Transaction> getTransaction(String id);
 
     Observable<Boolean> addTransaction(Transaction transaction);

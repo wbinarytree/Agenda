@@ -1,4 +1,4 @@
-package com.phoenix.soft.agenda.dagger;
+package com.phoenix.soft.agenda.account.di;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,5 +11,5 @@ import javax.inject.Scope;
 @Scope
 @Retention(RetentionPolicy.RUNTIME)
 
-public @interface FragmentScope {
+public @interface AccountRepoScope {
 }

@@ -27,6 +27,7 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
     private DatabaseReference dbRef;
     private List<Account> actual;
     private ArrayMap<String, Account> accountMap;
+    private Observable<ValueEvent<Account>> accoutUpdate;
 
     public AccountSourceRTFirebase(DatabaseReference dbRef) {
         this.dbRef = dbRef.child(ACCOUNT);
@@ -37,18 +38,24 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
     private static List<Account> parserList(DataSnapshot dataSnapshot) {
         List<Account> vList = Collections.synchronizedList(new ArrayList<Account>());
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-            vList.add(parser(snapshot));
+            Account account = parser(snapshot);
+            if (account != null) {
+                vList.add(account);
+            }
         }
         return vList;
     }
 
     private static Account parser(DataSnapshot dataSnapshot) {
         AccountFire fire = dataSnapshot.getValue(AccountFire.class);
-        fire.setKey(dataSnapshot.getKey());
-        return fire.toModule();
+        if (fire != null) {
+            fire.setKey(dataSnapshot.getKey());
+            return fire.toModule();
+        } else {
+            return null;
+        }
     }
 
-    //Keep
     @Override
     public Observable<List<Account>> getAccountList() {
         return Observable.create((ObservableEmitter<DataSnapshot> e) -> {
@@ -82,65 +89,68 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
 
     @Override
     public Observable<ValueEvent<Account>> getAccountUpdate() {
-        return Observable.create((ObservableEmitter<ValueEvent<Account>> e) -> {
-            ChildEventListener childEventListener = new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    if (!e.isDisposed()) {
-                        Account account = parser(dataSnapshot);
-                        String key = dataSnapshot.getKey();
-                        if (!accountMap.containsKey(key)) {
-                            actual.add(account);
-                            accountMap.put(key, account);
-                            e.onNext(new ValueEvent<>(account, EventType.TYPE_ADD));
+        if (accoutUpdate == null) {
+            accoutUpdate = Observable.create((ObservableEmitter<ValueEvent<Account>> e) -> {
+                ChildEventListener childEventListener = new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        if (!e.isDisposed()) {
+                            Account account = parser(dataSnapshot);
+                            String key = dataSnapshot.getKey();
+                            if (!accountMap.containsKey(key)) {
+                                actual.add(account);
+                                accountMap.put(key, account);
+                                e.onNext(new ValueEvent<>(account, EventType.TYPE_ADD));
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                    if (!e.isDisposed()) {
-                        Account account = parser(dataSnapshot);
-                        String key = dataSnapshot.getKey();
-                        Account accountInMap = accountMap.get(key);
-                        if (accountInMap != null) {
-                            actual.set(actual.indexOf(accountInMap), account);
-                            accountMap.put(key, account);
-                            e.onNext(new ValueEvent<>(account, EventType.TYPE_UPDATE));
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        if (!e.isDisposed()) {
+                            Account account = parser(dataSnapshot);
+                            String key = dataSnapshot.getKey();
+                            Account accountInMap = accountMap.get(key);
+                            if (accountInMap != null) {
+                                actual.set(actual.indexOf(accountInMap), account);
+                                accountMap.put(key, account);
+                                e.onNext(new ValueEvent<>(account, EventType.TYPE_UPDATE));
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    if (!e.isDisposed()) {
-                        Account account = parser(dataSnapshot);
-                        String key = dataSnapshot.getKey();
-                        if (accountMap.containsKey(key)) {
-                            actual.remove(accountMap.get(key));
-                            accountMap.remove(key);
-                            e.onNext(new ValueEvent<>(account, EventType.TYPE_DELETE));
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        if (!e.isDisposed()) {
+                            Account account = parser(dataSnapshot);
+                            String key = dataSnapshot.getKey();
+                            if (accountMap.containsKey(key)) {
+                                actual.remove(accountMap.get(key));
+                                accountMap.remove(key);
+                                e.onNext(new ValueEvent<>(account, EventType.TYPE_DELETE));
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                    if (!e.isDisposed()) {
-                        // TODO: 05/04/17
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                        if (!e.isDisposed()) {
+                            // TODO: 05/04/17
+                        }
                     }
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    if (!e.isDisposed()) {
-                        e.onError(new Throwable(databaseError.getMessage()));
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        if (!e.isDisposed()) {
+                            e.onError(new Throwable(databaseError.getMessage()));
+                        }
                     }
-                }
-            };
-            dbRef.addChildEventListener(childEventListener);
-            e.setCancellable(() -> dbRef.removeEventListener(childEventListener));
-        }).share();
+                };
+                dbRef.addChildEventListener(childEventListener);
+                e.setCancellable(() -> dbRef.removeEventListener(childEventListener));
+            }).share();
+        }
+        return accoutUpdate;
     }
 
     @Override
@@ -166,7 +176,7 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
         if (position == -1) {
             return Observable.error(new Throwable("Cant find Account match :" + account.getKey() + "in repository"));
         } else {
-            return Observable.just(dbRef.child(actual.toString())
+            return Observable.just(dbRef.child(account.getKey())
                                         .setValue(account.toAccountFire())
                                         .isSuccessful());
         }

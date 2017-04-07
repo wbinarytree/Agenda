@@ -8,5 +8,5 @@ public enum  EventType {
     TYPE_ADD,
     TYPE_DELETE,
     TYPE_MOVE,
-    TYPE_UPDATE;
+    TYPE_UPDATE
 }
