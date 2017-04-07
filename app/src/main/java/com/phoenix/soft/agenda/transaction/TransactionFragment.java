@@ -94,6 +94,12 @@ public class TransactionFragment extends Fragment implements TransactionContract
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        presenter.detachView();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         presenter.detachView();
@@ -102,8 +108,8 @@ public class TransactionFragment extends Fragment implements TransactionContract
 
     @Override
     public void showTransactionList(List<Transaction> transactions) {
-        account.setTransactionList(transactions);
-        transactionListAdapter = new TransactionListAdapter(account);
+//        account.setTransactionList(transactions);
+        transactionListAdapter = new TransactionListAdapter(transactions);
         LinearLayoutManager layout = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL,
                 false);

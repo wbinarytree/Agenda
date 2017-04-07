@@ -1,6 +1,7 @@
 package com.phoenix.soft.agenda;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     private List<Account> accountList;
     private CompositeDisposable disposable = new CompositeDisposable();
     private boolean isExpand;
+    private boolean isLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,11 +100,14 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         viewPager.setPageMargin(20);
 
         if (savedInstanceState == null) {
+            isLoaded = false;
             getSupportFragmentManager().beginTransaction()
                                        .replace(R.id.container_detail,
                                                AccountDetailFragment.newInstance(),
                                                AccountDetailFragment.TAG)
                                        .commit();
+        } else {
+            isLoaded = savedInstanceState.getBoolean("isLoaded");
         }
 
         appbar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> isExpand = verticalOffset == 0);
@@ -113,7 +118,10 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     protected void onStart() {
         super.onStart();
         presenter.attachView(this);
-        presenter.loadAccount();
+        if (!isLoaded) {
+            presenter.loadAccount();
+            isLoaded = true;
+        }
     }
 
     private void updateViewByPagerContent(int position) {
@@ -170,8 +178,19 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     protected void onStop() {
         super.onStop();
-        disposable.clear();
         presenter.detachView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposable.clear();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putBoolean("isLoaded", isLoaded);
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     public AccountContract.Presenter getPresenter() {
@@ -197,7 +216,8 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
             appbar.setExpanded(true, true);
         }
         disposable.add(RxView.clicks(fab)
-                             .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem()).onClick()));
+                             .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem())
+                                                    .onClick()));
         disposable.add(RxViewPager.pageSelections(viewPager).subscribe(position -> {
             if (!fab.isShown()) {
                 fab.show();
