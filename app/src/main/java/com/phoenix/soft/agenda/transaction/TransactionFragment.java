@@ -15,12 +15,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.phoenix.soft.agenda.MainActivity;
+import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.R;
-import com.phoenix.soft.agenda.utils.Utils;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.module.Transaction;
+import com.phoenix.soft.agenda.transaction.di.DaggerTransactionComponent;
+import com.phoenix.soft.agenda.transaction.di.TransactionModule;
+import com.phoenix.soft.agenda.utils.Utils;
 
+import org.joda.money.Money;
+
+import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,8 +46,9 @@ public class TransactionFragment extends Fragment implements TransactionContract
     private static final int REQUEST_CODE_DETAIL = 0xF1;
     @BindView(R.id.detail_list)
     RecyclerView detailRecyclerList;
+    @Inject
+    TransactionPresenter presenter;
     private Unbinder bind;
-    private TransactionContract.Presenter presenter;
     private TransactionListAdapter transactionListAdapter;
     private Account account;
 
@@ -55,17 +64,22 @@ public class TransactionFragment extends Fragment implements TransactionContract
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        account = (Account) getArguments().get("detail");
+        DaggerTransactionComponent.builder()
+                                  .firebaseComponent(MainApplication.getFirebaseComponent())
+                                  .transactionModule(new TransactionModule(account))
+                                  .build()
+                                  .inject(this);
         View view = inflater.inflate(R.layout.fragment_detail_list, container, false);
         bind = ButterKnife.bind(this, view);
-        account = (Account) getArguments().get("detail");
         setRetainInstance(true);
         Log.d(TAG, "onCreateView: ");
         return view;
     }
-
-    public void setPresenter(TransactionContract.Presenter presenter) {
-        this.presenter = presenter;
-    }
+//
+//    public void setPresenter(TransactionContract.Presenter presenter) {
+//        this.presenter = presenter;
+//    }
 
     @Override
     public void onStart() {
@@ -90,8 +104,11 @@ public class TransactionFragment extends Fragment implements TransactionContract
     public void showTransactionList(List<Transaction> transactions) {
         account.setTransactionList(transactions);
         transactionListAdapter = new TransactionListAdapter(account);
-        LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        detailRecyclerList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        LinearLayoutManager layout = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL,
+                false);
+        detailRecyclerList.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
         detailRecyclerList.setAdapter(transactionListAdapter);
         detailRecyclerList.setLayoutManager(layout);
         detailRecyclerList.setItemAnimator(new SlideInLeftAnimator());
@@ -129,8 +146,9 @@ public class TransactionFragment extends Fragment implements TransactionContract
 
     @Override
     public void showError(String errorMessage) {
-        Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">" + errorMessage + "</font>"), Snackbar.LENGTH_SHORT)
-                                    .setAction("RETRY", v -> presenter.loadDetailList());
+        Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.coordinator),
+                Utils.fromHtml("<font color=\"#ffffff\">" + errorMessage + "</font>"),
+                Snackbar.LENGTH_SHORT).setAction("RETRY", v -> presenter.loadDetailList());
         snackbar.show();
     }
 
@@ -140,7 +158,18 @@ public class TransactionFragment extends Fragment implements TransactionContract
         switch (requestCode) {
             case REQUEST_CODE_DETAIL:
                 if (resultCode == RESULT_OK) {
-                    presenter.addDetail(data.getStringExtra("mountNumber"), data.getBooleanExtra("isAdd", false));
+                    String number = data.getStringExtra("mountNumber");
+                    boolean add = data.getBooleanExtra("isAdd", false);
+                    Money money = add
+                                  ? Money.parse(account.getCurrency() + number)
+                                  : Money.parse(account.getCurrency() + " -" + number);
+                    Transaction transaction = new Transaction();
+                    transaction.setMoney(money);
+                    transaction.setDate(new Date());
+                    transaction.setDesc("temp desc");
+                    MainActivity activity = (MainActivity) getActivity();
+                    activity.getPresenter().updateTransactionToAccount(transaction, account);
+                    presenter.addDetail(transaction);
                 }
         }
     }

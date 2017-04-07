@@ -1,11 +1,10 @@
 package com.phoenix.soft.agenda.account.di;
 
-import com.phoenix.soft.agenda.account.AccountContract;
-import com.phoenix.soft.agenda.account.AccountPresenter;
-import com.phoenix.soft.agenda.dagger.FirebaseModule;
+import com.google.firebase.database.DatabaseReference;
 import com.phoenix.soft.agenda.repos.source.AccountSourceRT;
+import com.phoenix.soft.agenda.repos.source.AccountSourceRTFirebase;
 
-import javax.inject.Singleton;
+import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,19 +15,10 @@ import dagger.Provides;
 
 @Module
 public class AccountPresenterModule {
-//    private final AccountContract.View mView;
-//
-//    public AccountPresenterModule(AccountContract.View view) {
-//        mView = view;
-//    }
-//    @Provides
-//    AccountContract.View provideAccountContractView() {
-//        return mView;
-//    }
-//
-//    @Singleton
-//    @Provides
-//    AccountPresenter providePresenter(AccountSourceRT repo){
-//        return new AccountPresenter(repo);
-//    }
+    @AccountRepoScope
+    @Provides
+    AccountSourceRT provideRealTimeAccountSource(@Named("Account") DatabaseReference dbRef){
+        return new AccountSourceRTFirebase(dbRef);
+    }
+
 }

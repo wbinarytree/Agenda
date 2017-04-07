@@ -4,14 +4,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.phoenix.soft.agenda.repos.TransactionRxSource;
-import com.phoenix.soft.agenda.repos.source.AccountSourceRT;
-import com.phoenix.soft.agenda.repos.source.AccountSourceRTFirebase;
-import com.phoenix.soft.agenda.repos.source.FirebaseRxAccountSource;
-import com.phoenix.soft.agenda.repos.FirebaseRxTransactionRepository;
-import com.phoenix.soft.agenda.repos.RxAccountSource;
-import com.phoenix.soft.agenda.repos.RxTransactionRepository;
-import com.phoenix.soft.agenda.repos.source.RxAccountRepository;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -27,50 +19,22 @@ import dagger.Provides;
 public class FirebaseModule {
     @Provides
     @Singleton
-    FirebaseAuth provideFirebaseAuth(){
+    FirebaseAuth provideFirebaseAuth() {
         return FirebaseAuth.getInstance();
     }
+
     @Provides
     @Singleton
     @Named("Account")
-    DatabaseReference provideAccountDatabaseRef(FirebaseUser user){
+    DatabaseReference provideAccountDatabaseRef(FirebaseUser user) {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         return FirebaseDatabase.getInstance().getReference().child("user").child(user.getUid());
     }
 
     @Provides
     @Singleton
-    FirebaseUser provideUser(FirebaseAuth auth){
+    FirebaseUser provideUser(FirebaseAuth auth) {
         return auth.getCurrentUser();
-    }
-
-    @Provides
-    @Singleton
-    FirebaseRxAccountSource provideRxRepo(@Named("Account") DatabaseReference dbRef){
-        return new FirebaseRxAccountSource(dbRef);
-    }
-
-    @Provides
-    @Singleton
-    RxAccountSource provideRxSource(FirebaseRxAccountSource repo){
-        return  new RxAccountRepository(null,repo);
-    }
-
-
-    @Provides
-    RxTransactionRepository provideRxTransRepo(@Named("Account") DatabaseReference dbRef,String key){
-        return new FirebaseRxTransactionRepository(key,dbRef);
-    }
-
-    @Provides
-    TransactionRxSource provideRxTransSoure(@Named("Account") DatabaseReference dbRef,String key){
-        return new TransactionRxSource(key,dbRef);
-    }
-
-    @Singleton
-    @Provides
-    AccountSourceRT provideRealTimeSource(@Named("Account") DatabaseReference dbRef){
-        return new AccountSourceRTFirebase(dbRef);
     }
 
 }

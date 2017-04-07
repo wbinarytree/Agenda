@@ -2,6 +2,7 @@ package com.phoenix.soft.agenda.account;
 
 import com.phoenix.soft.agenda.BaseContract;
 import com.phoenix.soft.agenda.module.Account;
+import com.phoenix.soft.agenda.module.Transaction;
 import com.phoenix.soft.agenda.repos.source.EventType;
 
 import java.util.List;
@@ -39,5 +40,6 @@ public interface AccountContract   {
 
         void deleteAccount(Account account);
 
+        void updateTransactionToAccount(Transaction transaction, Account account);
     }
 }

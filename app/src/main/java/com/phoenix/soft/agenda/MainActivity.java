@@ -30,7 +30,6 @@ import com.phoenix.soft.agenda.account.AccountPagerAdapter;
 import com.phoenix.soft.agenda.account.AccountPresenter;
 import com.phoenix.soft.agenda.account.di.DaggerAccountPresenterComponent;
 import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.repos.RxAccountSource;
 import com.phoenix.soft.agenda.repos.source.EventType;
 import com.phoenix.soft.agenda.utils.Utils;
 import com.squareup.picasso.Picasso;
@@ -69,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     @Inject
-    RxAccountSource rxAccountRepository;
-    @Inject
     AccountPresenter presenter;
     private int count = 0;
     private AccountPagerAdapter adapter;
@@ -90,7 +87,11 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawerLayout,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         tabLayout.setupWithViewPager(viewPager);
@@ -98,7 +99,9 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                                       .replace(R.id.container_detail, AccountDetailFragment.newInstance(), AccountDetailFragment.TAG)
+                                       .replace(R.id.container_detail,
+                                               AccountDetailFragment.newInstance(),
+                                               AccountDetailFragment.TAG)
                                        .commit();
         }
 
@@ -119,7 +122,8 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
                .noFade()
                .resize(400, 800)
                .into(imageToolBar);
-        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(AccountDetailFragment.TAG);
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
+                AccountDetailFragment.TAG);
         if (fragment != null) {
             fragment.selectChart(position);
 
@@ -185,15 +189,15 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         adapter = new AccountPagerAdapter(getSupportFragmentManager(), this.accountList);
         viewPager.setAdapter(adapter);
 
-        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(AccountDetailFragment.TAG);
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
+                AccountDetailFragment.TAG);
         if (fragment != null) {
             fragment.showPieChart();
             detailContainer.setVisibility(View.VISIBLE);
             appbar.setExpanded(true, true);
         }
         disposable.add(RxView.clicks(fab)
-                             .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem())
-                                                    .onClick()));
+                             .subscribe(o -> adapter.getFragment(viewPager.getCurrentItem()).onClick()));
         disposable.add(RxViewPager.pageSelections(viewPager).subscribe(position -> {
             if (!fab.isShown()) {
                 fab.show();
@@ -213,7 +217,9 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     public void showError() {
         appbar.setExpanded(false);
-        Snackbar.make(findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">" + getString(R.string.error_title_sync) + "</font>"), Snackbar.LENGTH_SHORT)
+        Snackbar.make(findViewById(R.id.coordinator),
+                Utils.fromHtml("<font color=\"#ffffff\">" + getString(R.string.error_title_sync) + "</font>"),
+                Snackbar.LENGTH_SHORT)
                 .setAction(getString(R.string.title_retry), v -> presenter.loadAccount())
                 .show();
         errorLayout.setVisibility(View.VISIBLE);
@@ -229,9 +235,12 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     public void updateAccount(Account account, EventType type) {
         viewPager.getAdapter().notifyDataSetChanged();
-        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(AccountDetailFragment.TAG);
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
+                AccountDetailFragment.TAG);
         if (type == EventType.TYPE_ADD) {
             fragment.addAccountToChart(account);
+            fragment.selectChart(accountList.indexOf(account));
+            viewPager.setCurrentItem(accountList.indexOf(account));
         } else if (type == EventType.TYPE_UPDATE) {
             fragment.updateAccountChart(account);
         } else if (type == EventType.TYPE_DELETE) {
@@ -264,13 +273,11 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     public void hideLoading() {
         fab.setImageResource(R.drawable.ic_add_white_24dp);
         fab.clearAnimation();
-        Snackbar.make(findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">" + getString(R.string.title_sync_done) + "</font>"), Snackbar.LENGTH_SHORT)
-                .show();
+        Snackbar.make(findViewById(R.id.coordinator),
+                Utils.fromHtml("<font color=\"#ffffff\">" + getString(R.string.title_sync_done) + "</font>"),
+                Snackbar.LENGTH_SHORT).show();
     }
 
-    public RxAccountSource getRepo() {
-        return this.rxAccountRepository;
-    }
 
     public interface FabClick {
         void onClick();

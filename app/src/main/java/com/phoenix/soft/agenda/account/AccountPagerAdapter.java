@@ -28,9 +28,7 @@ public class AccountPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        TransactionFragment transactionFragment = TransactionFragment.newInstance(accounts.get(position));
-        transactionFragment.setPresenter(new TransactionPresenter(accounts.get(position).getKey()));
-        return transactionFragment;
+        return TransactionFragment.newInstance(accounts.get(position));
     }
 
     @Override

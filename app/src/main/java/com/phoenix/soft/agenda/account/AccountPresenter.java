@@ -2,6 +2,7 @@ package com.phoenix.soft.agenda.account;
 
 
 import com.phoenix.soft.agenda.module.Account;
+import com.phoenix.soft.agenda.module.Transaction;
 import com.phoenix.soft.agenda.repos.source.AccountSourceRT;
 import com.phoenix.soft.agenda.repos.source.ValueEvent;
 
@@ -40,10 +41,11 @@ public class AccountPresenter implements AccountContract.Presenter {
 
         Disposable subscribe = accountList.observeOn(AndroidSchedulers.mainThread())
                                           .doOnEach(disposable -> view.hideLoading())
-                                          .doAfterNext(accounts -> compositeDisposable.add(accountUpdate.subscribe(
-                                                  value -> view.updateAccount(value.getValue(),
+                                          .doAfterNext(accounts -> compositeDisposable.add(
+                                                  accountUpdate.subscribe(value -> view.updateAccount(
+                                                          value.getValue(),
                                                           value.getType()),
-                                                  throwable -> view.showError())))
+                                                          throwable -> view.showError())))
                                           .subscribe(accounts -> {
                                               if (accounts.isEmpty()) {
                                                   view.showNoAccount();
@@ -78,6 +80,16 @@ public class AccountPresenter implements AccountContract.Presenter {
     public void detachView() {
         this.view = null;
         compositeDisposable.clear();
+    }
+
+    @Override
+    public void updateTransactionToAccount(Transaction transaction, Account account) {
+        if (transaction.getMoney().isNegative()) {
+            account.setOutcome(account.getOutcome().plus(transaction.getMoney().abs()));
+        } else {
+            account.setIncome(account.getIncome().plus(transaction.getMoney()));
+        }
+        realTimeRepo.updateAccount(account);
     }
 
 }

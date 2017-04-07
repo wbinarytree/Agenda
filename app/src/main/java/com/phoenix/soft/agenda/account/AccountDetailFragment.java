@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -33,12 +34,14 @@ import butterknife.ButterKnife;
 
 public class AccountDetailFragment extends Fragment implements AccountDetailContract.View {
 
-
     public static final String TAG = "AccountDetailFragment";
     @BindView(R.id.detail_chart)
     PieChart pieChart;
+    @BindView(R.id.tv_total)
+    TextView textView;
     private List<Highlight> highlights;
     private List<Account> accountList;
+
 
 
     public static AccountDetailFragment newInstance() {
@@ -109,7 +112,10 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
             pieChart.highlightValue(highlights.get(position));
         }
         if (position < accountList.size()) {
-
+            Account account = accountList.get(position);
+            Money minus = account.getIncome().minus(account.getOutcome());
+            String text = minus.getCurrencyUnit().getSymbol() + minus.getAmount().toString();
+            textView.setText(text);
         }
     }
 
@@ -154,9 +160,12 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
     public void updateAccountChart(Account account) {
         IPieDataSet dataSet = pieChart.getData().getDataSet();
         PieEntry entry = dataSet.getEntryForIndex(accountList.indexOf(account));
-        entry.setY(account.getIncome().minus(account.getOutcome()).getAmount().floatValue());
+        Money minus = account.getIncome().minus(account.getOutcome());
+        entry.setY(minus.getAmount().floatValue());
         entry.setLabel(account.getAccountName());
         pieChart.notifyDataSetChanged();
         pieChart.invalidate();
+        String text = minus.getCurrencyUnit().getSymbol() + minus.getAmount().toString();
+        textView.setText(text);
     }
 }

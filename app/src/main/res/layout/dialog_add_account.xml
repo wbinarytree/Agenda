@@ -1,45 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
-        android:layout_gravity="center"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_width="240dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
 
         <EditText
             android:id="@+id/et_name"
             android:layout_width="match_parent"
-            android:inputType="numberDecimal"
             android:layout_height="wrap_content"
             android:hint="@string/account_name"
             android:imeOptions="actionNext"
-            android:maxLines="1" />
+            android:inputType="text"
+            android:maxLines="1"/>
     </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:layout_gravity="center"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="240dp"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/et_mount"
-            android:layout_width="match_parent"
-            android:inputType="number|numberSigned"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:hint="@string/mount"
-            android:imeOptions="actionDone"
-            android:maxLines="1" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
+
+            <EditText
+                android:id="@+id/et_mount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/mount"
+                android:imeOptions="actionDone"
+                android:inputType="number|numberSigned"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:layout_gravity="center|end"
+            android:id="@+id/currency_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>

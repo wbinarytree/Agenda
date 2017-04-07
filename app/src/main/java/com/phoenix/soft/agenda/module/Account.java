@@ -9,6 +9,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import com.phoenix.soft.agenda.module.firebase.AccountFire;
 import com.phoenix.soft.agenda.rxfirebase.FirebaseModule;
 
+import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
 import java.io.Serializable;
@@ -19,7 +20,7 @@ import java.util.List;
  * Created by yaoda on 22/02/17.
  */
 @IgnoreExtraProperties
-public class Account implements Parcelable,Serializable,FirebaseModule.ToFire<AccountFire,Account> {
+public class Account implements Parcelable, Serializable, FirebaseModule.ToFire<AccountFire, Account> {
     @Exclude
     public static final Parcelable.Creator<Account> CREATOR = new Parcelable.Creator<Account>() {
         @Override
@@ -32,6 +33,7 @@ public class Account implements Parcelable,Serializable,FirebaseModule.ToFire<Ac
             return new Account[size];
         }
     };
+    private CurrencyUnit currency;
     private String accountName;
     private String accountPicUrl;
     private long accountID;
@@ -41,18 +43,8 @@ public class Account implements Parcelable,Serializable,FirebaseModule.ToFire<Ac
     private Money income;
     @Exclude
     private Money outcome;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
     @Exclude
     private String key;
-
     public Account() {
     }
 
@@ -64,6 +56,22 @@ public class Account implements Parcelable,Serializable,FirebaseModule.ToFire<Ac
         in.readList(this.transactionList, Transaction.class.getClassLoader());
         this.income = (Money) in.readSerializable();
         this.outcome = (Money) in.readSerializable();
+    }
+
+    public CurrencyUnit getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(CurrencyUnit currency) {
+        this.currency = currency;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getAccountName() {
@@ -113,11 +121,13 @@ public class Account implements Parcelable,Serializable,FirebaseModule.ToFire<Ac
     public void setOutcome(Money outcome) {
         this.outcome = outcome;
     }
+
     @Exclude
     @Override
     public int describeContents() {
         return 0;
     }
+
     @Exclude
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -129,10 +139,14 @@ public class Account implements Parcelable,Serializable,FirebaseModule.ToFire<Ac
         dest.writeSerializable(this.outcome);
     }
 
-    public AccountFire toAccountFire(){
+    public AccountFire toAccountFire() {
         //accountFire.setTransactionList();
-        AccountFire accountFire = new AccountFire(getAccountName(), getAccountPicUrl(), getAccountID(), getIncome()
-                .toString(), getOutcome().toString());
+        AccountFire accountFire = new AccountFire(getAccountName(),
+                getAccountPicUrl(),
+                getAccountID(),
+                getIncome().toString(),
+                getOutcome().toString(),
+                getCurrency().toString());
         accountFire.setKey(getKey());
         return accountFire;
     }
