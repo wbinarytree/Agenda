@@ -15,7 +15,7 @@ import java.util.Date;
  * Created by yaoda on 17/03/17.
  */
 @IgnoreExtraProperties
-public class TransactionFire implements FirebaseModule<Transaction> {
+public class TransactionFire{
     //    new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
     private static final SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
     private Date date;
@@ -78,17 +78,17 @@ public class TransactionFire implements FirebaseModule<Transaction> {
         this.title = title;
     }
 
-    @Override
+
     public String getKey() {
         return key;
     }
 
-    @Override
+
     public void setKey(String key) {
         this.key = key;
     }
 
-    @Override
+
     public Transaction toModule() {
         Transaction transaction = null;
         try {

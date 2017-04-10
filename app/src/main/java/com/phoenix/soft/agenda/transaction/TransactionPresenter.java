@@ -7,8 +7,6 @@ import com.phoenix.soft.agenda.repos.source.ValueEvent;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -30,7 +28,7 @@ public class TransactionPresenter implements TransactionContract.Presenter {
     private Observable<List<Transaction>> transactionList;
     private Observable<ValueEvent<Transaction>> transactionUpdate;
 
-    @Inject
+
     public TransactionPresenter(Account account, TransactionSourceRT transactionSource) {
         this.account = account;
         this.transactionSource = transactionSource;
@@ -42,14 +40,10 @@ public class TransactionPresenter implements TransactionContract.Presenter {
     @Override
     public void loadDetailList() {
         Disposable subscribe = transactionList.observeOn(AndroidSchedulers.mainThread())
+                                              .doAfterNext(ignore -> subScribeUpdate())
                                               .subscribe(transactionsList -> {
                                                           transactions = transactionsList;
-                                                          if (transactions.isEmpty()) {
-                                                              view.showNoTransaction();
-                                                          } else {
-                                                              view.showTransactionList(transactionsList);
-                                                              subScribeUpdate();
-                                                          }
+                                                          view.initTransactionList(transactionsList);
                                                       },
                                                       throwable -> view.showError(throwable.getMessage()),
                                                       () -> {

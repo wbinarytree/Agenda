@@ -51,7 +51,7 @@ public class LoginFragment extends Fragment implements AuthActivity.FabClick {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
-        MainApplication.getFirebaseComponent().inject(this);
+        MainApplication.getAppComponent().inject(this);
         ButterKnife.bind(this, v);
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         etPassword.setOnEditorActionListener((textView, id, keyEvent) -> {

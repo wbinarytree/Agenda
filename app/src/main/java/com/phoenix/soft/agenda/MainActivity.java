@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DaggerAccountPresenterComponent.builder()
-                                       .firebaseComponent(MainApplication.getFirebaseComponent())
+                                       .appComponent(MainApplication.getAppComponent())
                                        .build()
                                        .inject(this);
         super.onCreate(savedInstanceState);

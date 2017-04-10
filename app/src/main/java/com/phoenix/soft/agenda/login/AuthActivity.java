@@ -50,7 +50,7 @@ public class AuthActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        MainApplication.getFirebaseComponent().inject(this);
+        MainApplication.getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
