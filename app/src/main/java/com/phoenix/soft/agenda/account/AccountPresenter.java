@@ -47,11 +47,7 @@ public class AccountPresenter implements AccountContract.Presenter {
                                                           value.getType()),
                                                           throwable -> view.showError())))
                                           .subscribe(accounts -> {
-                                              if (accounts.isEmpty()) {
-                                                  view.showNoAccount();
-                                              } else {
-                                                  view.showAccountList(accounts);
-                                              }
+                                              view.initAccountList(accounts);
                                           }, throwable -> view.showError());
         compositeDisposable.add(subscribe);
     }

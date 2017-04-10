@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     private List<Account> accountList;
     private CompositeDisposable disposable = new CompositeDisposable();
     private boolean isExpand;
-    private boolean isLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,28 +99,24 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         viewPager.setPageMargin(20);
 
         if (savedInstanceState == null) {
-            isLoaded = false;
             getSupportFragmentManager().beginTransaction()
                                        .replace(R.id.container_detail,
                                                AccountDetailFragment.newInstance(),
                                                AccountDetailFragment.TAG)
                                        .commit();
-        } else {
-            isLoaded = savedInstanceState.getBoolean("isLoaded");
         }
 
         appbar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> isExpand = verticalOffset == 0);
 
+        presenter.attachView(this);
+        presenter.loadAccount();
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.attachView(this);
-        if (!isLoaded) {
-            presenter.loadAccount();
-            isLoaded = true;
-        }
+
     }
 
     private void updateViewByPagerContent(int position) {
@@ -178,18 +173,18 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     protected void onStop() {
         super.onStop();
-        presenter.detachView();
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         disposable.clear();
+        presenter.detachView();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        outState.putBoolean("isLoaded", isLoaded);
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
@@ -201,13 +196,28 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         return Maybe.defer(() -> Maybe.just(accountList));
     }
 
-    // TODO: 05/04/17 define update/show
     @Override
-    public void showAccountList(List<Account> accountList) {
-        this.accountList = accountList;
+    public void initAccountList(List<Account> accounts) {
+        this.accountList = accounts;
         adapter = new AccountPagerAdapter(getSupportFragmentManager(), this.accountList);
         viewPager.setAdapter(adapter);
+        if (accountList.isEmpty()) {
+            showNoAccount();
+        } else {
+            showAccountList();
+        }
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
+                AccountDetailFragment.TAG);
+        if (fragment != null) {
+            fragment.showPieChart();
+        }
+    }
 
+    // TODO: 05/04/17 define update/show
+    @Override
+    public void showAccountList() {
+        errorLayout.setVisibility(View.GONE);
+        noAccountLayout.setVisibility(View.GONE);
         AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
                 AccountDetailFragment.TAG);
         if (fragment != null) {
@@ -226,12 +236,14 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         }));
     }
 
+
     @Override
     public void showNoAccount() {
         appbar.setExpanded(false);
         noAccountLayout.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(v -> {
-        });
+        errorLayout.setVisibility(View.GONE);
+        detailContainer.setVisibility(View.GONE);
+        fab.setOnClickListener(v -> {});
     }
 
     @Override
@@ -258,13 +270,20 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
                 AccountDetailFragment.TAG);
         if (type == EventType.TYPE_ADD) {
+            noAccountLayout.setVisibility(View.GONE);
+            errorLayout.setVisibility(View.GONE);
+            detailContainer.setVisibility(View.VISIBLE);
             fragment.addAccountToChart(account);
             fragment.selectChart(accountList.indexOf(account));
             viewPager.setCurrentItem(accountList.indexOf(account));
+
         } else if (type == EventType.TYPE_UPDATE) {
             fragment.updateAccountChart(account);
         } else if (type == EventType.TYPE_DELETE) {
             fragment.deleteAccountToChart(account);
+            if (viewPager.getChildCount() == 0) {
+                showNoAccount();
+            }
         }
     }
 
@@ -296,6 +315,11 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         Snackbar.make(findViewById(R.id.coordinator),
                 Utils.fromHtml("<font color=\"#ffffff\">" + getString(R.string.title_sync_done) + "</font>"),
                 Snackbar.LENGTH_SHORT).show();
+    }
+
+
+    public void selectAccount(int i) {
+        viewPager.setCurrentItem(i);
     }
 
 
