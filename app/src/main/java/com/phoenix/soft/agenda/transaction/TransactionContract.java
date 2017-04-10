@@ -11,11 +11,12 @@ import java.util.List;
 
 public interface TransactionContract {
     interface View extends BaseContract.BaseView {
-        void showTransactionList(List<Transaction> transactions);
+        void showTransactionList();
         void showAddDetailDialog();
         void updateList();
         void showNoTransaction();
         void showError(String errorMessage);
+        void initTransactionList(List<Transaction> transactions);
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {

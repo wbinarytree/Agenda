@@ -3,7 +3,6 @@ package com.phoenix.soft.agenda.module.firebase;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.phoenix.soft.agenda.module.Account;
-import com.phoenix.soft.agenda.rxfirebase.FirebaseModule;
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
@@ -14,7 +13,7 @@ import java.util.List;
  * Created by phoenix on 2017/3/17.
  */
 @IgnoreExtraProperties
-public class AccountFire implements FirebaseModule<Account> {
+public class AccountFire  {
 
     @Exclude
     private String key;
@@ -54,17 +53,17 @@ public class AccountFire implements FirebaseModule<Account> {
         this.accountID = accountID;
     }
 
-    @Override
+
     public String getKey() {
         return key;
     }
 
-    @Override
+
     public void setKey(String key) {
         this.key = key;
     }
 
-    @Override
+
     public Account toModule() {
         return toAccount();
     }

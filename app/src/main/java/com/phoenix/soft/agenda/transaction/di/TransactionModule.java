@@ -2,6 +2,7 @@ package com.phoenix.soft.agenda.transaction.di;
 
 import com.google.firebase.database.DatabaseReference;
 import com.phoenix.soft.agenda.module.Account;
+import com.phoenix.soft.agenda.module.Transaction;
 import com.phoenix.soft.agenda.repos.source.AccountSourceRT;
 import com.phoenix.soft.agenda.repos.source.AccountSourceRTFirebase;
 import com.phoenix.soft.agenda.repos.source.TransactionSourceRT;
@@ -27,12 +28,19 @@ public class TransactionModule {
     }
 
     @Provides
-    Account providePresenter(){
+    Account provideAccount(){
         return account;
     }
+
+    @TranscationScope
     @Provides
     TransactionSourceRT provideRealTransactionSource(@Named("Account") DatabaseReference dbRef){
         return new TransactionSourceRTFirebase(dbRef,account.getKey());
     }
 
+    @TranscationScope
+    @Provides
+    TransactionPresenter providePresenter(TransactionSourceRT sourceRT){
+        return new TransactionPresenter(account,sourceRT);
+    }
 }

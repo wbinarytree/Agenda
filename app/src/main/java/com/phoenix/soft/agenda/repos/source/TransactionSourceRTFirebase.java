@@ -28,6 +28,7 @@ public class TransactionSourceRTFirebase implements TransactionSourceRT {
     private List<Transaction> actual;
     private ArrayMap<String, Transaction> transactionMap;
     private Observable<ValueEvent<Transaction>> transactionUpdate;
+    private Observable<List<Transaction>> transListObservable;
 
 
     public TransactionSourceRTFirebase(DatabaseReference dbRef, String key) {
@@ -60,33 +61,36 @@ public class TransactionSourceRTFirebase implements TransactionSourceRT {
 
     @Override
     public Observable<List<Transaction>> getTransactionList() {
-        return Observable.create((ObservableEmitter<DataSnapshot> e) -> {
-            ValueEventListener valueEventListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (!e.isDisposed()) {
-                        e.onNext(dataSnapshot);
+        if (transListObservable == null) {
+            transListObservable = Observable.create((ObservableEmitter<DataSnapshot> e) -> {
+                ValueEventListener valueEventListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (!e.isDisposed()) {
+                            e.onNext(dataSnapshot);
 //                        e.onComplete();
+                        }
                     }
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    if (!e.isDisposed()) {
-                        e.onError(new Throwable(databaseError.getMessage()));
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        if (!e.isDisposed()) {
+                            e.onError(new Throwable(databaseError.getMessage()));
+                        }
                     }
-                }
-            };
-            dbRef.addListenerForSingleValueEvent(valueEventListener);
+                };
+                dbRef.addListenerForSingleValueEvent(valueEventListener);
 //            dbRef.addValueEventListener(valueEventListener);
-            e.setCancellable(() -> dbRef.removeEventListener(valueEventListener));
-        }).map(dataSnapshot -> {
-            this.actual = parserList(dataSnapshot);
-            for (Transaction account : actual) {
-                transactionMap.put(account.getKey(), account);
-            }
-            return this.actual;
-        }).replay(1).autoConnect();
+                e.setCancellable(() -> dbRef.removeEventListener(valueEventListener));
+            }).map(dataSnapshot -> {
+                this.actual = parserList(dataSnapshot);
+                for (Transaction account : actual) {
+                    transactionMap.put(account.getKey(), account);
+                }
+                return this.actual;
+            }).replay(1).autoConnect();
+        }
+        return transListObservable;
     }
 
     @Override

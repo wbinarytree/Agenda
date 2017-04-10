@@ -55,7 +55,7 @@ public class SignUpFragment extends Fragment implements AuthActivity.FabClick {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        MainApplication.getFirebaseComponent().inject(this);
+        MainApplication.getAppComponent().inject(this);
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         ButterKnife.bind(this, view);
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);

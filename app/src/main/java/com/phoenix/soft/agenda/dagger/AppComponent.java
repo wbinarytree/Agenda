@@ -1,4 +1,3 @@
-/*
 package com.phoenix.soft.agenda.dagger;
 
 import com.google.firebase.database.DatabaseReference;
@@ -7,21 +6,22 @@ import com.phoenix.soft.agenda.login.AuthActivity;
 import com.phoenix.soft.agenda.login.LoginFragment;
 import com.phoenix.soft.agenda.login.SignUpFragment;
 import com.phoenix.soft.agenda.transaction.TransactionPresenter;
+import com.phoenix.soft.agenda.transaction.di.TransactionComponent;
+import com.phoenix.soft.agenda.transaction.di.TransactionModule;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Component;
 
-
-*/
 /**
- * Created by yaoda on 17/03/17.
- *//*
+ * Created by yaoda on 10/04/17.
+ */
+@Singleton
+@Component(modules = {AppModule.class,FirebaseModule.class})
+public interface AppComponent {
+    TransactionComponent plus(TransactionModule transModule);
 
-@FirebaseScope
-@Component(modules = {FirebaseModule.class})
-public interface FirebaseComponent {
     void inject(MainApplication application);
 
     void inject(AuthActivity activity);
@@ -30,10 +30,6 @@ public interface FirebaseComponent {
 
     void inject(SignUpFragment signUpFragment);
 
-    void inject(TransactionPresenter detailPresenter);
-
     @Named("Account")
     DatabaseReference getDataRef();
-
 }
-*/

@@ -1,12 +1,15 @@
 package com.phoenix.soft.agenda;
 
 import android.app.Application;
+import android.util.ArrayMap;
 
 import com.facebook.stetho.Stetho;
 import com.google.firebase.auth.FirebaseAuth;
-import com.phoenix.soft.agenda.dagger.DaggerFirebaseComponent;
-import com.phoenix.soft.agenda.dagger.FirebaseComponent;
-
+import com.phoenix.soft.agenda.dagger.AppComponent;
+import com.phoenix.soft.agenda.dagger.DaggerAppComponent;
+import com.phoenix.soft.agenda.module.Account;
+import com.phoenix.soft.agenda.transaction.di.TransactionComponent;
+import com.phoenix.soft.agenda.transaction.di.TransactionModule;
 
 import javax.inject.Inject;
 
@@ -16,8 +19,8 @@ import javax.inject.Inject;
 
 public class MainApplication extends Application {
 
-    private static FirebaseComponent firebaseComponent;
-
+    private static AppComponent appComponent;
+    private static ArrayMap<String,TransactionComponent> transactionMap;
     public FirebaseAuth  getAuth() {
         return mAuth;
     }
@@ -26,15 +29,25 @@ public class MainApplication extends Application {
     FirebaseAuth mAuth;
 
 
-    public static FirebaseComponent getFirebaseComponent() {
-        return firebaseComponent;
+    public static AppComponent getAppComponent() {
+        return appComponent;
     }
 
+    public static TransactionComponent addTransaction(Account account){
+        TransactionComponent component =getAppComponent().plus(new TransactionModule(account));
+        transactionMap.put(account.getKey(),component);
+        return component;
+    }
+
+    public static TransactionComponent getTransaction(String key){
+        return transactionMap.get(key);
+    }
     @Override
     public void onCreate() {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
-        firebaseComponent = DaggerFirebaseComponent.create();
-        firebaseComponent.inject(this);
+        appComponent = DaggerAppComponent.create();
+        appComponent.inject(this);
+        transactionMap = new ArrayMap<>();
     }
 }
