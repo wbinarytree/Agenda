@@ -1,5 +1,6 @@
 package com.phoenix.soft.agenda;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.AppBarLayout;
@@ -21,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding2.view.RxMenuItem;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -30,6 +32,7 @@ import com.phoenix.soft.agenda.account.AccountDetailFragment;
 import com.phoenix.soft.agenda.account.AccountPagerAdapter;
 import com.phoenix.soft.agenda.account.AccountPresenter;
 import com.phoenix.soft.agenda.account.di.DaggerAccountPresenterComponent;
+import com.phoenix.soft.agenda.login.AuthActivity;
 import com.phoenix.soft.agenda.module.Account;
 import com.phoenix.soft.agenda.repos.source.EventType;
 import com.phoenix.soft.agenda.utils.Utils;
@@ -42,6 +45,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity implements AccountContract.View {
@@ -70,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     DrawerLayout drawerLayout;
     @Inject
     AccountPresenter presenter;
+    @Inject
+    FirebaseAuth auth;
     private int count = 0;
     private AccountPagerAdapter adapter;
     private List<Account> accountList;
@@ -143,6 +149,11 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         disposable.add(RxMenuItem.clicks(menu.findItem(R.id.action_plus)).subscribe(o -> {
             AccountAddDialogFragment fragment = new AccountAddDialogFragment();
             fragment.show(getSupportFragmentManager(), AccountAddDialogFragment.TAG);
+        }));
+        disposable.add(RxMenuItem.clicks(menu.findItem(R.id.action_settings)).subscribe(objects -> {
+            auth.signOut();
+            Intent intent = new Intent(this, AuthActivity.class);
+            startActivity(intent);
         }));
         return true;
     }
@@ -291,6 +302,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     public void showModifyAccount() {
         // TODO: 16/03/17
     }
+
 
     @Override
     public void showLoading() {

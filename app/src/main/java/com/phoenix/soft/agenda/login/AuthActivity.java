@@ -54,7 +54,9 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        fab.hide();
         setupSignUpText();
+        tvSignUp.setVisibility(View.GONE);
         mAuthListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
@@ -100,6 +102,7 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void showLogin() {
+        fab.show();
         FragmentManager fm = getSupportFragmentManager();
         final LoginFragment loginFragment = fm.findFragmentByTag(LoginFragment.TAG) != null ? (LoginFragment) fm
                 .findFragmentByTag(LoginFragment.TAG) : LoginFragment.newInstance();

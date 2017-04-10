@@ -1,5 +1,6 @@
 package com.phoenix.soft.agenda.dagger;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.phoenix.soft.agenda.MainApplication;
 import com.phoenix.soft.agenda.login.AuthActivity;
@@ -23,6 +24,8 @@ public interface AppComponent {
     TransactionComponent plus(TransactionModule transModule);
 
     void inject(MainApplication application);
+
+    FirebaseAuth getAuth();
 
     void inject(AuthActivity activity);
 
