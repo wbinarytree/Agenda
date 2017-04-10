@@ -21,6 +21,7 @@ public class MainApplication extends Application {
 
     private static AppComponent appComponent;
     private static ArrayMap<String,TransactionComponent> transactionMap;
+    public final static String DATEPATTERN = "EEE MMM dd HH:mm:ss yyyy";
     public FirebaseAuth  getAuth() {
         return mAuth;
     }

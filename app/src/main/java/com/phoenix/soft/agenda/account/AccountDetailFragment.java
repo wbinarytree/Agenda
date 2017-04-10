@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.phoenix.soft.agenda.MainActivity;
 import com.phoenix.soft.agenda.R;
@@ -42,8 +44,6 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
     private List<Highlight> highlights;
     private List<Account> accountList;
 
-
-
     public static AccountDetailFragment newInstance() {
         Bundle args = new Bundle();
         AccountDetailFragment fragment = new AccountDetailFragment();
@@ -56,12 +56,34 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account_detail, container, false);
         ButterKnife.bind(this, view);
+        initPieChart();
+        return view;
+    }
+
+    private void initPieChart() {
         pieChart.setEntryLabelColor(R.color.primary_dark);
-        pieChart.setHighlightPerTapEnabled(false);
+        pieChart.setHighlightPerTapEnabled(true);
         pieChart.setDrawCenterText(true);
         pieChart.getLegend().setEnabled(false);
         pieChart.getDescription().setEnabled(false);
-        return view;
+//        pieChart.setClickable(true);
+        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                int i = pieChart.getData().getMaxEntryCountSet().getEntryIndex((PieEntry) e);
+                if (i != -1) {
+                    MainActivity activity = (MainActivity) getActivity();
+                    activity.selectAccount(i);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected() {
+                MainActivity activity = (MainActivity) getActivity();
+                activity.selectAccount(0);
+            }
+        });
     }
 
     @Override

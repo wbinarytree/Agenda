@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface AccountContract   {
     interface View extends BaseContract.BaseView {
-        void showAccountList(List<Account> accounts);
+        void showAccountList();
 
         void showNoAccount();
 
@@ -29,6 +29,8 @@ public interface AccountContract   {
         void showLoading();
 
         void hideLoading();
+
+        void initAccountList(List<Account> accounts);
     }
 
     interface Presenter  extends BaseContract.BasePresenter<View>{

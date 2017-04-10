@@ -49,7 +49,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             return new HeaderHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext())
-                                      .inflate(R.layout.item_detail_list, parent, false);
+                                      .inflate(R.layout.item_trans_list, parent, false);
             return new ItemHolder(view);
         }
 
