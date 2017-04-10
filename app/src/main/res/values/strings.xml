@@ -51,5 +51,6 @@
 
     <string name="title_add_account">add_account</string>
     <string name="title_about">About Costy</string>
+    <string name="title_log_out">Logout</string>
     <string name="title_chart">Pie chart</string>
 </resources>
