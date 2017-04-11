@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.phoenix.soft.agenda">
+    package="com.phoenix.soft.costy">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:name=".MainApplication"
+        android:name="com.phoenix.soft.costy.MainApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,20 +24,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeNew">
         <activity
-            android:name=".MainActivity"
+            android:name="com.phoenix.soft.costy.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppThemeNew.NoActionBar"
             android:windowSoftInputMode="adjustPan|adjustNothing">
 
         </activity>
         <activity
-            android:name=".hidden.HiddenActivity"
+            android:name="com.phoenix.soft.costy.hidden.HiddenActivity"
             android:label="@string/hidden"
             android:theme="@style/AppThemeNew.NoActionBar"
             android:noHistory="true"
             android:windowSoftInputMode="adjustPan|adjustNothing" />
         <activity
-            android:name=".login.AuthActivity"
+            android:name="com.phoenix.soft.costy.login.AuthActivity"
             android:theme="@style/AppThemeNew.NoActionBar"
             android:noHistory="true"
             android:label="@string/app_name">
