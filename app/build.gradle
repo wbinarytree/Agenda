@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'com.getkeepsafe.dexcount'
+
 
 android {
     compileSdkVersion 25
@@ -26,9 +28,9 @@ android {
     buildTypes {
         debug {
             // Minifying the variant used for tests is not supported when using Jack.
-            minifyEnabled false
+            minifyEnabled true
             // Uses new built-in shrinker http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
-            useProguard false
+            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
         }
@@ -63,7 +65,7 @@ dependencies {
     compile 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.0.0'
-    compile 'com.github.wbinarytree:rxfirebase:0.1.0'
+//    compile 'com.github.wbinarytree:rxfirebase:0.1.0'
 
     //NetWork retrofit/OkHttp/Gson/Picasso
 //    compile 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -80,11 +82,12 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    //Test/Espresso/Mokito
+    //Test/Espresso/Mockito
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support:support-annotations:25.3.0'
     testCompile 'junit:junit:4.12'
+
 
     //support
     compile 'org.joda:joda-money:0.12'
