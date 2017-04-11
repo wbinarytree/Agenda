@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:background="@color/primary_light"
         android:fitsSystemWindows="true"
-        tools:context="com.phoenix.soft.agenda.MainActivity">
+        tools:context="com.phoenix.soft.costy.MainActivity">
 
         <!--When use toolbar only without parallax window.
             Use fitsSystemWindows: false for appbar Layout

@@ -5,7 +5,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.phoenix.soft.agenda"
+        applicationId "com.phoenix.soft.costy"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
@@ -39,6 +39,17 @@ android {
         }
 
     }
+    productFlavors {
+        firebase {
+            applicationId "com.phoenix.soft.costy"
+//            resValue "string", "package_name", applicationId
+        }
+        leancloud{
+            applicationId "com.phoenix.soft.costy.cn"
+            resValue "string", "package_name", applicationId
+
+        }
+    }
 }
 
 dependencies {
@@ -53,7 +64,6 @@ dependencies {
     compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.0.0'
     compile 'com.github.wbinarytree:rxfirebase:0.1.0'
-
 
     //NetWork retrofit/OkHttp/Gson/Picasso
 //    compile 'com.squareup.retrofit2:retrofit:2.1.0'

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:665542283857:android:c3e14661a83880ed",
         "android_client_info": {
-          "package_name": "com.phoenix.soft.agenda"
+          "package_name": "com.phoenix.soft.costy"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "665542283857-q3frcj03qbv3fbdv2f6m9k1gbl6h41m9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.phoenix.soft.agenda",
+            "package_name": "com.phoenix.soft.costy",
             "certificate_hash": "22af7a95294a1d3f4a6ff9c0660166cb8ec95e54"
           }
         },
@@ -26,7 +26,7 @@
           "client_id": "665542283857-t41vej182tkh16c1kqpt8m8ng1nurs06.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.phoenix.soft.agenda",
+            "package_name": "com.phoenix.soft.costy",
             "certificate_hash": "6156a96cd1332c55eb1ce00c473906a7d759b1de"
           }
         },
