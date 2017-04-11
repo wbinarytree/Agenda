@@ -7,180 +7,316 @@
           <extensions>
             <ext name="ext" type="org.gradle.api.internal.plugins.DefaultExtraPropertiesExtension" />
             <task name="projects" type="org.gradle.api.tasks.diagnostics.ProjectReportTask">Displays the sub-projects of root project 'Agenda'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="resolveDebugDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="validateSigningDebugAndroidTest" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="resolveDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformClassesWithDexBuilderForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="assembleReleaseUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="prepareDebugDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processReleaseJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateReleaseAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="lintDebug" type="com.android.build.gradle.tasks.Lint">Runs lint on the Debug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="assembleDebugUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="model" type="org.gradle.api.reporting.model.ModelReport">Displays the configuration model of root project 'Agenda'. [incubating]&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="preLeancloudReleaseBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudReleaseResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithPreDexForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareFirebaseReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAndroidTestAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareLeancloudDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="lintLeancloudRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on the LeancloudRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
             <task name="mockableAndroidJar" type="com.android.build.gradle.internal.tasks.MockableAndroidJarTask">Creates a version of android.jar that's suitable for unit tests.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="tasks" type="org.gradle.api.tasks.diagnostics.TaskReportTask">Displays the tasks runnable from root project 'Agenda' (some of the displayed tasks may belong to subprojects).&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="compileDebugSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="init" type="org.gradle.buildinit.tasks.InitBuild">Initializes a new Gradle build. [incubating]&lt;p&gt;&lt;i&gt;Task group: Build Setup&lt;i&gt;</task>
-            <task name="incrementalDebugJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="jarLeancloudReleaseClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="checkFirebaseReleaseManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="incrementalFirebaseReleaseUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebaseDebugAndroidTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleLeancloud">Assembles all Leancloud builds.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAndroidTestResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleLeancloudDebug">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="deviceCheck">Runs all device checks using Device Providers and Test Servers.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="resolveReleaseDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="dependencies" type="org.gradle.api.tasks.diagnostics.DependencyReportTask">Displays all dependencies declared in root project 'Agenda'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="processDebugResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformNativeLibsWithStripDebugSymbolForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="handleLeancloudDebugMicroApk" type="com.android.build.gradle.internal.tasks.GenerateApkDataTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="lint" type="com.android.build.gradle.tasks.Lint">Runs lint on all variants.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="packageDebug" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileReleaseNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processDebugGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="buildNeeded">Assembles and tests this project and all projects it depends on.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="generateDebugAndroidTestBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processDebugUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="testReleaseUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the release build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="generateLeancloudDebugBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="checkFirebaseDebugManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleLeancloudDebugAndroidTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="cleanBuildCache" type="com.android.build.gradle.tasks.CleanBuildCache">Deletes the build cache directory.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformClassesWithPreDexForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
             <task name="components" type="org.gradle.api.reporting.components.ComponentReport">Displays the components produced by root project 'Agenda'. [incubating]&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="compileReleaseRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="assembleDebug">Assembles all Debug builds.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="processDebugAndroidTestManifest" type="com.android.build.gradle.tasks.ProcessTestManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="handleDebugMicroApk" type="com.android.build.gradle.internal.tasks.GenerateApkDataTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformResourcesWithMergeJavaResForReleaseUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="cleanIdeaModule" type="org.gradle.api.tasks.Delete">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="preDebugAndroidTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processDebugAndroidTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processReleaseUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="javaPreCompileDebugAndroidTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="uninstallRelease" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the Release build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
-            <task name="compileReleaseShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeReleaseResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugAndroidTestSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="prepareDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="incrementalDebugAndroidTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="checkReleaseManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="javaPreCompileDebugUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="mergeReleaseJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="prepareReleaseDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformDexWithDexForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processReleaseResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="deviceAndroidTest">Installs and runs instrumentation tests using all Device Providers.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="mergeDebugAndroidTestAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processReleaseManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="resolveDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="uninstallDebugAndroidTest" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the android (on device) tests for the Debug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
-            <task name="dependencyInsight" type="org.gradle.api.tasks.diagnostics.DependencyInsightReportTask">Displays the insight into a specific dependency in root project 'Agenda'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="generateReleaseSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="incrementalReleaseUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="preReleaseBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseReleaseResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="validateSigningLeancloudDebug" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="validateSigningFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileLeancloudDebug" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseReleaseAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preFirebaseReleaseUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebaseRelease">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="javaPreCompileLeancloudDebugAndroidTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAndroidTestResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveLeancloudReleaseDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileFirebaseReleaseUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareLeancloudReleaseDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="packageLeancloudDebug" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseReleaseBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="deviceAndroidTest" type="com.android.build.gradle.internal.tasks.AndroidReportTask">Installs and runs instrumentation tests using all Device Providers.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="mergeLeancloudReleaseJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preLeancloudDebugAndroidTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preFirebaseDebugAndroidTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="assemble">Assembles all variants of all applications and secondary packages.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="connectedLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.tasks.DeviceProviderInstrumentTestTask">Installs and runs the tests for leancloudDebug on connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="lintVitalFirebaseRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on just the fatal issues in the firebaseRelease build.&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="cleanIdeaProject" type="org.gradle.api.tasks.Delete">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="incrementalDebugUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="incrementalReleaseJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="help" type="org.gradle.configuration.Help">Displays a help message.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="compileReleaseUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudReleaseBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileFirebaseRelease" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithStripDebugSymbolForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="handleFirebaseDebugMicroApk" type="com.android.build.gradle.internal.tasks.GenerateApkDataTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="extractJava8LangSupportJar" type="com.android.build.gradle.internal.tasks.ExtractJava8LangSupportJar">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="installDebugAndroidTest" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the android (on device) tests for the Debug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
-            <task name="transformClassesWithDexBuilderForDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="javaPreCompileReleaseUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="resolveReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="javaPreCompileRelease" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseReleaseJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveLeancloudDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalLeancloudReleaseUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallLeancloudRelease" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the ReleaseLeancloud build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="compileFirebaseDebugJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexArchiveWithDexMergerForLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="connectedCheck">Runs all device checks on currently connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="connectedDebugAndroidTest" type="com.android.build.gradle.internal.tasks.DeviceProviderInstrumentTestTask">Installs and runs the tests for debug on connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="transformDexArchiveWithDexMergerForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="uninstallAll">Uninstall all applications.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
-            <task name="transformNativeLibsWithMergeJniLibsForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseReleaseSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugAndroidTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithStripDebugSymbolForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="assembleAndroidTest">Assembles all the Test applications.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="processDebugAndroidTestResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformClassesWithDesugarForDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="packageRelease" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="validateSigningDebug" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="wrapper" type="org.gradle.api.tasks.wrapper.Wrapper">Generates Gradle wrapper files. [incubating]&lt;p&gt;&lt;i&gt;Task group: Build Setup&lt;i&gt;</task>
-            <task name="preDebugUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudReleaseResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="installFirebaseDebug" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the DebugFirebase build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
             <task name="compileLint" type="com.android.build.gradle.internal.tasks.LintCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugAndroidTestResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformNativeLibsWithMergeJniLibsForDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeReleaseShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="androidDependencies" type="com.android.build.gradle.internal.tasks.DependencyReportTask">Displays the Android dependencies of the project.&lt;p&gt;&lt;i&gt;Task group: Android&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="transformNativeLibsWithMergeJniLibsForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugAndroidTestJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preFirebaseDebugUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileLeancloudRelease" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="packageFirebaseDebugAndroidTest" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the android (on device) tests for the FirebaseDebug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="javaPreCompileLeancloudReleaseUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
             <task name="extractProguardFiles" type="com.android.build.gradle.internal.tasks.ExtractProguardFiles">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="assembleDebugAndroidTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processDebugJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugAndroidTestAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileReleaseJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="jarReleaseClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformResourcesWithMergeJavaResForDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="prepareReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="installFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the android (on device) tests for the FirebaseDebug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="javaPreCompileFirebaseDebugAndroidTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveLeancloudDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="test">Run unit tests for all variants.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="transformNativeLibsWithStripDebugSymbolForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugAndroidTestResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="preReleaseUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudReleaseJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithPreDexForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseReleaseAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseReleaseShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="check">Runs all checks.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="javaPreCompileDebug" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="testDebugUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the debug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="connectedAndroidTest">Installs and runs instrumentation tests for all flavors on connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="jarDebugClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="installDebug" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the Debug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="resolveLeancloudReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="installLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the android (on device) tests for the LeancloudDebug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="processLeancloudDebugJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="lintFirebaseDebug" type="com.android.build.gradle.tasks.Lint">Runs lint on the FirebaseDebug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
             <task name="preBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformResourcesWithMergeJavaResForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="ideaProject" type="org.gradle.plugins.ide.idea.GenerateIdeaProject">Generates IDEA project file (IPR)&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileReleaseSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="compileReleaseUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformResourcesWithMergeJavaResForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileReleaseAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="lintRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on the Release build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="buildDependents">Assembles and tests this project and all projects that depend on it.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="generateDebugAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAndroidTestSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="lintLeancloudDebug" type="com.android.build.gradle.tasks.Lint">Runs lint on the LeancloudDebug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
             <task name="idea">Generates IDEA project files (IML, IPR, IWS)&lt;p&gt;&lt;i&gt;Task group: IDE&lt;i&gt;</task>
-            <task name="transformDexArchiveWithDexMergerForDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="dependentComponents" type="org.gradle.api.reporting.dependents.DependentComponentsReport">Displays the dependent components of components in root project 'Agenda'. [incubating]&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="assembleLeancloudRelease">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="buildEnvironment" type="org.gradle.api.tasks.diagnostics.BuildEnvironmentReportTask">Displays all buildscript dependencies declared in root project 'Agenda'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="checkDebugManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="preLeancloudDebugUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveFirebaseDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareFirebaseDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="sourceSets" type="com.android.build.gradle.internal.tasks.SourceSetsTask">Prints out all the source sets defined in this project.&lt;p&gt;&lt;i&gt;Task group: Android&lt;i&gt;</task>
-            <task name="transformResourcesWithMergeJavaResForDebugUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeReleaseAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateReleaseBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="prepareDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="ideaModule" type="org.gradle.plugins.ide.idea.GenerateIdeaModule">Generates IDEA module files (IML)&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformClassesWithDesugarForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithStripDebugSymbolForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveFirebaseDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallLeancloudDebug" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the DebugLeancloud build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="mergeLeancloudReleaseAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="packageFirebaseRelease" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForLeancloudDebugUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="cleanIdea">Cleans IDEA project files (IML, IPR)&lt;p&gt;&lt;i&gt;Task group: IDE&lt;i&gt;</task>
-            <task name="generateReleaseResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="lintVitalRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on just the fatal issues in the release build.&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="ideaWorkspace" type="org.gradle.plugins.ide.idea.GenerateIdeaWorkspace">Generates an IDEA workspace file (IWS)&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="uninstallDebug" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the Debug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
-            <task name="signingReport" type="com.android.build.gradle.internal.tasks.SigningReportTask">Displays the signing info for each variant.&lt;p&gt;&lt;i&gt;Task group: Android&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugAndroidTestShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="clean" type="org.gradle.api.tasks.Delete">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="preDebugBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformClassesWithDesugarForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="build">Assembles and tests this project.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAndroidTestBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalLeancloudReleaseJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="assembleRelease">Assembles all Release builds.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugAndroidTestResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processDebugManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="packageDebugAndroidTest" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateReleaseResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processReleaseGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseReleaseUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveFirebaseReleaseDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="jarFirebaseReleaseClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseReleaseResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalFirebaseDebugAndroidTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugAndroidTestAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudReleaseShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudReleaseSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugAndroidTestResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="compileLeancloudDebugNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="model" type="org.gradle.api.reporting.model.ModelReport">Displays the configuration model of root project 'Agenda'. [incubating]&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugAndroidTestAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preLeancloudReleaseUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="lintFirebaseRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on the FirebaseRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="mergeFirebaseReleaseJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="tasks" type="org.gradle.api.tasks.diagnostics.TaskReportTask">Displays the tasks runnable from root project 'Agenda' (some of the displayed tasks may belong to subprojects).&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="init" type="org.gradle.buildinit.tasks.InitBuild">Initializes a new Gradle build. [incubating]&lt;p&gt;&lt;i&gt;Task group: Build Setup&lt;i&gt;</task>
+            <task name="testFirebaseDebugUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the firebaseDebug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForLeancloudReleaseUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="packageLeancloudDebugAndroidTest" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAndroidTestBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudReleaseAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexArchiveWithDexMergerForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="validateSigningLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preFirebaseDebugBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebaseDebugUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexWithDexForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="dependencies" type="org.gradle.api.tasks.diagnostics.DependencyReportTask">Displays all dependencies declared in root project 'Agenda'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallFirebaseRelease" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the ReleaseFirebase build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="buildNeeded">Assembles and tests this project and all projects it depends on.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="processFirebaseDebugManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareLeancloudDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDexBuilderForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugAndroidTestManifest" type="com.android.build.gradle.tasks.ProcessTestManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="connectedFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.tasks.DeviceProviderInstrumentTestTask">Installs and runs the tests for firebaseDebug on connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="generateFirebaseReleaseResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForFirebaseReleaseUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileFirebaseDebugUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleDebug">Assembles all Debug builds.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveFirebaseDebugDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAndroidTestResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="installLeancloudDebug" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the DebugLeancloud build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="cleanIdeaModule" type="org.gradle.api.tasks.Delete">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAndroidTestSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareFirebaseReleaseDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudReleaseUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareLeancloudDebugDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebase">Assembles all Firebase builds.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="packageFirebaseDebug" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="dependencyInsight" type="org.gradle.api.tasks.diagnostics.DependencyInsightReportTask">Displays the insight into a specific dependency in root project 'Agenda'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="transformClassesWithDexBuilderForLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebaseDebug">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleLeancloudReleaseUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveFirebaseReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForFirebaseDebugUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="help" type="org.gradle.configuration.Help">Displays a help message.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="uninstallLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the android (on device) tests for the LeancloudDebug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugAndroidTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="checkLeancloudDebugManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallAll">Uninstall all applications.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="preFirebaseReleaseBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseReleaseResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseReleaseManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="wrapper" type="org.gradle.api.tasks.wrapper.Wrapper">Generates Gradle wrapper files. [incubating]&lt;p&gt;&lt;i&gt;Task group: Build Setup&lt;i&gt;</task>
+            <task name="jarFirebaseDebugClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugAndroidTestJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareFirebaseDebugDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="androidDependencies" type="com.android.build.gradle.internal.tasks.DependencyReportTask">Displays the Android dependencies of the project.&lt;p&gt;&lt;i&gt;Task group: Android&lt;i&gt;</task>
+            <task name="prepareLeancloudReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugAndroidTestResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseReleaseGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDexBuilderForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAndroidTestResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileFirebaseDebug" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="testFirebaseReleaseUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the firebaseRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="testLeancloudReleaseUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the leancloudRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="incrementalFirebaseDebugUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="connectedAndroidTest" type="com.android.build.gradle.internal.tasks.AndroidReportTask">Installs and runs instrumentation tests for all flavors on connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="javaPreCompileLeancloudDebugUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugAndroidTestJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugAndroidTestShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalFirebaseDebugJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudReleaseGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudReleaseResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveLeancloudDebugDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="validateSigningFirebaseDebug" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="prepareFirebaseDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="buildDependents">Assembles and tests this project and all projects that depend on it.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="incrementalLeancloudDebugAndroidTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithStripDebugSymbolForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexArchiveWithDexMergerForFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="jarLeancloudDebugClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalFirebaseReleaseJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAndroidTestAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugAndroidTestResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preLeancloudDebugBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugAndroidTestManifest" type="com.android.build.gradle.tasks.ProcessTestManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="checkLeancloudReleaseManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallFirebaseDebug" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the DebugFirebase build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="ideaModule" type="org.gradle.plugins.ide.idea.GenerateIdeaModule">Generates IDEA module files (IML)&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugAndroidTestResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexWithDexForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudReleaseResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudReleaseManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="ideaWorkspace" type="org.gradle.plugins.ide.idea.GenerateIdeaWorkspace">Generates an IDEA workspace file (IWS)&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="lintVitalLeancloudRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on just the fatal issues in the leancloudRelease build.&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebaseReleaseUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="signingReport" type="com.android.build.gradle.internal.tasks.SigningReportTask">Displays the signing info for each variant.&lt;p&gt;&lt;i&gt;Task group: Android&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugAndroidTestShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="clean" type="org.gradle.api.tasks.Delete">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="build">Assembles and tests this project.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="testLeancloudDebugUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the leancloudDebug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="incrementalLeancloudDebugJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleLeancloudDebugUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexArchiveWithDexMergerForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="properties" type="org.gradle.api.tasks.diagnostics.PropertyReportTask">Displays the properties of root project 'Agenda'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="compileFirebaseDebugUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="transformClassesWithDexBuilderForFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="cleanIdeaWorkspace" type="org.gradle.api.tasks.Delete">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalLeancloudDebugUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="packageLeancloudRelease" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <conf name="classpath" scriptClasspath="true" />
           </extensions>
         </project>
@@ -191,228 +327,437 @@
             <ext name="reporting" type="org.gradle.api.reporting.ReportingExtension" />
             <ext name="android" type="com.android.build.gradle.AppExtension" />
             <task name="projects" type="org.gradle.api.tasks.diagnostics.ProjectReportTask">Displays the sub-projects of project ':app'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="resolveDebugDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="validateSigningDebugAndroidTest" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="resolveDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformClassesWithDexBuilderForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="assembleReleaseUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="prepareDebugDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processReleaseJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateReleaseAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="lintDebug" type="com.android.build.gradle.tasks.Lint">Runs lint on the Debug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="assembleDebugUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preLeancloudReleaseBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudReleaseResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithPreDexForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareFirebaseReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAndroidTestAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareLeancloudDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="lintLeancloudRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on the LeancloudRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
             <task name="mockableAndroidJar" type="com.android.build.gradle.internal.tasks.MockableAndroidJarTask">Creates a version of android.jar that's suitable for unit tests.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="model" type="org.gradle.api.reporting.model.ModelReport">Displays the configuration model of project ':app'. [incubating]&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="tasks" type="org.gradle.api.tasks.diagnostics.TaskReportTask">Displays the tasks runnable from project ':app'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="compileDebugSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="incrementalDebugJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="jarLeancloudReleaseClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="checkFirebaseReleaseManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="incrementalFirebaseReleaseUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebaseDebugAndroidTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleLeancloud">Assembles all Leancloud builds.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAndroidTestResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleLeancloudDebug">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="deviceCheck">Runs all device checks using Device Providers and Test Servers.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="resolveReleaseDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="dependencies" type="org.gradle.api.tasks.diagnostics.DependencyReportTask">Displays all dependencies declared in project ':app'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="processDebugResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformNativeLibsWithStripDebugSymbolForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="handleLeancloudDebugMicroApk" type="com.android.build.gradle.internal.tasks.GenerateApkDataTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="lint" type="com.android.build.gradle.tasks.Lint">Runs lint on all variants.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="packageDebug" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileReleaseNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processDebugGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="buildNeeded">Assembles and tests this project and all projects it depends on.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="generateDebugAndroidTestBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processDebugUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="testReleaseUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the release build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="generateLeancloudDebugBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="checkFirebaseDebugManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleLeancloudDebugAndroidTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="cleanBuildCache" type="com.android.build.gradle.tasks.CleanBuildCache">Deletes the build cache directory.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformClassesWithPreDexForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
             <task name="components" type="org.gradle.api.reporting.components.ComponentReport">Displays the components produced by project ':app'. [incubating]&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="compileReleaseRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="assembleDebug">Assembles all Debug builds.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="processDebugAndroidTestManifest" type="com.android.build.gradle.tasks.ProcessTestManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="handleDebugMicroApk" type="com.android.build.gradle.internal.tasks.GenerateApkDataTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformResourcesWithMergeJavaResForReleaseUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="cleanIdeaModule" type="org.gradle.api.tasks.Delete">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="preDebugAndroidTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processDebugAndroidTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processReleaseUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="javaPreCompileDebugAndroidTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="uninstallRelease" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the Release build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
-            <task name="compileReleaseShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeReleaseResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugAndroidTestSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="prepareDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="incrementalDebugAndroidTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="checkReleaseManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="javaPreCompileDebugUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="mergeReleaseJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="prepareReleaseDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformDexWithDexForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processReleaseResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="deviceAndroidTest">Installs and runs instrumentation tests using all Device Providers.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="mergeDebugAndroidTestAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processReleaseManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="resolveDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="uninstallDebugAndroidTest" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the android (on device) tests for the Debug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
-            <task name="dependencyInsight" type="org.gradle.api.tasks.diagnostics.DependencyInsightReportTask">Displays the insight into a specific dependency in project ':app'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="generateReleaseSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="incrementalReleaseUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="preReleaseBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseReleaseResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="validateSigningLeancloudDebug" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="validateSigningFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileLeancloudDebug" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseReleaseAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preFirebaseReleaseUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebaseRelease">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="javaPreCompileLeancloudDebugAndroidTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAndroidTestResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveLeancloudReleaseDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileFirebaseReleaseUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareLeancloudReleaseDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="packageLeancloudDebug" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseReleaseBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="deviceAndroidTest" type="com.android.build.gradle.internal.tasks.AndroidReportTask">Installs and runs instrumentation tests using all Device Providers.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="mergeLeancloudReleaseJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preLeancloudDebugAndroidTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preFirebaseDebugAndroidTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="assemble">Assembles all variants of all applications and secondary packages.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="incrementalDebugUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="incrementalReleaseJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="help" type="org.gradle.configuration.Help">Displays a help message.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="compileReleaseUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="connectedLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.tasks.DeviceProviderInstrumentTestTask">Installs and runs the tests for leancloudDebug on connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="lintVitalFirebaseRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on just the fatal issues in the firebaseRelease build.&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudReleaseBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileFirebaseRelease" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithStripDebugSymbolForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="handleFirebaseDebugMicroApk" type="com.android.build.gradle.internal.tasks.GenerateApkDataTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="extractJava8LangSupportJar" type="com.android.build.gradle.internal.tasks.ExtractJava8LangSupportJar">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="installDebugAndroidTest" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the android (on device) tests for the Debug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
-            <task name="transformClassesWithDexBuilderForDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="javaPreCompileReleaseUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="resolveReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="javaPreCompileRelease" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseReleaseJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveLeancloudDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalLeancloudReleaseUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallLeancloudRelease" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the ReleaseLeancloud build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="compileFirebaseDebugJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexArchiveWithDexMergerForLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="connectedCheck">Runs all device checks on currently connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="connectedDebugAndroidTest" type="com.android.build.gradle.internal.tasks.DeviceProviderInstrumentTestTask">Installs and runs the tests for debug on connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="transformDexArchiveWithDexMergerForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="uninstallAll">Uninstall all applications.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
-            <task name="transformNativeLibsWithMergeJniLibsForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseReleaseSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugAndroidTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithStripDebugSymbolForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="assembleAndroidTest">Assembles all the Test applications.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="processDebugAndroidTestResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformClassesWithDesugarForDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="packageRelease" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="validateSigningDebug" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="preDebugUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudReleaseResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="installFirebaseDebug" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the DebugFirebase build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
             <task name="compileLint" type="com.android.build.gradle.internal.tasks.LintCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugAndroidTestResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformNativeLibsWithMergeJniLibsForDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeReleaseShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="androidDependencies" type="com.android.build.gradle.internal.tasks.DependencyReportTask">Displays the Android dependencies of the project.&lt;p&gt;&lt;i&gt;Task group: Android&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="transformNativeLibsWithMergeJniLibsForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugAndroidTestJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preFirebaseDebugUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileLeancloudRelease" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="packageFirebaseDebugAndroidTest" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the android (on device) tests for the FirebaseDebug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="javaPreCompileLeancloudReleaseUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
             <task name="extractProguardFiles" type="com.android.build.gradle.internal.tasks.ExtractProguardFiles">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="assembleDebugAndroidTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processDebugJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugAndroidTestAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileReleaseJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="jarReleaseClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformResourcesWithMergeJavaResForDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="prepareReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="installFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the android (on device) tests for the FirebaseDebug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="javaPreCompileFirebaseDebugAndroidTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveLeancloudDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="test">Run unit tests for all variants.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="transformNativeLibsWithStripDebugSymbolForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugAndroidTestResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="preReleaseUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudReleaseJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithPreDexForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseReleaseAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseReleaseShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="check">Runs all checks.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="javaPreCompileDebug" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="testDebugUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the debug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="connectedAndroidTest">Installs and runs instrumentation tests for all flavors on connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="jarDebugClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="installDebug" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the Debug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="resolveLeancloudReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="installLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the android (on device) tests for the LeancloudDebug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="processLeancloudDebugJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="lintFirebaseDebug" type="com.android.build.gradle.tasks.Lint">Runs lint on the FirebaseDebug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
             <task name="preBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformResourcesWithMergeJavaResForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileReleaseSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="compileReleaseUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformResourcesWithMergeJavaResForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileReleaseAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="lintRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on the Release build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
-            <task name="buildDependents">Assembles and tests this project and all projects that depend on it.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="generateDebugAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAndroidTestSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="lintLeancloudDebug" type="com.android.build.gradle.tasks.Lint">Runs lint on the LeancloudDebug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
             <task name="idea">Generates IDEA project files (IML, IPR, IWS)&lt;p&gt;&lt;i&gt;Task group: IDE&lt;i&gt;</task>
-            <task name="transformDexArchiveWithDexMergerForDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleLeancloudRelease">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="dependentComponents" type="org.gradle.api.reporting.dependents.DependentComponentsReport">Displays the dependent components of components in project ':app'. [incubating]&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="buildEnvironment" type="org.gradle.api.tasks.diagnostics.BuildEnvironmentReportTask">Displays all buildscript dependencies declared in project ':app'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <task name="checkDebugManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="preLeancloudDebugUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveFirebaseDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareFirebaseDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="sourceSets" type="com.android.build.gradle.internal.tasks.SourceSetsTask">Prints out all the source sets defined in this project.&lt;p&gt;&lt;i&gt;Task group: Android&lt;i&gt;</task>
-            <task name="transformResourcesWithMergeJavaResForDebugUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeReleaseAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="compileDebugRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateReleaseBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="prepareDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="ideaModule" type="org.gradle.plugins.ide.idea.GenerateIdeaModule">Generates IDEA module files (IML)&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformClassesWithDesugarForRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithStripDebugSymbolForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveFirebaseDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallLeancloudDebug" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the DebugLeancloud build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="mergeLeancloudReleaseAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="packageFirebaseRelease" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForLeancloudDebugUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="cleanIdea">Cleans IDEA project files (IML, IPR)&lt;p&gt;&lt;i&gt;Task group: IDE&lt;i&gt;</task>
-            <task name="generateReleaseResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="lintVitalRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on just the fatal issues in the release build.&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="uninstallDebug" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the Debug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
-            <task name="signingReport" type="com.android.build.gradle.internal.tasks.SigningReportTask">Displays the signing info for each variant.&lt;p&gt;&lt;i&gt;Task group: Android&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="mergeDebugAndroidTestShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="clean" type="org.gradle.api.tasks.Delete">Deletes the build directory.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="preDebugBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="transformClassesWithDesugarForDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="build">Assembles and tests this project.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAndroidTestBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalLeancloudReleaseJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="assembleRelease">Assembles all Release builds.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
-            <task name="compileDebugAndroidTestRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateDebugAndroidTestResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processDebugManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="packageDebugAndroidTest" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="generateReleaseResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
-            <task name="processReleaseGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseReleaseUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveFirebaseReleaseDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="jarFirebaseReleaseClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseReleaseResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalFirebaseDebugAndroidTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugAndroidTestAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudReleaseShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudReleaseSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugAndroidTestResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDesugarForLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="compileLeancloudDebugNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugAndroidTestAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="model" type="org.gradle.api.reporting.model.ModelReport">Displays the configuration model of project ':app'. [incubating]&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preLeancloudReleaseUnitTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="lintFirebaseRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on the FirebaseRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="mergeFirebaseReleaseJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="tasks" type="org.gradle.api.tasks.diagnostics.TaskReportTask">Displays the tasks runnable from project ':app'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="compileLeancloudDebugAndroidTestRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="testFirebaseDebugUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the firebaseDebug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForLeancloudReleaseUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="packageLeancloudDebugAndroidTest" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAndroidTestBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudReleaseAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexArchiveWithDexMergerForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="validateSigningLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preFirebaseDebugBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebaseDebugUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexWithDexForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="dependencies" type="org.gradle.api.tasks.diagnostics.DependencyReportTask">Displays all dependencies declared in project ':app'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallFirebaseRelease" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the ReleaseFirebase build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="buildNeeded">Assembles and tests this project and all projects it depends on.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="processFirebaseDebugManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareLeancloudDebugUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDexBuilderForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugAndroidTestManifest" type="com.android.build.gradle.tasks.ProcessTestManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="connectedFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.tasks.DeviceProviderInstrumentTestTask">Installs and runs the tests for firebaseDebug on connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="generateFirebaseReleaseResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForFirebaseReleaseUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileFirebaseDebugUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleDebug">Assembles all Debug builds.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveFirebaseDebugDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAndroidTestResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="installLeancloudDebug" type="com.android.build.gradle.internal.tasks.InstallVariantTask">Installs the DebugLeancloud build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="cleanIdeaModule" type="org.gradle.api.tasks.Delete">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForLeancloudDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAndroidTestSources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareFirebaseReleaseDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudReleaseUnitTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareLeancloudDebugDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebase">Assembles all Firebase builds.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="packageFirebaseDebug" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="dependencyInsight" type="org.gradle.api.tasks.diagnostics.DependencyInsightReportTask">Displays the insight into a specific dependency in project ':app'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="transformClassesWithDexBuilderForLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebaseDebug">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleLeancloudReleaseUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveFirebaseReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForFirebaseDebugUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="help" type="org.gradle.configuration.Help">Displays a help message.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="uninstallLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the android (on device) tests for the LeancloudDebug build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="compileFirebaseDebugAndroidTestShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformResourcesWithMergeJavaResForLeancloudDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugAndroidTestJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="checkLeancloudDebugManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateFirebaseDebugBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallAll">Uninstall all applications.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="preFirebaseReleaseBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseReleaseResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithMergeJniLibsForFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseReleaseManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="jarFirebaseDebugClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseShaders" type="com.android.build.gradle.tasks.ShaderCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugAndroidTestJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="prepareFirebaseDebugDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="androidDependencies" type="com.android.build.gradle.internal.tasks.DependencyReportTask">Displays the Android dependencies of the project.&lt;p&gt;&lt;i&gt;Task group: Android&lt;i&gt;</task>
+            <task name="prepareLeancloudReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugAndroidTestResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseReleaseGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithDexBuilderForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAndroidTestResValues" type="com.android.build.gradle.tasks.GenerateResValues">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="javaPreCompileFirebaseDebug" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="testFirebaseReleaseUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the firebaseRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="testLeancloudReleaseUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the leancloudRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="incrementalFirebaseDebugUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="connectedAndroidTest" type="com.android.build.gradle.internal.tasks.AndroidReportTask">Installs and runs instrumentation tests for all flavors on connected devices.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="javaPreCompileLeancloudDebugUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugAndroidTestJniLibFolders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugAndroidTestShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalFirebaseDebugJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudReleaseGoogleServices" type="com.google.gms.googleservices.GoogleServicesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudReleaseResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="resolveLeancloudDebugDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="validateSigningFirebaseDebug" type="com.android.build.gradle.internal.tasks.ValidateSigningTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="prepareFirebaseDebugAndroidTestDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="buildDependents">Assembles and tests this project and all projects that depend on it.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="incrementalLeancloudDebugAndroidTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformNativeLibsWithStripDebugSymbolForLeancloudRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexArchiveWithDexMergerForFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="jarLeancloudDebugClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalFirebaseReleaseJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="generateLeancloudDebugAndroidTestAssets">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugAndroidTestResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="preLeancloudDebugBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processFirebaseDebugAndroidTestManifest" type="com.android.build.gradle.tasks.ProcessTestManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="checkLeancloudReleaseManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseReleaseAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="uninstallFirebaseDebug" type="com.android.build.gradle.internal.tasks.UninstallTask">Uninstalls the DebugFirebase build.&lt;p&gt;&lt;i&gt;Task group: Install&lt;i&gt;</task>
+            <task name="ideaModule" type="org.gradle.plugins.ide.idea.GenerateIdeaModule">Generates IDEA module files (IML)&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="mergeFirebaseDebugAndroidTestResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudDebugUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudDebugManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexWithDexForFirebaseRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="mergeLeancloudReleaseResources" type="com.android.build.gradle.tasks.MergeResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="processLeancloudReleaseManifest" type="com.android.build.gradle.tasks.MergeManifests">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="lintVitalLeancloudRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on just the fatal issues in the leancloudRelease build.&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileLeancloudReleaseRenderscript" type="com.android.build.gradle.tasks.RenderscriptCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleFirebaseReleaseUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="signingReport" type="com.android.build.gradle.internal.tasks.SigningReportTask">Displays the signing info for each variant.&lt;p&gt;&lt;i&gt;Task group: Android&lt;i&gt;</task>
+            <task name="mergeLeancloudDebugAndroidTestShaders" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="clean" type="org.gradle.api.tasks.Delete">Deletes the build directory.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="compileFirebaseDebugUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="build">Assembles and tests this project.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
+            <task name="testLeancloudDebugUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the leancloudDebug build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
+            <task name="incrementalLeancloudDebugJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="assembleLeancloudDebugUnitTest">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformDexArchiveWithDexMergerForFirebaseDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="compileFirebaseDebugUnitTestSources">&lt;i&gt;Task group: build&lt;i&gt;</task>
             <task name="properties" type="org.gradle.api.tasks.diagnostics.PropertyReportTask">Displays the properties of project ':app'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
-            <conf name="_debugAndroidTestAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_debugAndroidTestApk" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_debugAndroidTestCompile" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_debugAndroidTestJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_debugAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_debugApk" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_debugCompile" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_debugJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_debugUnitTestAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_debugUnitTestApk" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_debugUnitTestCompile" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_debugUnitTestJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_releaseAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_releaseApk" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_releaseCompile" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_releaseJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_releaseUnitTestAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_releaseUnitTestApk" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_releaseUnitTestCompile" visible="false">## Internal use, do not manually configure ##</conf>
-            <conf name="_releaseUnitTestJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
+            <task name="transformClassesWithDexBuilderForFirebaseDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="incrementalLeancloudDebugUnitTestJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="packageLeancloudRelease" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <conf name="_firebaseDebugAndroidTestAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseDebugAndroidTestApk" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseDebugAndroidTestCompile" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseDebugAndroidTestJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseDebugAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseDebugApk" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseDebugCompile" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseDebugJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseDebugUnitTestAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseDebugUnitTestApk" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseDebugUnitTestCompile" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseDebugUnitTestJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseReleaseAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseReleaseApk" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseReleaseCompile" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseReleaseJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseReleaseUnitTestAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseReleaseUnitTestApk" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseReleaseUnitTestCompile" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_firebaseReleaseUnitTestJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugAndroidTestAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugAndroidTestApk" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugAndroidTestCompile" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugAndroidTestJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugApk" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugCompile" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugUnitTestAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugUnitTestApk" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugUnitTestCompile" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudDebugUnitTestJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudReleaseAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudReleaseApk" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudReleaseCompile" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudReleaseJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudReleaseUnitTestAnnotationProcessor" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudReleaseUnitTestApk" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudReleaseUnitTestCompile" visible="false">## Internal use, do not manually configure ##</conf>
+            <conf name="_leancloudReleaseUnitTestJackPlugin" visible="false">## Internal use, do not manually configure ##</conf>
             <conf name="androidJacocoAgent" visible="false">The Jacoco agent to use to get coverage data.</conf>
             <conf name="androidJacocoAnt" visible="false">The Jacoco ant tasks to use to get execute Gradle tasks.</conf>
             <conf name="androidTestAnnotationProcessor" visible="false">Classpath for the annotation processor for 'androidTest'.</conf>
             <conf name="androidTestApk" visible="false">Classpath packaged with the compiled 'androidTest' classes.</conf>
             <conf name="androidTestCompile" visible="false">Classpath for compiling the androidTest sources.</conf>
+            <conf name="androidTestFirebaseAnnotationProcessor" visible="false">Classpath for the annotation processor for 'androidTestFirebase'.</conf>
+            <conf name="androidTestFirebaseApk" visible="false">Classpath packaged with the compiled 'androidTestFirebase' classes.</conf>
+            <conf name="androidTestFirebaseCompile" visible="false">Classpath for compiling the androidTestFirebase sources.</conf>
+            <conf name="androidTestFirebaseJackPlugin" visible="false">Classpath for the 'androidTestFirebase' Jack plugins.</conf>
+            <conf name="androidTestFirebaseProvided" visible="false">Classpath for only compiling the androidTestFirebase sources.</conf>
+            <conf name="androidTestFirebaseWearApp" visible="false">Link to a wear app to embed for object 'androidTestFirebase'.</conf>
             <conf name="androidTestJackPlugin" visible="false">Classpath for the 'androidTest' Jack plugins.</conf>
+            <conf name="androidTestLeancloudAnnotationProcessor" visible="false">Classpath for the annotation processor for 'androidTestLeancloud'.</conf>
+            <conf name="androidTestLeancloudApk" visible="false">Classpath packaged with the compiled 'androidTestLeancloud' classes.</conf>
+            <conf name="androidTestLeancloudCompile" visible="false">Classpath for compiling the androidTestLeancloud sources.</conf>
+            <conf name="androidTestLeancloudJackPlugin" visible="false">Classpath for the 'androidTestLeancloud' Jack plugins.</conf>
+            <conf name="androidTestLeancloudProvided" visible="false">Classpath for only compiling the androidTestLeancloud sources.</conf>
+            <conf name="androidTestLeancloudWearApp" visible="false">Link to a wear app to embed for object 'androidTestLeancloud'.</conf>
             <conf name="androidTestProvided" visible="false">Classpath for only compiling the androidTest sources.</conf>
             <conf name="androidTestWearApp" visible="false">Link to a wear app to embed for object 'androidTest'.</conf>
             <conf name="annotationProcessor" visible="false">Classpath for the annotation processor for 'main'.</conf>
             <conf name="apk" visible="false">Classpath packaged with the compiled 'main' classes.</conf>
             <conf name="archives">Configuration for archive artifacts.</conf>
             <conf name="compile" visible="false">Classpath for compiling the main sources.</conf>
-            <conf name="debugAndroidTestWearBundling">Resolved Configuration for wear app bundling for variant: debugAndroidTest</conf>
             <conf name="debugAnnotationProcessor" visible="false">Classpath for the annotation processor for 'debug'.</conf>
             <conf name="debugApk" visible="false">Classpath packaged with the compiled 'debug' classes.</conf>
             <conf name="debugCompile" visible="false">Classpath for compiling the debug sources.</conf>
             <conf name="debugJackPlugin" visible="false">Classpath for the 'debug' Jack plugins.</conf>
             <conf name="debugProvided" visible="false">Classpath for only compiling the debug sources.</conf>
-            <conf name="debugUnitTestWearBundling">Resolved Configuration for wear app bundling for variant: debugUnitTest</conf>
             <conf name="debugWearApp" visible="false">Link to a wear app to embed for object 'debug'.</conf>
-            <conf name="debugWearBundling">Resolved Configuration for wear app bundling for variant: debug</conf>
             <conf name="default">Configuration for default artifacts.</conf>
             <conf name="default-mapping">Configuration for default mapping artifacts.</conf>
             <conf name="default-metadata">Metadata for the produced APKs.</conf>
+            <conf name="firebaseAnnotationProcessor" visible="false">Classpath for the annotation processor for 'firebase'.</conf>
+            <conf name="firebaseApk" visible="false">Classpath packaged with the compiled 'firebase' classes.</conf>
+            <conf name="firebaseCompile" visible="false">Classpath for compiling the firebase sources.</conf>
+            <conf name="firebaseDebugAndroidTestWearBundling">Resolved Configuration for wear app bundling for variant: firebaseDebugAndroidTest</conf>
+            <conf name="firebaseDebugAnnotationProcessor" visible="false">Classpath for the annotation processor for 'firebaseDebug'.</conf>
+            <conf name="firebaseDebugApk" visible="false">Classpath packaged with the compiled 'firebaseDebug' classes.</conf>
+            <conf name="firebaseDebugCompile" visible="false">Classpath for compiling the firebaseDebug sources.</conf>
+            <conf name="firebaseDebugJackPlugin" visible="false">Classpath for the 'firebaseDebug' Jack plugins.</conf>
+            <conf name="firebaseDebugProvided" visible="false">Classpath for only compiling the firebaseDebug sources.</conf>
+            <conf name="firebaseDebugUnitTestWearBundling">Resolved Configuration for wear app bundling for variant: firebaseDebugUnitTest</conf>
+            <conf name="firebaseDebugWearApp" visible="false">Link to a wear app to embed for object 'firebaseDebug'.</conf>
+            <conf name="firebaseDebugWearBundling">Resolved Configuration for wear app bundling for variant: firebaseDebug</conf>
+            <conf name="firebaseJackPlugin" visible="false">Classpath for the 'firebase' Jack plugins.</conf>
+            <conf name="firebaseProvided" visible="false">Classpath for only compiling the firebase sources.</conf>
+            <conf name="firebaseReleaseAnnotationProcessor" visible="false">Classpath for the annotation processor for 'firebaseRelease'.</conf>
+            <conf name="firebaseReleaseApk" visible="false">Classpath packaged with the compiled 'firebaseRelease' classes.</conf>
+            <conf name="firebaseReleaseCompile" visible="false">Classpath for compiling the firebaseRelease sources.</conf>
+            <conf name="firebaseReleaseJackPlugin" visible="false">Classpath for the 'firebaseRelease' Jack plugins.</conf>
+            <conf name="firebaseReleaseProvided" visible="false">Classpath for only compiling the firebaseRelease sources.</conf>
+            <conf name="firebaseReleaseUnitTestWearBundling">Resolved Configuration for wear app bundling for variant: firebaseReleaseUnitTest</conf>
+            <conf name="firebaseReleaseWearApp" visible="false">Link to a wear app to embed for object 'firebaseRelease'.</conf>
+            <conf name="firebaseReleaseWearBundling">Resolved Configuration for wear app bundling for variant: firebaseRelease</conf>
+            <conf name="firebaseWearApp" visible="false">Link to a wear app to embed for object 'firebase'.</conf>
             <conf name="jackPlugin" visible="false">Classpath for the 'main' Jack plugins.</conf>
+            <conf name="leancloudAnnotationProcessor" visible="false">Classpath for the annotation processor for 'leancloud'.</conf>
+            <conf name="leancloudApk" visible="false">Classpath packaged with the compiled 'leancloud' classes.</conf>
+            <conf name="leancloudCompile" visible="false">Classpath for compiling the leancloud sources.</conf>
+            <conf name="leancloudDebugAndroidTestWearBundling">Resolved Configuration for wear app bundling for variant: leancloudDebugAndroidTest</conf>
+            <conf name="leancloudDebugAnnotationProcessor" visible="false">Classpath for the annotation processor for 'leancloudDebug'.</conf>
+            <conf name="leancloudDebugApk" visible="false">Classpath packaged with the compiled 'leancloudDebug' classes.</conf>
+            <conf name="leancloudDebugCompile" visible="false">Classpath for compiling the leancloudDebug sources.</conf>
+            <conf name="leancloudDebugJackPlugin" visible="false">Classpath for the 'leancloudDebug' Jack plugins.</conf>
+            <conf name="leancloudDebugProvided" visible="false">Classpath for only compiling the leancloudDebug sources.</conf>
+            <conf name="leancloudDebugUnitTestWearBundling">Resolved Configuration for wear app bundling for variant: leancloudDebugUnitTest</conf>
+            <conf name="leancloudDebugWearApp" visible="false">Link to a wear app to embed for object 'leancloudDebug'.</conf>
+            <conf name="leancloudDebugWearBundling">Resolved Configuration for wear app bundling for variant: leancloudDebug</conf>
+            <conf name="leancloudJackPlugin" visible="false">Classpath for the 'leancloud' Jack plugins.</conf>
+            <conf name="leancloudProvided" visible="false">Classpath for only compiling the leancloud sources.</conf>
+            <conf name="leancloudReleaseAnnotationProcessor" visible="false">Classpath for the annotation processor for 'leancloudRelease'.</conf>
+            <conf name="leancloudReleaseApk" visible="false">Classpath packaged with the compiled 'leancloudRelease' classes.</conf>
+            <conf name="leancloudReleaseCompile" visible="false">Classpath for compiling the leancloudRelease sources.</conf>
+            <conf name="leancloudReleaseJackPlugin" visible="false">Classpath for the 'leancloudRelease' Jack plugins.</conf>
+            <conf name="leancloudReleaseProvided" visible="false">Classpath for only compiling the leancloudRelease sources.</conf>
+            <conf name="leancloudReleaseUnitTestWearBundling">Resolved Configuration for wear app bundling for variant: leancloudReleaseUnitTest</conf>
+            <conf name="leancloudReleaseWearApp" visible="false">Link to a wear app to embed for object 'leancloudRelease'.</conf>
+            <conf name="leancloudReleaseWearBundling">Resolved Configuration for wear app bundling for variant: leancloudRelease</conf>
+            <conf name="leancloudWearApp" visible="false">Link to a wear app to embed for object 'leancloud'.</conf>
             <conf name="provided" visible="false">Classpath for only compiling the main sources.</conf>
             <conf name="releaseAnnotationProcessor" visible="false">Classpath for the annotation processor for 'release'.</conf>
             <conf name="releaseApk" visible="false">Classpath packaged with the compiled 'release' classes.</conf>
             <conf name="releaseCompile" visible="false">Classpath for compiling the release sources.</conf>
             <conf name="releaseJackPlugin" visible="false">Classpath for the 'release' Jack plugins.</conf>
             <conf name="releaseProvided" visible="false">Classpath for only compiling the release sources.</conf>
-            <conf name="releaseUnitTestWearBundling">Resolved Configuration for wear app bundling for variant: releaseUnitTest</conf>
             <conf name="releaseWearApp" visible="false">Link to a wear app to embed for object 'release'.</conf>
-            <conf name="releaseWearBundling">Resolved Configuration for wear app bundling for variant: release</conf>
             <conf name="testAnnotationProcessor" visible="false">Classpath for the annotation processor for 'test'.</conf>
             <conf name="testApk" visible="false">Classpath packaged with the compiled 'test' classes.</conf>
             <conf name="testCompile" visible="false">Classpath for compiling the test sources.</conf>
@@ -422,7 +767,43 @@
             <conf name="testDebugJackPlugin" visible="false">Classpath for the 'testDebug' Jack plugins.</conf>
             <conf name="testDebugProvided" visible="false">Classpath for only compiling the testDebug sources.</conf>
             <conf name="testDebugWearApp" visible="false">Link to a wear app to embed for object 'testDebug'.</conf>
+            <conf name="testFirebaseAnnotationProcessor" visible="false">Classpath for the annotation processor for 'testFirebase'.</conf>
+            <conf name="testFirebaseApk" visible="false">Classpath packaged with the compiled 'testFirebase' classes.</conf>
+            <conf name="testFirebaseCompile" visible="false">Classpath for compiling the testFirebase sources.</conf>
+            <conf name="testFirebaseDebugAnnotationProcessor" visible="false">Classpath for the annotation processor for 'testFirebaseDebug'.</conf>
+            <conf name="testFirebaseDebugApk" visible="false">Classpath packaged with the compiled 'testFirebaseDebug' classes.</conf>
+            <conf name="testFirebaseDebugCompile" visible="false">Classpath for compiling the testFirebaseDebug sources.</conf>
+            <conf name="testFirebaseDebugJackPlugin" visible="false">Classpath for the 'testFirebaseDebug' Jack plugins.</conf>
+            <conf name="testFirebaseDebugProvided" visible="false">Classpath for only compiling the testFirebaseDebug sources.</conf>
+            <conf name="testFirebaseDebugWearApp" visible="false">Link to a wear app to embed for object 'testFirebaseDebug'.</conf>
+            <conf name="testFirebaseJackPlugin" visible="false">Classpath for the 'testFirebase' Jack plugins.</conf>
+            <conf name="testFirebaseProvided" visible="false">Classpath for only compiling the testFirebase sources.</conf>
+            <conf name="testFirebaseReleaseAnnotationProcessor" visible="false">Classpath for the annotation processor for 'testFirebaseRelease'.</conf>
+            <conf name="testFirebaseReleaseApk" visible="false">Classpath packaged with the compiled 'testFirebaseRelease' classes.</conf>
+            <conf name="testFirebaseReleaseCompile" visible="false">Classpath for compiling the testFirebaseRelease sources.</conf>
+            <conf name="testFirebaseReleaseJackPlugin" visible="false">Classpath for the 'testFirebaseRelease' Jack plugins.</conf>
+            <conf name="testFirebaseReleaseProvided" visible="false">Classpath for only compiling the testFirebaseRelease sources.</conf>
+            <conf name="testFirebaseReleaseWearApp" visible="false">Link to a wear app to embed for object 'testFirebaseRelease'.</conf>
+            <conf name="testFirebaseWearApp" visible="false">Link to a wear app to embed for object 'testFirebase'.</conf>
             <conf name="testJackPlugin" visible="false">Classpath for the 'test' Jack plugins.</conf>
+            <conf name="testLeancloudAnnotationProcessor" visible="false">Classpath for the annotation processor for 'testLeancloud'.</conf>
+            <conf name="testLeancloudApk" visible="false">Classpath packaged with the compiled 'testLeancloud' classes.</conf>
+            <conf name="testLeancloudCompile" visible="false">Classpath for compiling the testLeancloud sources.</conf>
+            <conf name="testLeancloudDebugAnnotationProcessor" visible="false">Classpath for the annotation processor for 'testLeancloudDebug'.</conf>
+            <conf name="testLeancloudDebugApk" visible="false">Classpath packaged with the compiled 'testLeancloudDebug' classes.</conf>
+            <conf name="testLeancloudDebugCompile" visible="false">Classpath for compiling the testLeancloudDebug sources.</conf>
+            <conf name="testLeancloudDebugJackPlugin" visible="false">Classpath for the 'testLeancloudDebug' Jack plugins.</conf>
+            <conf name="testLeancloudDebugProvided" visible="false">Classpath for only compiling the testLeancloudDebug sources.</conf>
+            <conf name="testLeancloudDebugWearApp" visible="false">Link to a wear app to embed for object 'testLeancloudDebug'.</conf>
+            <conf name="testLeancloudJackPlugin" visible="false">Classpath for the 'testLeancloud' Jack plugins.</conf>
+            <conf name="testLeancloudProvided" visible="false">Classpath for only compiling the testLeancloud sources.</conf>
+            <conf name="testLeancloudReleaseAnnotationProcessor" visible="false">Classpath for the annotation processor for 'testLeancloudRelease'.</conf>
+            <conf name="testLeancloudReleaseApk" visible="false">Classpath packaged with the compiled 'testLeancloudRelease' classes.</conf>
+            <conf name="testLeancloudReleaseCompile" visible="false">Classpath for compiling the testLeancloudRelease sources.</conf>
+            <conf name="testLeancloudReleaseJackPlugin" visible="false">Classpath for the 'testLeancloudRelease' Jack plugins.</conf>
+            <conf name="testLeancloudReleaseProvided" visible="false">Classpath for only compiling the testLeancloudRelease sources.</conf>
+            <conf name="testLeancloudReleaseWearApp" visible="false">Link to a wear app to embed for object 'testLeancloudRelease'.</conf>
+            <conf name="testLeancloudWearApp" visible="false">Link to a wear app to embed for object 'testLeancloud'.</conf>
             <conf name="testProvided" visible="false">Classpath for only compiling the test sources.</conf>
             <conf name="testReleaseAnnotationProcessor" visible="false">Classpath for the annotation processor for 'testRelease'.</conf>
             <conf name="testReleaseApk" visible="false">Classpath packaged with the compiled 'testRelease' classes.</conf>
