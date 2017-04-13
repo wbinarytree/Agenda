@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.phoenix.soft.costy.module.Account;
+import com.phoenix.soft.costy.models.Account;
 
 import static com.phoenix.soft.costy.db.DBContract.AccountEntry.ACCOUNT_INCOME;
 import static com.phoenix.soft.costy.db.DBContract.AccountEntry.ACCOUNT_NAME;

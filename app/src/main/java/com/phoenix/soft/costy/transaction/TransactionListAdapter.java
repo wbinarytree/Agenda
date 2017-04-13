@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.phoenix.soft.costy.R;
-import com.phoenix.soft.costy.module.Account;
-import com.phoenix.soft.costy.module.Transaction;
+import com.phoenix.soft.costy.models.Account;
+import com.phoenix.soft.costy.models.Transaction;
 
 import org.joda.money.Money;
 

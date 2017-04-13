@@ -1,7 +1,7 @@
 package com.phoenix.soft.costy.account;
 
 import com.phoenix.soft.costy.BaseContract;
-import com.phoenix.soft.costy.module.Account;
+import com.phoenix.soft.costy.models.Account;
 
 /**
  * Created by yaoda on 22/03/17.

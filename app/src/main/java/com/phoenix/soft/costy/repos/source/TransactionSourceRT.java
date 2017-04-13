@@ -1,6 +1,7 @@
 package com.phoenix.soft.costy.repos.source;
 
-import com.phoenix.soft.costy.module.Transaction;
+
+import com.phoenix.soft.costy.models.Transaction;
 
 import java.util.List;
 

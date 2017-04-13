@@ -18,8 +18,8 @@ import android.view.ViewGroup;
 import com.phoenix.soft.costy.MainActivity;
 import com.phoenix.soft.costy.MainApplication;
 import com.phoenix.soft.costy.R;
-import com.phoenix.soft.costy.module.Account;
-import com.phoenix.soft.costy.module.Transaction;
+import com.phoenix.soft.costy.models.Account;
+import com.phoenix.soft.costy.models.Transaction;
 import com.phoenix.soft.costy.utils.Utils;
 
 import org.joda.money.Money;

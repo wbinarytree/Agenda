@@ -22,7 +22,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding2.view.RxMenuItem;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -33,7 +32,7 @@ import com.phoenix.soft.costy.account.AccountPagerAdapter;
 import com.phoenix.soft.costy.account.AccountPresenter;
 import com.phoenix.soft.costy.account.di.DaggerAccountPresenterComponent;
 import com.phoenix.soft.costy.login.AuthActivity;
-import com.phoenix.soft.costy.module.Account;
+import com.phoenix.soft.costy.models.Account;
 import com.phoenix.soft.costy.repos.source.EventType;
 import com.phoenix.soft.costy.utils.Utils;
 import com.squareup.picasso.Picasso;
@@ -45,7 +44,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Maybe;
-import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity implements AccountContract.View {
@@ -74,8 +72,7 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     DrawerLayout drawerLayout;
     @Inject
     AccountPresenter presenter;
-    @Inject
-    FirebaseAuth auth;
+
     private int count = 0;
     private AccountPagerAdapter adapter;
     private List<Account> accountList;
@@ -94,22 +91,24 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,
                 drawerLayout,
                 toolbar,
                 R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
+                R.string.navigation_drawer_close
+        );
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setPageMargin(20);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                                       .replace(R.id.container_detail,
-                                               AccountDetailFragment.newInstance(),
-                                               AccountDetailFragment.TAG)
-                                       .commit();
+            getSupportFragmentManager().beginTransaction().replace(
+                    R.id.container_detail,
+                    AccountDetailFragment.newInstance(),
+                    AccountDetailFragment.TAG
+            ).commit();
         }
 
         appbar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> isExpand = verticalOffset == 0);
@@ -127,12 +126,13 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
 
     private void updateViewByPagerContent(int position) {
         Picasso.with(this)
-               .load(Integer.valueOf(accountList.get(position).getAccountPicUrl()))
+               .load(Integer.valueOf(accountList.get(position)
+                                                .getAccountPicUrl()))
                .noFade()
                .resize(400, 800)
                .into(imageToolBar);
-        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
-                AccountDetailFragment.TAG);
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager()
+                .findFragmentByTag(AccountDetailFragment.TAG);
         if (fragment != null) {
             fragment.selectChart(position);
 
@@ -150,11 +150,12 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
             AccountAddDialogFragment fragment = new AccountAddDialogFragment();
             fragment.show(getSupportFragmentManager(), AccountAddDialogFragment.TAG);
         }));
-        disposable.add(RxMenuItem.clicks(menu.findItem(R.id.action_settings)).subscribe(objects -> {
-            auth.signOut();
-            Intent intent = new Intent(this, AuthActivity.class);
-            startActivity(intent);
-        }));
+        disposable.add(RxMenuItem.clicks(menu.findItem(R.id.action_settings))
+                                 .subscribe(objects -> {
+                                     Intent intent = new Intent(this, AuthActivity.class);
+                                     intent.putExtra("signOut",true);
+                                     startActivity(intent);
+                                 }));
         return true;
     }
 
@@ -217,8 +218,8 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
         } else {
             showAccountList();
         }
-        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
-                AccountDetailFragment.TAG);
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager()
+                .findFragmentByTag(AccountDetailFragment.TAG);
         if (fragment != null) {
             fragment.showPieChart();
         }
@@ -229,8 +230,8 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     public void showAccountList() {
         errorLayout.setVisibility(View.GONE);
         noAccountLayout.setVisibility(View.GONE);
-        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
-                AccountDetailFragment.TAG);
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager()
+                .findFragmentByTag(AccountDetailFragment.TAG);
         if (fragment != null) {
             fragment.showPieChart();
             detailContainer.setVisibility(View.VISIBLE);
@@ -260,11 +261,11 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     public void showError() {
         appbar.setExpanded(false);
-        Snackbar.make(findViewById(R.id.coordinator),
+        Snackbar.make(
+                findViewById(R.id.coordinator),
                 Utils.fromHtml("<font color=\"#ffffff\">" + getString(R.string.error_title_sync) + "</font>"),
-                Snackbar.LENGTH_SHORT)
-                .setAction(getString(R.string.title_retry), v -> presenter.loadAccount())
-                .show();
+                Snackbar.LENGTH_SHORT
+        ).setAction(getString(R.string.title_retry), v -> presenter.loadAccount()).show();
         errorLayout.setVisibility(View.VISIBLE);
         fab.setImageResource(R.drawable.ic_replay_white_24dp);
         fab.setOnClickListener(v -> presenter.loadAccount());
@@ -278,8 +279,8 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     @Override
     public void updateAccount(Account account, EventType type) {
         viewPager.getAdapter().notifyDataSetChanged();
-        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager().findFragmentByTag(
-                AccountDetailFragment.TAG);
+        AccountDetailFragment fragment = (AccountDetailFragment) getSupportFragmentManager()
+                .findFragmentByTag(AccountDetailFragment.TAG);
         if (type == EventType.TYPE_ADD) {
             noAccountLayout.setVisibility(View.GONE);
             errorLayout.setVisibility(View.GONE);
@@ -324,9 +325,11 @@ public class MainActivity extends AppCompatActivity implements AccountContract.V
     public void hideLoading() {
         fab.setImageResource(R.drawable.ic_add_white_24dp);
         fab.clearAnimation();
-        Snackbar.make(findViewById(R.id.coordinator),
+        Snackbar.make(
+                findViewById(R.id.coordinator),
                 Utils.fromHtml("<font color=\"#ffffff\">" + getString(R.string.title_sync_done) + "</font>"),
-                Snackbar.LENGTH_SHORT).show();
+                Snackbar.LENGTH_SHORT
+        ).show();
     }
 
 

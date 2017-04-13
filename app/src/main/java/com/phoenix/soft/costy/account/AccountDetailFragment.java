@@ -20,7 +20,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.phoenix.soft.costy.MainActivity;
 import com.phoenix.soft.costy.R;
-import com.phoenix.soft.costy.module.Account;
+import com.phoenix.soft.costy.models.Account;
 
 import org.joda.money.Money;
 

@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import com.phoenix.soft.costy.module.Account;
+import com.phoenix.soft.costy.models.Account;
 import com.phoenix.soft.costy.transaction.TransactionFragment;
 
 import java.util.List;

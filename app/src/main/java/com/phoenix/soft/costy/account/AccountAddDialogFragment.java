@@ -13,7 +13,7 @@ import android.widget.Spinner;
 
 import com.phoenix.soft.costy.MainActivity;
 import com.phoenix.soft.costy.R;
-import com.phoenix.soft.costy.module.Account;
+import com.phoenix.soft.costy.models.Account;
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
