@@ -1,6 +1,7 @@
 package com.phoenix.soft.costy.repos.source;
 
-import com.phoenix.soft.costy.module.Account;
+
+import com.phoenix.soft.costy.models.Account;
 
 import java.util.List;
 

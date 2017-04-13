@@ -1,8 +1,8 @@
 package com.phoenix.soft.costy.account;
 
 
-import com.phoenix.soft.costy.module.Account;
-import com.phoenix.soft.costy.module.Transaction;
+import com.phoenix.soft.costy.models.Account;
+import com.phoenix.soft.costy.models.Transaction;
 import com.phoenix.soft.costy.repos.source.AccountSourceRT;
 import com.phoenix.soft.costy.repos.source.ValueEvent;
 

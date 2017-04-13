@@ -2,7 +2,7 @@ package com.phoenix.soft.costy.repos.source;
 
 import com.jakewharton.rxrelay2.BehaviorRelay;
 import com.jakewharton.rxrelay2.Relay;
-import com.phoenix.soft.costy.module.Account;
+import com.phoenix.soft.costy.models.Account;
 
 import java.util.ArrayList;
 import java.util.List;

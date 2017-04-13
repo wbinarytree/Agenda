@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'com.getkeepsafe.dexcount'
 
-
+def fl = "default"
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -28,9 +28,9 @@ android {
     buildTypes {
         debug {
             // Minifying the variant used for tests is not supported when using Jack.
-            minifyEnabled true
+            minifyEnabled false
             // Uses new built-in shrinker http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
-            useProguard true
+            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
         }
@@ -44,12 +44,15 @@ android {
     productFlavors {
         firebase {
             applicationId "com.phoenix.soft.costy"
-//            resValue "string", "package_name", applicationId
+            resValue "string", "package_name", applicationId
+            fl = "firebase"
         }
         leancloud{
-            applicationId "com.phoenix.soft.costy.cn"
+            applicationId "com.phoenix.soft.costy"
+            applicationIdSuffix ".cn"
+            versionNameSuffix "-cn"
             resValue "string", "package_name", applicationId
-
+            fl = "leancloud"
         }
     }
 }
@@ -100,12 +103,15 @@ dependencies {
     //test
     compile 'com.facebook.stetho:stetho:1.4.2'
     //firebase
-    compile 'com.google.firebase:firebase-core:10.2.1'
-    compile 'com.google.firebase:firebase-auth:10.2.1'
-    compile 'com.google.firebase:firebase-messaging:10.2.1'
-    compile 'com.google.android.gms:play-services-auth:10.2.1'
-    compile 'com.google.firebase:firebase-database:10.2.1'
+    firebaseCompile 'com.google.firebase:firebase-core:10.2.1'
+    firebaseCompile 'com.google.firebase:firebase-auth:10.2.1'
+    firebaseCompile 'com.google.firebase:firebase-messaging:10.2.1'
+    firebaseCompile 'com.google.android.gms:play-services-auth:10.2.1'
+    firebaseCompile 'com.google.firebase:firebase-database:10.2.1'
 
 }
 
-apply plugin: 'com.google.gms.google-services'
+if (getGradle().getStartParameter().getTaskRequests()
+        .toString().contains("Firebase")){
+    apply plugin: 'com.google.gms.google-services'
+}

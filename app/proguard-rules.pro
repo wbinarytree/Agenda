@@ -77,3 +77,6 @@
 }
 
 -dontwarn com.squareup.okhttp.**
+
+-dontwarn org.joda.money.**
+-keep class org.joda.money.** { *; }

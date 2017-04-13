@@ -1,6 +1,6 @@
 package com.phoenix.soft.costy.transaction.di;
 
-import com.phoenix.soft.costy.module.Account;
+import com.phoenix.soft.costy.models.Account;
 import com.phoenix.soft.costy.transaction.TransactionFragment;
 
 import dagger.Subcomponent;
