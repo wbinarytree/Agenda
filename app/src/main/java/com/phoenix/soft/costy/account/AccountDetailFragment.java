@@ -105,12 +105,12 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
     @Override
     public void showPieChart() {
         ((MainActivity) getActivity()).getAccountList()
-                                      .map(accountList -> setupPieData(setUpEntries(accountList)))
-                                      .subscribe(pieData -> {
-                                          pieChart.setData(pieData);
-                                          selectChart(0);
-                                          pieChart.invalidate();
-                                      }, throwable -> showError(), this::showNoChart);
+                .map(accountList -> setupPieData(setUpEntries(accountList)))
+                .subscribe(pieData -> {
+                    pieChart.setData(pieData);
+                    selectChart(0);
+                    pieChart.invalidate();
+                }, throwable -> showError(), this::showNoChart);
     }
 
     @NonNull

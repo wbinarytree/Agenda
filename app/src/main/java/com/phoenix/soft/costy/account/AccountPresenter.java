@@ -56,15 +56,13 @@ public class AccountPresenter implements AccountContract.Presenter {
         view.showLoading();
 
         Disposable subscribe = accountList.observeOn(AndroidSchedulers.mainThread())
-                                          .doOnEach(disposable -> view.hideLoading())
-                                          .doAfterNext(accounts -> compositeDisposable.add(
-                                                  accountUpdate.subscribe(value -> view.updateAccount(
-                                                          value.getValue(),
-                                                          value.getType()),
-                                                          throwable -> view.showError())))
-                                          .subscribe(accounts -> {
-                                              view.initAccountList(accounts);
-                                          }, throwable -> view.showError());
+                .doOnEach(disposable -> view.hideLoading())
+                .doAfterNext(accounts -> compositeDisposable.add(accountUpdate.subscribe(
+                        value -> view.updateAccount(value.getValue(), value.getType()),
+                        throwable -> view.showError())))
+                .subscribe(
+                        accounts -> view.initAccountList(accounts),
+                        throwable -> view.showError());
         compositeDisposable.add(subscribe);
     }
 

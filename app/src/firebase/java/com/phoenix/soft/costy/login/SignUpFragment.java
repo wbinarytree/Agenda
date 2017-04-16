@@ -32,6 +32,7 @@ import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView;
 import com.phoenix.soft.costy.MainApplication;
 import com.phoenix.soft.costy.R;
 import com.phoenix.soft.costy.utils.Utils;
@@ -67,6 +68,7 @@ public class SignUpFragment extends Fragment implements AuthActivity.FabClick {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Nullable
     @Override

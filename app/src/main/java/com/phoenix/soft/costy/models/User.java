@@ -14,27 +14,32 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.repos.source;
+package com.phoenix.soft.costy.models;
 
 /**
- * Created by yaoda on 05/04/17.
+ * Created by phoenix on 2017/4/16.
  */
 
-public class ValueEvent<T> {
-    private final T value;
-    private final EventType type;
+public class User {
+    private final String uid;
+    private final String username;
+    private final String email;
 
-    public ValueEvent(T value, EventType type) {
-        this.value = value;
-        this.type = type;
+    public User(String uid, String username, String email) {
+        this.uid = uid;
+        this.username = username;
+        this.email = email;
     }
 
-    public EventType getType() {
-        return type;
+    public String getUid() {
+        return uid;
     }
 
-    public T getValue() {
-        return value;
+    public String getUsername() {
+        return username;
     }
 
+    public String getEmail() {
+        return email;
+    }
 }

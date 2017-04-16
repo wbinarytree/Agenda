@@ -73,7 +73,6 @@ public class AccountActivity extends AppCompatActivity {
     private List<Account> accountList;
     private CompositeDisposable disposable = new CompositeDisposable();
     private boolean isExpand;
-    private ViewModel accoutViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +80,8 @@ public class AccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initDrawer();
-        disposable.add(accoutViewModel.getAccountList()
-                                      .subscribe(this::showAccountList, this::showError));
+//        disposable.add(accoutViewModel.getAccountList()
+//                                      .subscribe(this::showAccountList, this::showError));
 
 
     }
