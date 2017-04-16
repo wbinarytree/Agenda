@@ -54,7 +54,8 @@ public class AccountPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        TransactionFragment o = (TransactionFragment) super.instantiateItem(container, position);
+        TransactionFragment o = (TransactionFragment) super.instantiateItem(
+                container, position);
         transactionFragments.put(position, o);
         return o;
     }
