@@ -18,15 +18,18 @@ package com.phoenix.soft.costy.login
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.phoenix.soft.costy.login.di.AuthScope
 import com.phoenix.soft.costy.models.User
 import io.reactivex.Observable
 import phoenixlib.io.rxfirebase.auth.RxAuth
 import phoenixlib.io.rxfirebase.auth.RxUser
+import javax.inject.Inject
 
 /**
  * Created by phoenix on 2017/4/16.
  */
-class AuthManager constructor(val auth: FirebaseAuth) {
+@AuthScope
+class AuthManager @Inject constructor(val auth: FirebaseAuth) {
     fun signUp(email: String, pwd: String, username: String):Observable<User>
             = RxAuth.createUser(auth, email, pwd)
             .map { it.user }

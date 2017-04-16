@@ -17,22 +17,27 @@
 package com.phoenix.soft.costy.login
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.View
-import android.view.animation.AlphaAnimation
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.phoenix.soft.costy.MainApplication
 import com.phoenix.soft.costy.R
+import com.phoenix.soft.costy.login.di.DaggerAuthComponent
 import javax.inject.Inject
 
 /**
  * Created by phoenix on 2017/4/16.
  */
 
-class AuthActivityKot : AppCompatActivity() {
+class AuthActivityKt : AppCompatActivity() {
     private val TAG = "AuthActivity"
     @BindView(R.id.tv_sign_up)
     lateinit var tvSignUp: TextView
@@ -40,11 +45,15 @@ class AuthActivityKot : AppCompatActivity() {
     lateinit var fab: FloatingActionButton
     @BindView(R.id.login_background)
     lateinit var root: View
+    @Inject
     lateinit var auth: AuthManager
 
-    override fun onCreate(savedInstanceState: Bundle?,
-            persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        DaggerAuthComponent.builder()
+                .appComponent(MainApplication.getAppComponent())
+                .build()
+                .inject(this)
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
         tvSignUp.setText(R.string.title_about)
@@ -52,14 +61,25 @@ class AuthActivityKot : AppCompatActivity() {
 
     }
 
-    companion object {
-        private val ALPHA_FADE = ButterKnife.Action<View> { view, index ->
-            with(AlphaAnimation(0f, 1f)) {
-                fillBefore = true
-                duration = 500
-                startOffset = (index * 100).toLong()
-                view.startAnimation(this)
+    private fun setupSignUpText() {
+        val string = getString(R.string.sign_up_long)
+        val start = string.indexOf("{")
+        val end = string.indexOf("}") - 1
+        val ss = SpannableString(string.replace("{", "").replace("}", ""))
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(textView: View) {
+                TODO()
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = true
             }
         }
+        ss.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        tvSignUp.text = ss
+        tvSignUp.movementMethod = LinkMovementMethod.getInstance()
+
     }
+
 }

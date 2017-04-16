@@ -17,6 +17,7 @@
 package com.phoenix.soft.costy.account;
 
 
+import com.phoenix.soft.costy.account.di.AccountRepoScope;
 import com.phoenix.soft.costy.models.Account;
 import com.phoenix.soft.costy.models.Transaction;
 import com.phoenix.soft.costy.repos.source.AccountSourceRT;
@@ -34,6 +35,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * Created by yaoda on 22/02/17.
  */
+@AccountRepoScope
 public class AccountPresenter implements AccountContract.Presenter {
 
     private static final String TAG = "AccountPresenter";
