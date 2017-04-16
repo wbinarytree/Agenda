@@ -42,6 +42,7 @@ class SignUpFragmentKt : Fragment() {
     lateinit var etNickName: EditText
     lateinit var fab: FloatingActionButton
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root: View = inflater.inflate(R.layout.fragment_sign_up, container, false)
         ButterKnife.bind(this, root)
