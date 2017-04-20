@@ -19,17 +19,21 @@ package com.phoenix.soft.costy.login
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
+import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.jakewharton.rxbinding2.view.RxView
+import com.phoenix.soft.costy.MainApplication
 import com.phoenix.soft.costy.R
-import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.*
+import com.phoenix.soft.costy.login.di.DaggerAuthComponent
+import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -46,12 +50,14 @@ class SignUpFragmentKt : Fragment() {
     @BindView(R.id.username)
     lateinit var etNickName: EditText
     lateinit var fab: FloatingActionButton
-    @Inject lateinit var translator: AuthTranslator
+    @Inject
+    lateinit var translator: AuthTranslator
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root: View = inflater.inflate(R.layout.fragment_sign_up, container, false)
         ButterKnife.bind(this, root)
         fab = activity.findViewById(R.id.fab) as FloatingActionButton
+        DaggerAuthComponent.builder().appComponent(MainApplication.getAppComponent()).build().inject(this)
         return root
     }
 
@@ -61,6 +67,7 @@ class SignUpFragmentKt : Fragment() {
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .map { SignUpEvent(etUsername.text.toString(), etPassword.text.toString(), etNickName.text.toString()) }
                 .compose(translator.signUpProcess)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when (it) {
                         is SignUpUiModule.Idle -> {
@@ -69,10 +76,11 @@ class SignUpFragmentKt : Fragment() {
                             fab.startAnimation(animation)
                         }
                         is SignUpUiModule.SuccessModule -> {
-                            TODO()
+                            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+
                         }
                         is SignUpUiModule.ErrorModule -> {
-
+                            Log.d("",it.msg)
                         }
                     }
                 })

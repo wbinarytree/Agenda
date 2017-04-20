@@ -16,11 +16,7 @@
 
 package com.phoenix.soft.costy.login;
 
-import android.animation.Animator;
-import android.content.Intent;
-import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,13 +30,11 @@ import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.phoenix.soft.costy.MainActivity;
 import com.phoenix.soft.costy.MainApplication;
 import com.phoenix.soft.costy.R;
-import com.phoenix.soft.costy.utils.Utils;
 
 import javax.inject.Inject;
 
@@ -73,52 +67,55 @@ public class AuthActivity extends AppCompatActivity {
         if (getIntent().getBooleanExtra("signOut", false)) {
             firebaseAuth.signOut();
         }
-        fab.hide();
+//        fab.hide();
         setupSignUpText();
         tvSignUp.setVisibility(View.GONE);
-        mAuthListener = firebaseAuth -> {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user != null) {
-                Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                fab.clearAnimation();
-                Utils.viewMoveToCenter(fab, this, new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getDrawable(R.drawable.sync_to_tick);
-                        if (drawable != null) {
-                            fab.setImageDrawable(drawable);
-                            drawable.start();
-                            fab.setClickable(false);
-                        }
-                        new Handler(getMainLooper()).postDelayed(() -> {
-                            //FirebaseAccountRepository.getObservable().subscribe(accountFire -> Log.d(TAG, "accept: "));
-                            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        }, 250);
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-
-                    }
-                });
-
-            } else {
-                if (savedInstanceState == null) {
-                    showLogin();
-                }
-            }
-        };
+        getSupportFragmentManager().beginTransaction()
+                                   .replace(R.id.container, new SignUpFragmentKt())
+                                   .commit();
+//        mAuthListener = firebaseAuth -> {
+//            FirebaseUser user = firebaseAuth.getCurrentUser();
+//            if (user != null) {
+//                Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+//                fab.clearAnimation();
+//                Utils.viewMoveToCenter(fab, this, new Animator.AnimatorListener() {
+//                    @Override
+//                    public void onAnimationStart(Animator animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animator animation) {
+//                        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getDrawable(R.drawable.sync_to_tick);
+//                        if (drawable != null) {
+//                            fab.setImageDrawable(drawable);
+//                            drawable.start();
+//                            fab.setClickable(false);
+//                        }
+//                        new Handler(getMainLooper()).postDelayed(() -> {
+//                            //FirebaseAccountRepository.getObservable().subscribe(accountFire -> Log.d(TAG, "accept: "));
+//                            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+//                            startActivity(intent);
+//                        }, 250);
+//                    }
+//
+//                    @Override
+//                    public void onAnimationCancel(Animator animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animator animation) {
+//
+//                    }
+//                });
+//
+//            } else {
+//                if (savedInstanceState == null) {
+//                    showLogin();
+//                }
+//            }
+//        };
     }
 
     private void showLogin() {
@@ -157,7 +154,7 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        firebaseAuth.addAuthStateListener(mAuthListener);
+//        firebaseAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
