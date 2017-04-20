@@ -19,6 +19,7 @@ package com.phoenix.soft.costy.login.di
 import com.phoenix.soft.costy.dagger.AppComponent
 import com.phoenix.soft.costy.login.AuthActivityKt
 import com.phoenix.soft.costy.login.FirebaseAuthManager
+import com.phoenix.soft.costy.login.SignUpFragmentKt
 import dagger.Component
 import javax.inject.Scope
 
@@ -30,6 +31,7 @@ import javax.inject.Scope
 interface AuthComponent {
     fun inject(authActivity: AuthActivityKt)
     fun provide(): FirebaseAuthManager
+    fun inject(signUpFragmentKt: SignUpFragmentKt)
 }
 
 @Scope
