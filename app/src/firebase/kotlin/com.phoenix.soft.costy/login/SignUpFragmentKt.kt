@@ -22,11 +22,16 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.jakewharton.rxbinding2.view.RxView
 import com.phoenix.soft.costy.R
+import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.*
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 /**
  * Created by phoenix on 2017/4/16.
@@ -41,7 +46,7 @@ class SignUpFragmentKt : Fragment() {
     @BindView(R.id.username)
     lateinit var etNickName: EditText
     lateinit var fab: FloatingActionButton
-
+    @Inject lateinit var translator: AuthTranslator
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root: View = inflater.inflate(R.layout.fragment_sign_up, container, false)
@@ -50,7 +55,28 @@ class SignUpFragmentKt : Fragment() {
         return root
     }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        RxView.clicks(fab)
+                .debounce(200, TimeUnit.MILLISECONDS)
+                .map { SignUpEvent(etUsername.text.toString(), etPassword.text.toString(), etNickName.text.toString()) }
+                .compose(translator.signUpProcess)
+                .subscribe({
+                    when (it) {
+                        is SignUpUiModule.Idle -> {
+                            fab.setImageResource(R.drawable.ic_sync_white_24dp)
+                            val animation = AnimationUtils.loadAnimation(context, R.anim.rotate)
+                            fab.startAnimation(animation)
+                        }
+                        is SignUpUiModule.SuccessModule -> {
+                            TODO()
+                        }
+                        is SignUpUiModule.ErrorModule -> {
 
+                        }
+                    }
+                })
+    }
 }
 
 fun newInstance(): SignUpFragmentKt {

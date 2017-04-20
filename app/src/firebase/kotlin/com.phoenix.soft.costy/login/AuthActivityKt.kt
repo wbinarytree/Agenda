@@ -28,9 +28,8 @@ import android.view.View
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.phoenix.soft.costy.MainApplication
+import com.jakewharton.rxbinding2.view.RxView
 import com.phoenix.soft.costy.R
-import com.phoenix.soft.costy.login.di.DaggerAuthComponent
 import javax.inject.Inject
 
 /**
@@ -46,18 +45,13 @@ class AuthActivityKt : AppCompatActivity() {
     @BindView(R.id.login_background)
     lateinit var root: View
     @Inject
-    lateinit var auth: AuthManager
+    lateinit var auth: FirebaseAuthManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerAuthComponent.builder()
-                .appComponent(MainApplication.getAppComponent())
-                .build()
-                .inject(this)
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
         tvSignUp.setText(R.string.title_about)
-
 
     }
 
@@ -79,7 +73,6 @@ class AuthActivityKt : AppCompatActivity() {
         ss.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         tvSignUp.text = ss
         tvSignUp.movementMethod = LinkMovementMethod.getInstance()
-
     }
 
 }

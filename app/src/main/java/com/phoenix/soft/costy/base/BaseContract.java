@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy;
+package com.phoenix.soft.costy.base;
 
 /**
  * Created by yaoda on 22/03/17.

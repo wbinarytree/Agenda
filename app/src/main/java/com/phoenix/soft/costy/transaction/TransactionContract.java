@@ -16,7 +16,7 @@
 
 package com.phoenix.soft.costy.transaction;
 
-import com.phoenix.soft.costy.BaseContract;
+import com.phoenix.soft.costy.base.BaseContract;
 import com.phoenix.soft.costy.models.Transaction;
 
 import java.util.List;
