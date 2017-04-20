@@ -14,11 +14,22 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.account;
+package com.phoenix.soft.costy.base;
+
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 
 /**
- * Created by phoenix on 2017/4/15.
+ * Created by yaoda on 20/04/17.
  */
 
-public class AccountUiMoDel {
+public class BaseEvent {
+    public abstract static class BaseAction {
+
+    }
+
+    public abstract static class BaseResult {
+
+    }
+
 }

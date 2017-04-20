@@ -16,32 +16,12 @@
 
 package com.phoenix.soft.costy.login
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.phoenix.soft.costy.login.di.AuthScope
-import com.phoenix.soft.costy.models.User
 import io.reactivex.Observable
-import phoenixlib.io.rxfirebase.auth.RxAuth
-import phoenixlib.io.rxfirebase.auth.RxUser
-import javax.inject.Inject
 
 /**
- * Created by phoenix on 2017/4/16.
+ * Created by yaoda on 20/04/17.
  */
-@AuthScope
-class AuthManager @Inject constructor(val auth: FirebaseAuth) {
-    fun signUp(email: String, pwd: String, username: String):Observable<User>
-            = RxAuth.createUser(auth, email, pwd)
-            .map { it.user }
-            .publish { user ->
-                user.flatMapCompletable { RxUser.updateUsername(it, username) }
-                        .andThen(user)
-            }
-            .map(::toUser)
 
-    fun signIn(email: String, pwd: String)
-            = RxAuth.signInWithEmailAndPassword(auth, email, pwd)
+interface AuthManager {
+    fun signUp(action: SignUpAction): Observable<SignUpResult>
 }
-
-private fun toUser(user: FirebaseUser)
-        = User(user.uid, user.displayName, user.email)

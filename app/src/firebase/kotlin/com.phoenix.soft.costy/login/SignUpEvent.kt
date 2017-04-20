@@ -14,28 +14,12 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.models;
+package com.phoenix.soft.costy.login
+
+import com.phoenix.soft.costy.base.BaseEvent
 
 /**
- * Created by yaoda on 03/03/17.
- * Actions for RxBus
- *
+ * Created by yaoda on 20/04/17.
  */
+data class SignUpEvent(val email: String, val password: String, val username: String) : BaseEvent()
 
-public class Events {
-
-    //change full toolbar layout
-    //ex: AppbarLayout/ CollapsingToolbarLayout /ImageView
-    public static class ToolbarChangeEvent{
-        public boolean isVisible() {
-            return visible;
-        }
-
-        private boolean visible;
-
-        public ToolbarChangeEvent(boolean visible) {
-            this.visible = visible;
-        }
-
-    }
-}

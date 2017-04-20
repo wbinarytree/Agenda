@@ -14,28 +14,29 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.models;
+package com.phoenix.soft.costy.login
 
-/**
- * Created by yaoda on 03/03/17.
- * Actions for RxBus
- *
- */
+import com.phoenix.soft.costy.models.User
 
-public class Events {
+open class SignUpResult {
 
-    //change full toolbar layout
-    //ex: AppbarLayout/ CollapsingToolbarLayout /ImageView
-    public static class ToolbarChangeEvent{
-        public boolean isVisible() {
-            return visible;
-        }
+    companion object {
+        val idle: SignUpResult = IdleResult()
 
-        private boolean visible;
+        fun success(user: User): SignUpResult = SuccessResult(user)
 
-        public ToolbarChangeEvent(boolean visible) {
-            this.visible = visible;
-        }
+        fun failure(message: String?): SignUpResult = FailResult(message ?: "Sign Up Error With unknown message")
 
     }
+
 }
+
+class SuccessResult(val user: User) : SignUpResult()
+
+class IdleResult : SignUpResult()
+
+class FailResult(val message: String) : SignUpResult()
+
+
+
+
