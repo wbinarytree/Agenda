@@ -82,6 +82,9 @@ public class TransactionFragment extends Fragment implements TransactionContract
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         account = (Account) getArguments().get("detail");
+        if (account == null) {
+            throw new RuntimeException("Null Account Received");
+        }
         if (savedInstanceState == null) {
             MainApplication.addTransaction(account).inject(this);
         } else {
@@ -99,11 +102,6 @@ public class TransactionFragment extends Fragment implements TransactionContract
         Log.d(TAG, "onCreateView: ");
         return view;
     }
-//
-//    public void setPresenter(TransactionContract.Presenter presenter) {
-//        this.presenter = presenter;
-//    }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -130,6 +128,12 @@ public class TransactionFragment extends Fragment implements TransactionContract
     }
 
     @Override
+    public void onResume() {
+        Log.d(TAG, "onResume: ");
+        super.onResume();
+    }
+
+    @Override
     public void onStop() {
         Log.d(TAG, "onStop: ");
         super.onStop();
@@ -140,7 +144,7 @@ public class TransactionFragment extends Fragment implements TransactionContract
     public void onDestroy() {
         Log.d(TAG, "onDestroy: ");
         super.onDestroy();
-        presenter.detachView();
+        MainApplication.removeTransaction(account.getKey());
         bind.unbind();
     }
 
@@ -191,20 +195,16 @@ public class TransactionFragment extends Fragment implements TransactionContract
 
     @Override
     public void showError(String errorMessage) {
-        Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.coordinator),
-                Utils.fromHtml("<font color=\"#ffffff\">" + errorMessage + "</font>"),
-                Snackbar.LENGTH_SHORT).setAction("RETRY", v -> presenter.loadDetailList());
+        Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.coordinator), Utils.fromHtml("<font color=\"#ffffff\">" + errorMessage + "</font>"), Snackbar.LENGTH_SHORT)
+                                    .setAction("RETRY", v -> presenter.loadDetailList());
         snackbar.show();
     }
 
     @Override
     public void initTransactionList(List<Transaction> transactions) {
         transactionListAdapter = new TransactionListAdapter(transactions);
-        LinearLayoutManager layout = new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL,
-                false);
-        detailRecyclerList.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));
+        LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        detailRecyclerList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         detailRecyclerList.setAdapter(transactionListAdapter);
         detailRecyclerList.setLayoutManager(layout);
         detailRecyclerList.setItemAnimator(new SlideInLeftAnimator());
@@ -237,9 +237,8 @@ public class TransactionFragment extends Fragment implements TransactionContract
                 if (resultCode == RESULT_OK) {
                     String number = data.getStringExtra("mountNumber");
                     boolean add = data.getBooleanExtra("isAdd", false);
-                    Money money = add
-                                  ? Money.parse(account.getCurrency() + number)
-                                  : Money.parse(account.getCurrency() + " -" + number);
+                    Money money = add ? Money.parse(account.getCurrency() + number) : Money.parse(account
+                            .getCurrency() + " -" + number);
                     Transaction transaction = new Transaction();
                     transaction.setMoney(money);
                     transaction.setDate(new Date());

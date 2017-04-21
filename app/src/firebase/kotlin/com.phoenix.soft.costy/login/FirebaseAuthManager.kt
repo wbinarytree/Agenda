@@ -30,31 +30,39 @@ import javax.inject.Inject
  * Created by phoenix on 2017/4/16.
  */
 @AuthScope
-class FirebaseAuthManager @Inject constructor(val auth: FirebaseAuth) : AuthManager {
+class FirebaseAuthManager @Inject constructor(val auth: FirebaseAuth) {
 
     val signUp: ObservableTransformer<SignUpAction, SignUpResult> = ObservableTransformer {
         it.flatMap { (email, password, username) ->
             RxAuth.createUser(auth, email, password)
-                    .publish {
-                        it.flatMapCompletable { RxUser.updateUsername(it.user, username) }.andThen(it)
+                    .flatMap {
+                        RxUser.updateUsername(it.user, username)
+                                .andThen(Observable.just(it))
                     }
-                    .map {
-                        SignUpResult.success(toUser(it.user))
-                    }
+                    .map { SignUpResult.success(toUser(it.user)) }
                     .onErrorReturn { SignUpResult.failure(it.message) }
-                    .startWith { SignUpResult.idle }
+                    .startWith(SignUpResult.idle)
         }
-
     }
 
-    override fun signUp(action: SignUpAction): Observable<SignUpResult>
-            = RxAuth.createUser(auth, action.email, action.password)
-            .publish {
-                it.flatMapCompletable { RxUser.updateUsername(it.user, action.username) }.andThen(it)
-            }
-            .map { SignUpResult.success(toUser(it.user)) }
+    val authTrans: ObservableTransformer<Any, SignUpResult> = ObservableTransformer {
+        it.flatMap {
+            RxAuth.createUser(auth, "11wangyaoda@gmail.com", "930621a123")
+                    .map { SignUpResult.success(toUser(it.user)) }
+                    .onErrorReturn { SignUpResult.failure(it.message) }
+                    .startWith(SignUpResult.idle)
+        }
+    }
 
-    private fun toUser(user: FirebaseUser)
-            = User(user.uid, user.displayName, user.email)
+//    override fun signUp(action: SignUpAction): Observable<SignUpResult>
+//            = RxAuth.createUser(auth, action.email, action.password)
+//            .publish {
+//                it.flatMapCompletable { RxUser.updateUsername(it.user, action.username) }.andThen(it)
+//            }
+//            .map { SignUpResult.success(toUser(it.user)) }
+
+
 }
 
+public fun toUser(user: FirebaseUser)
+        = User(user.uid, user.displayName, user.email)

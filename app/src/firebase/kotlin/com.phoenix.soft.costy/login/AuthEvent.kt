@@ -16,10 +16,9 @@
 
 package com.phoenix.soft.costy.login
 
-import com.phoenix.soft.costy.base.BaseEvent
-
 /**
- * Created by yaoda on 20/04/17.
+ * Created by yaoda on 21/04/17.
  */
-data class SignUpEvent(val email: String, val password: String, val username: String) : BaseEvent()
-
+sealed class AuthEvent {
+    data class SignUpEvent(val email: String, val password: String, val username: String) : AuthEvent()
+}
