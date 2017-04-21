@@ -18,7 +18,12 @@ package com.phoenix.soft.costy.login
 
 import com.phoenix.soft.costy.models.User
 
-open class SignUpResult {
+sealed class SignUpResult {
+    class SuccessResult(val user: User) : SignUpResult()
+
+    class IdleResult : SignUpResult()
+
+    class FailResult(val message: String) : SignUpResult()
 
     companion object {
         val idle: SignUpResult = IdleResult()
@@ -31,11 +36,7 @@ open class SignUpResult {
 
 }
 
-class SuccessResult(val user: User) : SignUpResult()
 
-class IdleResult : SignUpResult()
-
-class FailResult(val message: String) : SignUpResult()
 
 
 

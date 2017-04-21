@@ -21,7 +21,6 @@ import android.util.ArrayMap;
 
 import com.facebook.stetho.Stetho;
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.phoenix.soft.costy.dagger.AppComponent;
 import com.phoenix.soft.costy.dagger.DaggerAppComponent;
 import com.phoenix.soft.costy.models.Account;
@@ -36,30 +35,34 @@ import javax.inject.Inject;
 
 public class MainApplication extends Application {
 
-    private static AppComponent appComponent;
-    private static ArrayMap<String,TransactionComponent> transactionMap;
     public final static String DATEPATTERN = "EEE MMM dd HH:mm:ss yyyy";
-    public FirebaseAuth  getAuth() {
-        return mAuth;
-    }
-
+    private static AppComponent appComponent;
+    private static ArrayMap<String, TransactionComponent> transactionMap;
     @Inject
     FirebaseAuth mAuth;
-
 
     public static AppComponent getAppComponent() {
         return appComponent;
     }
 
-    public static TransactionComponent addTransaction(Account account){
-        TransactionComponent component =getAppComponent().plus(new TransactionModule(account));
-        transactionMap.put(account.getKey(),component);
+    public static TransactionComponent addTransaction(Account account) {
+        TransactionComponent component = getAppComponent().plus(new TransactionModule(account));
+        transactionMap.put(account.getKey(), component);
         return component;
     }
 
-    public static TransactionComponent getTransaction(String key){
+    public static TransactionComponent getTransaction(String key) {
         return transactionMap.get(key);
     }
+
+    public static void removeTransaction(String key) {
+        transactionMap.remove(key);
+    }
+
+    public FirebaseAuth getAuth() {
+        return mAuth;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

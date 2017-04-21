@@ -18,7 +18,7 @@ package com.phoenix.soft.costy.login
 
 import com.phoenix.soft.costy.models.User
 
-open class SignUpUiModule {
+sealed class SignUpUiModule {
     companion object {
         fun error(type: ErrorType, msg: String = type.name + " is not validated"):
                 SignUpUiModule = ErrorModule(type, msg)

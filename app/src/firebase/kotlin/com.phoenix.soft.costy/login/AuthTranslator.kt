@@ -33,29 +33,40 @@ class AuthTranslator @Inject constructor(val auth: FirebaseAuthManager) {
     val signUpResult: ObservableTransformer<SignUpResult, SignUpUiModule> = ObservableTransformer {
         it.map {
             when (it) {
-                is IdleResult -> SignUpUiModule.inProcess
-                is SuccessResult -> SignUpUiModule.success(it.user)
-                is FailResult -> SignUpUiModule.error(SIGN_UP_ERROR, it.message)
+                is SignUpResult.IdleResult -> SignUpUiModule.inProcess
+                is SignUpResult.SuccessResult -> SignUpUiModule.success(it.user)
+                is SignUpResult.FailResult -> SignUpUiModule.error(SIGN_UP_ERROR, it.message)
                 else -> SignUpUiModule.error(UNKNOWN)
             }
         }
     }
 
-    val signUpProcess: ObservableTransformer<SignUpEvent, SignUpUiModule> = ObservableTransformer {
+    val signUp: ObservableTransformer<Any, SignUpUiModule> = ObservableTransformer {
+        it.map { SignUpAction("11wangyaoda@gmail.com", "930621a123", "username") }
+                .compose(auth.signUp)
+                .compose(signUpResult)
+    }
+
+    val signUpProcess: ObservableTransformer<AuthEvent, SignUpUiModule> = ObservableTransformer {
         it.flatMap {
             event ->
-            val result = checkEvent(event)
-            when (result) {
-                is SignUpUiModule -> Observable.just(result)
-                is SignUpAction -> Observable.just(result).compose(auth.signUp).compose(signUpResult)
-                else -> {
-                    Observable.just(SignUpUiModule.error(UNKNOWN))
+            if (event is AuthEvent.SignUpEvent) {
+                val result = checkEvent(event)
+                when (result) {
+                    is SignUpUiModule -> Observable.just(result)
+                    is SignUpAction -> Observable.just(result).compose(auth.signUp).compose(signUpResult)
+                    else -> {
+                        Observable.just(SignUpUiModule.error(UNKNOWN))
+                    }
                 }
+            } else {
+                TODO()
             }
+
         }
     }
 
-    fun checkEvent(event: SignUpEvent): Any {
+    fun checkEvent(event: AuthEvent.SignUpEvent): Any {
         val (email, password, username) = event
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             return SignUpUiModule.error(PASSWORD)
