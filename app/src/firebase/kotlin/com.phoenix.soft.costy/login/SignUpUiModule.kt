@@ -21,17 +21,13 @@ import com.phoenix.soft.costy.models.User
 sealed class SignUpUiModule {
     companion object {
         fun error(type: ErrorType, msg: String = type.name + " is not validated"):
-                SignUpUiModule = ErrorModule(type, msg)
+            SignUpUiModule = ErrorModule(type, msg)
 
         fun success(user: User): SignUpUiModule = SuccessModule(user)
         val inProcess: SignUpUiModule = Idle()
 
         enum class ErrorType {
-            USERNAME,
-            PASSWORD,
-            EMAIL,
-            UNKNOWN,
-            SIGN_UP_ERROR
+            USERNAME, PASSWORD, EMAIL, UNKNOWN, SIGN_UP_ERROR
         }
     }
 

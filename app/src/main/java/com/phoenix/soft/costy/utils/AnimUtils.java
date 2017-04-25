@@ -31,7 +31,6 @@ import android.util.Property;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
-
 import java.util.ArrayList;
 
 /**
@@ -39,7 +38,8 @@ import java.util.ArrayList;
  */
 public class AnimUtils {
 
-    private AnimUtils() { }
+    private AnimUtils() {
+    }
 
     private static Interpolator fastOutSlowIn;
     private static Interpolator fastOutLinearIn;
@@ -48,24 +48,24 @@ public class AnimUtils {
 
     public static Interpolator getFastOutSlowInInterpolator(Context context) {
         if (fastOutSlowIn == null) {
-            fastOutSlowIn = AnimationUtils.loadInterpolator(context,
-                    android.R.interpolator.fast_out_slow_in);
+            fastOutSlowIn =
+                AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_slow_in);
         }
         return fastOutSlowIn;
     }
 
     public static Interpolator getFastOutLinearInInterpolator(Context context) {
         if (fastOutLinearIn == null) {
-            fastOutLinearIn = AnimationUtils.loadInterpolator(context,
-                    android.R.interpolator.fast_out_linear_in);
+            fastOutLinearIn =
+                AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_linear_in);
         }
         return fastOutLinearIn;
     }
 
     public static Interpolator getLinearOutSlowInInterpolator(Context context) {
         if (linearOutSlowIn == null) {
-            linearOutSlowIn = AnimationUtils.loadInterpolator(context,
-                    android.R.interpolator.linear_out_slow_in);
+            linearOutSlowIn =
+                AnimationUtils.loadInterpolator(context, android.R.interpolator.linear_out_slow_in);
         }
         return linearOutSlowIn;
     }
@@ -96,6 +96,7 @@ public class AnimUtils {
         }
 
         public abstract void set(T object, int value);
+
         public abstract int get(T object);
     }
 
@@ -107,25 +108,21 @@ public class AnimUtils {
     public static <T> Property<T, Integer> createIntProperty(final IntProp<T> impl) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return new IntProperty<T>(impl.name) {
-                @Override
-                public Integer get(T object) {
+                @Override public Integer get(T object) {
                     return impl.get(object);
                 }
 
-                @Override
-                public void setValue(T object, int value) {
+                @Override public void setValue(T object, int value) {
                     impl.set(object, value);
                 }
             };
         } else {
             return new Property<T, Integer>(Integer.class, impl.name) {
-                @Override
-                public Integer get(T object) {
+                @Override public Integer get(T object) {
                     return impl.get(object);
                 }
 
-                @Override
-                public void set(T object, Integer value) {
+                @Override public void set(T object, Integer value) {
                     impl.set(object, value);
                 }
             };
@@ -144,6 +141,7 @@ public class AnimUtils {
         }
 
         public abstract void set(T object, float value);
+
         public abstract float get(T object);
     }
 
@@ -155,25 +153,21 @@ public class AnimUtils {
     public static <T> Property<T, Float> createFloatProperty(final FloatProp<T> impl) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return new FloatProperty<T>(impl.name) {
-                @Override
-                public Float get(T object) {
+                @Override public Float get(T object) {
                     return impl.get(object);
                 }
 
-                @Override
-                public void setValue(T object, float value) {
+                @Override public void setValue(T object, float value) {
                     impl.set(object, value);
                 }
             };
         } else {
             return new Property<T, Float>(Float.class, impl.name) {
-                @Override
-                public Float get(T object) {
+                @Override public Float get(T object) {
                     return impl.get(object);
                 }
 
-                @Override
-                public void set(T object, Float value) {
+                @Override public void set(T object, Float value) {
                     impl.set(object, value);
                 }
             };
@@ -194,8 +188,7 @@ public class AnimUtils {
             mAnimator = animator;
         }
 
-        @Override
-        public void addListener(AnimatorListener listener) {
+        @Override public void addListener(AnimatorListener listener) {
             AnimatorListener wrapper = new AnimatorListenerWrapper(this, listener);
             if (!mListeners.containsKey(listener)) {
                 mListeners.put(listener, wrapper);
@@ -203,58 +196,47 @@ public class AnimUtils {
             }
         }
 
-        @Override
-        public void cancel() {
+        @Override public void cancel() {
             mAnimator.cancel();
         }
 
-        @Override
-        public void end() {
+        @Override public void end() {
             mAnimator.end();
         }
 
-        @Override
-        public long getDuration() {
+        @Override public long getDuration() {
             return mAnimator.getDuration();
         }
 
-        @Override
-        public TimeInterpolator getInterpolator() {
+        @Override public TimeInterpolator getInterpolator() {
             return mAnimator.getInterpolator();
         }
 
-        @Override
-        public void setInterpolator(TimeInterpolator timeInterpolator) {
+        @Override public void setInterpolator(TimeInterpolator timeInterpolator) {
             mAnimator.setInterpolator(timeInterpolator);
         }
 
-        @Override
-        public ArrayList<AnimatorListener> getListeners() {
+        @Override public ArrayList<AnimatorListener> getListeners() {
             return new ArrayList<>(mListeners.keySet());
         }
 
-        @Override
-        public long getStartDelay() {
+        @Override public long getStartDelay() {
             return mAnimator.getStartDelay();
         }
 
-        @Override
-        public void setStartDelay(long delayMS) {
+        @Override public void setStartDelay(long delayMS) {
             mAnimator.setStartDelay(delayMS);
         }
 
-        @Override
-        public boolean isPaused() {
+        @Override public boolean isPaused() {
             return mAnimator.isPaused();
         }
 
-        @Override
-        public boolean isRunning() {
+        @Override public boolean isRunning() {
             return mAnimator.isRunning();
         }
 
-        @Override
-        public boolean isStarted() {
+        @Override public boolean isStarted() {
             return mAnimator.isStarted();
         }
 
@@ -269,14 +251,12 @@ public class AnimUtils {
         public void removePauseListener(AnimatorPauseListener listener);
         */
 
-        @Override
-        public void removeAllListeners() {
+        @Override public void removeAllListeners() {
             mListeners.clear();
             mAnimator.removeAllListeners();
         }
 
-        @Override
-        public void removeListener(AnimatorListener listener) {
+        @Override public void removeListener(AnimatorListener listener) {
             AnimatorListener wrapper = mListeners.get(listener);
             if (wrapper != null) {
                 mListeners.remove(listener);
@@ -284,29 +264,24 @@ public class AnimUtils {
             }
         }
 
-        @Override
-        public Animator setDuration(long durationMS) {
+        @Override public Animator setDuration(long durationMS) {
             mAnimator.setDuration(durationMS);
             return this;
         }
 
-        @Override
-        public void setTarget(Object target) {
+        @Override public void setTarget(Object target) {
             mAnimator.setTarget(target);
         }
 
-        @Override
-        public void setupEndValues() {
+        @Override public void setupEndValues() {
             mAnimator.setupEndValues();
         }
 
-        @Override
-        public void setupStartValues() {
+        @Override public void setupStartValues() {
             mAnimator.setupStartValues();
         }
 
-        @Override
-        public void start() {
+        @Override public void start() {
             mAnimator.start();
         }
     }
@@ -320,25 +295,20 @@ public class AnimUtils {
             mListener = listener;
         }
 
-        @Override
-        public void onAnimationStart(Animator animator) {
+        @Override public void onAnimationStart(Animator animator) {
             mListener.onAnimationStart(mAnimator);
         }
 
-        @Override
-        public void onAnimationEnd(Animator animator) {
+        @Override public void onAnimationEnd(Animator animator) {
             mListener.onAnimationEnd(mAnimator);
         }
 
-        @Override
-        public void onAnimationCancel(Animator animator) {
+        @Override public void onAnimationCancel(Animator animator) {
             mListener.onAnimationCancel(mAnimator);
         }
 
-        @Override
-        public void onAnimationRepeat(Animator animator) {
+        @Override public void onAnimationRepeat(Animator animator) {
             mListener.onAnimationRepeat(mAnimator);
         }
     }
-
 }

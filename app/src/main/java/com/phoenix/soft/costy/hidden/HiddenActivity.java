@@ -23,29 +23,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-
-import com.phoenix.soft.costy.R;
-import com.phoenix.soft.costy.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.phoenix.soft.costy.R;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yaoda on 07/03/17.
  */
 
 public class HiddenActivity extends AppCompatActivity {
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.tab_bar)
-    TabLayout tabbar;
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.tab_bar) TabLayout tabbar;
+    @BindView(R.id.view_pager) ViewPager viewPager;
+
+    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hidden);
         ButterKnife.bind(this);
@@ -59,6 +52,7 @@ public class HiddenActivity extends AppCompatActivity {
         // TODO: 07/03/17 transformer
         //viewPager.setPageTransformer(true,new ZoomOutPageTransformer());
     }
+
     public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_SCALE = 0.85f;
         private static final float MIN_ALPHA = 0.5f;
@@ -70,7 +64,6 @@ public class HiddenActivity extends AppCompatActivity {
             if (position < -1) { // [-Infinity,-1)
                 // This page is way off-screen to the left.
                 view.setAlpha(0);
-
             } else if (position <= 1) { // [-1,1]
                 // Modify the default slide transition to shrink the page as well
                 float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
@@ -87,15 +80,12 @@ public class HiddenActivity extends AppCompatActivity {
                 view.setScaleY(scaleFactor);
 
                 // Fade the page relative to its size.
-                view.setAlpha(MIN_ALPHA +
-                        (scaleFactor - MIN_SCALE) /
-                                (1 - MIN_SCALE) * (1 - MIN_ALPHA));
-
+                view.setAlpha(
+                    MIN_ALPHA + (scaleFactor - MIN_SCALE) / (1 - MIN_SCALE) * (1 - MIN_ALPHA));
             } else { // (1,+Infinity]
                 // This page is way off-screen to the right.
                 view.setAlpha(0);
             }
         }
     }
-
 }

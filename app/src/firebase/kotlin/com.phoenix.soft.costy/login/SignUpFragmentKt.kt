@@ -55,11 +55,14 @@ class SignUpFragmentKt : Fragment() {
     lateinit var translator: AuthTranslator
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
         val root: View = inflater.inflate(R.layout.fragment_sign_up, container, false)
         ButterKnife.bind(this, root)
         fab = activity.findViewById(R.id.fab) as FloatingActionButton
-        DaggerAuthComponent.builder().appComponent(MainApplication.getAppComponent()).build().inject(this)
+        DaggerAuthComponent.builder().appComponent(
+            MainApplication.getAppComponent()).build().inject(
+            this)
         return root
     }
 
@@ -67,30 +70,33 @@ class SignUpFragmentKt : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         RxView.clicks(fab)
-                .debounce(200, TimeUnit.MILLISECONDS)
-                .map { AuthEvent.SignUpEvent(etUsername.text.toString(), etPassword.text.toString(), etNickName.text.toString()) }
-                .compose(translator.signUpProcess)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    when (it) {
-                        is SignUpUiModule.Idle -> {
-                            fab.setImageResource(R.drawable.ic_sync_white_24dp)
-                            val animation = AnimationUtils.loadAnimation(context, R.anim.rotate)
-                            fab.startAnimation(animation)
-                        }
-                        is SignUpUiModule.SuccessModule -> {
-                            fab.setImageResource(R.drawable.ic_arrow_forward_white_24dp)
-                            fab.clearAnimation()
-                            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
-
-                        }
-                        is SignUpUiModule.ErrorModule -> {
-                            fab.setImageResource(R.drawable.anim_clear)
-                            fab.clearAnimation()
-                            Log.d("", it.msg)
-                        }
+            .debounce(200, TimeUnit.MILLISECONDS)
+            .map {
+                AuthEvent.SignUpEvent(etUsername.text.toString(), etPassword.text.toString(),
+                    etNickName.text.toString())
+            }
+            .compose(translator.signUpProcess)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                when (it) {
+                    is SignUpUiModule.Idle -> {
+                        fab.setImageResource(R.drawable.ic_sync_white_24dp)
+                        val animation = AnimationUtils.loadAnimation(context, R.anim.rotate)
+                        fab.startAnimation(animation)
                     }
-                })
+                    is SignUpUiModule.SuccessModule -> {
+                        fab.setImageResource(R.drawable.ic_arrow_forward_white_24dp)
+                        fab.clearAnimation()
+                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+
+                    }
+                    is SignUpUiModule.ErrorModule -> {
+                        fab.setImageResource(R.drawable.anim_clear)
+                        fab.clearAnimation()
+                        Log.d("", it.msg)
+                    }
+                }
+            })
 
 //        RxView.clicks(fab)
 //                .debounce(200, TimeUnit.MILLISECONDS)

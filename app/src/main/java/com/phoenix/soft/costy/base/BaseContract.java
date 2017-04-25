@@ -21,11 +21,13 @@ package com.phoenix.soft.costy.base;
  */
 
 public interface BaseContract {
-    public interface BaseView{
+    public interface BaseView {
 
     }
-    public interface BasePresenter<T extends BaseView>{
+
+    public interface BasePresenter<T extends BaseView> {
         void attachView(T view);
+
         void detachView();
     }
 }

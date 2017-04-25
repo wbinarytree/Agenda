@@ -18,7 +18,6 @@ package com.phoenix.soft.costy;
 
 import android.app.Application;
 import android.util.ArrayMap;
-
 import com.facebook.stetho.Stetho;
 import com.google.firebase.auth.FirebaseAuth;
 import com.phoenix.soft.costy.dagger.AppComponent;
@@ -26,7 +25,6 @@ import com.phoenix.soft.costy.dagger.DaggerAppComponent;
 import com.phoenix.soft.costy.models.Account;
 import com.phoenix.soft.costy.transaction.di.TransactionComponent;
 import com.phoenix.soft.costy.transaction.di.TransactionModule;
-
 import javax.inject.Inject;
 
 /**
@@ -38,8 +36,7 @@ public class MainApplication extends Application {
     public final static String DATEPATTERN = "EEE MMM dd HH:mm:ss yyyy";
     private static AppComponent appComponent;
     private static ArrayMap<String, TransactionComponent> transactionMap;
-    @Inject
-    FirebaseAuth mAuth;
+    @Inject FirebaseAuth mAuth;
 
     public static AppComponent getAppComponent() {
         return appComponent;
@@ -63,8 +60,7 @@ public class MainApplication extends Application {
         return mAuth;
     }
 
-    @Override
-    public void onCreate() {
+    @Override public void onCreate() {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
         appComponent = DaggerAppComponent.create();

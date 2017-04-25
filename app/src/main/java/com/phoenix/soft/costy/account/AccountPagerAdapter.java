@@ -21,10 +21,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
-
 import com.phoenix.soft.costy.models.Account;
 import com.phoenix.soft.costy.transaction.TransactionFragment;
-
 import java.util.List;
 
 /**
@@ -41,39 +39,30 @@ public class AccountPagerAdapter extends FragmentPagerAdapter {
         transactionFragments = new SparseArray<>();
     }
 
-    @Override
-    public Fragment getItem(int position) {
+    @Override public Fragment getItem(int position) {
         return TransactionFragment.newInstance(accounts.get(position));
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
         return accounts.size();
     }
 
-
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        TransactionFragment o = (TransactionFragment) super.instantiateItem(
-                container, position);
+    @Override public Object instantiateItem(ViewGroup container, int position) {
+        TransactionFragment o = (TransactionFragment) super.instantiateItem(container, position);
         transactionFragments.put(position, o);
         return o;
     }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    @Override public void destroyItem(ViewGroup container, int position, Object object) {
         super.destroyItem(container, position, object);
         transactionFragments.remove(position);
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
+    @Override public CharSequence getPageTitle(int position) {
         return accounts.get(position).getAccountName();
     }
 
-
-    @Override
-    public int getItemPosition(Object object) {
+    @Override public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
 

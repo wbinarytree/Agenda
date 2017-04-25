@@ -16,13 +16,10 @@
 
 package com.phoenix.soft.costy.repos.source;
 
-
 import com.phoenix.soft.costy.models.Account;
-
-import java.util.List;
-
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import java.util.List;
 
 /**
  * Created by yaoda on 04/04/17.
@@ -40,5 +37,4 @@ public interface AccountSourceRT {
     Observable<Boolean> updateAccount(Account account);
 
     Observable<Boolean> deleteAccount(Account account);
-
 }

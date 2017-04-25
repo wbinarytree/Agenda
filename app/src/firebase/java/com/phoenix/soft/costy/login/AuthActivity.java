@@ -30,16 +30,12 @@ import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.google.firebase.auth.FirebaseAuth;
 import com.phoenix.soft.costy.MainApplication;
 import com.phoenix.soft.costy.R;
-
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * A login screen that offers login via email/password.
@@ -47,19 +43,13 @@ import butterknife.ButterKnife;
 public class AuthActivity extends AppCompatActivity {
 
     private static final String TAG = "AuthActivity";
-    @BindView(R.id.tv_sign_up)
-    TextView tvSignUp;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-    @BindView(R.id.login_background)
-    View root;
-    @Inject
-    FirebaseAuth firebaseAuth;
+    @BindView(R.id.tv_sign_up) TextView tvSignUp;
+    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.login_background) View root;
+    @Inject FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         MainApplication.getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -67,62 +57,63 @@ public class AuthActivity extends AppCompatActivity {
         if (getIntent().getBooleanExtra("signOut", false)) {
             firebaseAuth.signOut();
         }
-//        fab.hide();
+        //        fab.hide();
         setupSignUpText();
         tvSignUp.setVisibility(View.GONE);
         getSupportFragmentManager().beginTransaction()
-                                   .replace(R.id.container, new SignUpFragmentKt())
-                                   .commit();
-//        mAuthListener = firebaseAuth -> {
-//            FirebaseUser user = firebaseAuth.getCurrentUser();
-//            if (user != null) {
-//                Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-//                fab.clearAnimation();
-//                Utils.viewMoveToCenter(fab, this, new Animator.AnimatorListener() {
-//                    @Override
-//                    public void onAnimationStart(Animator animation) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onAnimationEnd(Animator animation) {
-//                        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getDrawable(R.drawable.sync_to_tick);
-//                        if (drawable != null) {
-//                            fab.setImageDrawable(drawable);
-//                            drawable.start();
-//                            fab.setClickable(false);
-//                        }
-//                        new Handler(getMainLooper()).postDelayed(() -> {
-//                            //FirebaseAccountRepository.getObservable().subscribe(accountFire -> Log.d(TAG, "accept: "));
-//                            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-//                            startActivity(intent);
-//                        }, 250);
-//                    }
-//
-//                    @Override
-//                    public void onAnimationCancel(Animator animation) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animator animation) {
-//
-//                    }
-//                });
-//
-//            } else {
-//                if (savedInstanceState == null) {
-//                    showLogin();
-//                }
-//            }
-//        };
+            .replace(R.id.container, new SignUpFragmentKt())
+            .commit();
+        //        mAuthListener = firebaseAuth -> {
+        //            FirebaseUser user = firebaseAuth.getCurrentUser();
+        //            if (user != null) {
+        //                Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+        //                fab.clearAnimation();
+        //                Utils.viewMoveToCenter(fab, this, new Animator.AnimatorListener() {
+        //                    @Override
+        //                    public void onAnimationStart(Animator animation) {
+        //
+        //                    }
+        //
+        //                    @Override
+        //                    public void onAnimationEnd(Animator animation) {
+        //                        AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getDrawable(R.drawable.sync_to_tick);
+        //                        if (drawable != null) {
+        //                            fab.setImageDrawable(drawable);
+        //                            drawable.start();
+        //                            fab.setClickable(false);
+        //                        }
+        //                        new Handler(getMainLooper()).postDelayed(() -> {
+        //                            //FirebaseAccountRepository.getObservable().subscribe(accountFire -> Log.d(TAG, "accept: "));
+        //                            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+        //                            startActivity(intent);
+        //                        }, 250);
+        //                    }
+        //
+        //                    @Override
+        //                    public void onAnimationCancel(Animator animation) {
+        //
+        //                    }
+        //
+        //                    @Override
+        //                    public void onAnimationRepeat(Animator animation) {
+        //
+        //                    }
+        //                });
+        //
+        //            } else {
+        //                if (savedInstanceState == null) {
+        //                    showLogin();
+        //                }
+        //            }
+        //        };
     }
 
     private void showLogin() {
         fab.show();
         FragmentManager fm = getSupportFragmentManager();
-        final LoginFragment loginFragment = fm.findFragmentByTag(LoginFragment.TAG) != null ? (LoginFragment) fm
-                .findFragmentByTag(LoginFragment.TAG) : LoginFragment.newInstance();
+        final LoginFragment loginFragment =
+            fm.findFragmentByTag(LoginFragment.TAG) != null ? (LoginFragment) fm.findFragmentByTag(
+                LoginFragment.TAG) : LoginFragment.newInstance();
         Fragment fragment = fm.findFragmentById(R.id.container);
         if (fragment instanceof LoginFragment && fragment.isVisible()) {
             Log.d(TAG, "showLogin: LoginFragment is shown");
@@ -142,23 +133,21 @@ public class AuthActivity extends AppCompatActivity {
         if (fragment instanceof LoginFragment) {
             SignUpFragment signUpFragment = SignUpFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
-                                       .hide(fragment)
-                                       .add(R.id.container, signUpFragment, SignUpFragment.TAG)
-                                       .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                                       .commit();
+                .hide(fragment)
+                .add(R.id.container, signUpFragment, SignUpFragment.TAG)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
             fab.setOnClickListener(signUpFragment::onFabClick);
         }
         tvSignUp.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onStart() {
+    @Override public void onStart() {
         super.onStart();
-//        firebaseAuth.addAuthStateListener(mAuthListener);
+        //        firebaseAuth.addAuthStateListener(mAuthListener);
     }
 
-    @Override
-    public void onStop() {
+    @Override public void onStop() {
         super.onStop();
         if (mAuthListener != null) {
             firebaseAuth.removeAuthStateListener(mAuthListener);
@@ -171,13 +160,11 @@ public class AuthActivity extends AppCompatActivity {
         int end = string.indexOf("}") - 1;
         SpannableString ss = new SpannableString(string.replace("{", "").replace("}", ""));
         ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override
-            public void onClick(View textView) {
+            @Override public void onClick(View textView) {
                 showSignUp();
             }
 
-            @Override
-            public void updateDrawState(TextPaint ds) {
+            @Override public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setUnderlineText(true);
             }
@@ -185,11 +172,9 @@ public class AuthActivity extends AppCompatActivity {
         ss.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvSignUp.setText(ss);
         tvSignUp.setMovementMethod(LinkMovementMethod.getInstance());
-
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
         if (!(fragment instanceof LoginFragment)) {
             showLogin();

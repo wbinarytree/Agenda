@@ -18,7 +18,6 @@ package com.phoenix.soft.costy.transaction;
 
 import com.phoenix.soft.costy.base.BaseContract;
 import com.phoenix.soft.costy.models.Transaction;
-
 import java.util.List;
 
 /**
@@ -28,10 +27,15 @@ import java.util.List;
 public interface TransactionContract {
     interface View extends BaseContract.BaseView {
         void showTransactionList();
+
         void showAddDetailDialog();
+
         void updateList();
+
         void showNoTransaction();
+
         void showError(String errorMessage);
+
         void initTransactionList(List<Transaction> transactions);
     }
 

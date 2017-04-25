@@ -32,8 +32,8 @@ public class GravityArcMotion extends ArcMotion {
 
     private static final float DEFAULT_MIN_ANGLE_DEGREES = 0;
     private static final float DEFAULT_MAX_ANGLE_DEGREES = 70;
-    private static final float DEFAULT_MAX_TANGENT = (float)
-            Math.tan(Math.toRadians(DEFAULT_MAX_ANGLE_DEGREES/2));
+    private static final float DEFAULT_MAX_TANGENT =
+        (float) Math.tan(Math.toRadians(DEFAULT_MAX_ANGLE_DEGREES / 2));
 
     private float mMinimumHorizontalAngle = 0;
     private float mMinimumVerticalAngle = 0;
@@ -42,7 +42,8 @@ public class GravityArcMotion extends ArcMotion {
     private float mMinimumVerticalTangent = 0;
     private float mMaximumTangent = DEFAULT_MAX_TANGENT;
 
-    public GravityArcMotion() {}
+    public GravityArcMotion() {
+    }
 
     public GravityArcMotion(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -51,8 +52,7 @@ public class GravityArcMotion extends ArcMotion {
     /**
      * @inheritDoc
      */
-    @Override
-    public void setMinimumHorizontalAngle(float angleInDegrees) {
+    @Override public void setMinimumHorizontalAngle(float angleInDegrees) {
         mMinimumHorizontalAngle = angleInDegrees;
         mMinimumHorizontalTangent = toTangent(angleInDegrees);
     }
@@ -60,16 +60,14 @@ public class GravityArcMotion extends ArcMotion {
     /**
      * @inheritDoc
      */
-    @Override
-    public float getMinimumHorizontalAngle() {
+    @Override public float getMinimumHorizontalAngle() {
         return mMinimumHorizontalAngle;
     }
 
     /**
      * @inheritDoc
      */
-    @Override
-    public void setMinimumVerticalAngle(float angleInDegrees) {
+    @Override public void setMinimumVerticalAngle(float angleInDegrees) {
         mMinimumVerticalAngle = angleInDegrees;
         mMinimumVerticalTangent = toTangent(angleInDegrees);
     }
@@ -77,16 +75,14 @@ public class GravityArcMotion extends ArcMotion {
     /**
      * @inheritDoc
      */
-    @Override
-    public float getMinimumVerticalAngle() {
+    @Override public float getMinimumVerticalAngle() {
         return mMinimumVerticalAngle;
     }
 
     /**
      * @inheritDoc
      */
-    @Override
-    public void setMaximumAngle(float angleInDegrees) {
+    @Override public void setMaximumAngle(float angleInDegrees) {
         mMaximumAngle = angleInDegrees;
         mMaximumTangent = toTangent(angleInDegrees);
     }
@@ -94,8 +90,7 @@ public class GravityArcMotion extends ArcMotion {
     /**
      * @inheritDoc
      */
-    @Override
-    public float getMaximumAngle() {
+    @Override public float getMaximumAngle() {
         return mMaximumAngle;
     }
 
@@ -106,8 +101,7 @@ public class GravityArcMotion extends ArcMotion {
         return (float) Math.tan(Math.toRadians(arcInDegrees / 2));
     }
 
-    @Override
-    public Path getPath(float startX, float startY, float endX, float endY) {
+    @Override public Path getPath(float startX, float startY, float endX, float endY) {
         // Here's a little ascii art to show how this is calculated:
         // c---------- b
         //  \        / |
@@ -173,16 +167,14 @@ public class GravityArcMotion extends ArcMotion {
                 ey = endY + eDistY;
                 ex = endX;
 
-                minimumArcDist2 = midDist2 * mMinimumVerticalTangent
-                        * mMinimumVerticalTangent;
+                minimumArcDist2 = midDist2 * mMinimumVerticalTangent * mMinimumVerticalTangent;
             } else {
                 // Same as above, but flip X & Y
                 float eDistX = h2 / (2 * deltaX);
                 ex = endX + eDistX;
                 ey = endY;
 
-                minimumArcDist2 = midDist2 * mMinimumHorizontalTangent
-                        * mMinimumHorizontalTangent;
+                minimumArcDist2 = midDist2 * mMinimumHorizontalTangent * mMinimumHorizontalTangent;
             }
             float arcDistX = dx - ex;
             float arcDistY = dy - ey;
@@ -210,5 +202,4 @@ public class GravityArcMotion extends ArcMotion {
         path.cubicTo(controlX1, controlY1, controlX2, controlY2, endX, endY);
         return path;
     }
-
 }

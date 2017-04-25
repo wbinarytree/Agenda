@@ -24,7 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -37,14 +38,9 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.phoenix.soft.costy.MainActivity;
 import com.phoenix.soft.costy.R;
 import com.phoenix.soft.costy.models.Account;
-
-import org.joda.money.Money;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import org.joda.money.Money;
 
 /**
  * Created by yaoda on 22/03/17.
@@ -53,10 +49,8 @@ import butterknife.ButterKnife;
 public class AccountDetailFragment extends Fragment implements AccountDetailContract.View {
 
     public static final String TAG = "AccountDetailFragment";
-    @BindView(R.id.detail_chart)
-    PieChart pieChart;
-    @BindView(R.id.tv_total)
-    TextView textView;
+    @BindView(R.id.detail_chart) PieChart pieChart;
+    @BindView(R.id.tv_total) TextView textView;
     private List<Highlight> highlights;
     private List<Account> accountList;
 
@@ -67,9 +61,9 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
         return fragment;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    @Nullable @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+        @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account_detail, container, false);
         ButterKnife.bind(this, view);
         initPieChart();
@@ -82,39 +76,34 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
         pieChart.setDrawCenterText(true);
         pieChart.getLegend().setEnabled(false);
         pieChart.getDescription().setEnabled(false);
-//        pieChart.setClickable(true);
+        //        pieChart.setClickable(true);
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
+            @Override public void onValueSelected(Entry e, Highlight h) {
                 int i = pieChart.getData().getMaxEntryCountSet().getEntryIndex((PieEntry) e);
                 if (i != -1) {
                     MainActivity activity = (MainActivity) getActivity();
                     activity.selectAccount(i);
                 }
-
             }
 
-            @Override
-            public void onNothingSelected() {
+            @Override public void onNothingSelected() {
                 MainActivity activity = (MainActivity) getActivity();
                 activity.selectAccount(0);
             }
         });
     }
 
-    @Override
-    public void showPieChart() {
+    @Override public void showPieChart() {
         ((MainActivity) getActivity()).getAccountList()
-                .map(accountList -> setupPieData(setUpEntries(accountList)))
-                .subscribe(pieData -> {
-                    pieChart.setData(pieData);
-                    selectChart(0);
-                    pieChart.invalidate();
-                }, throwable -> showError(), this::showNoChart);
+            .map(accountList -> setupPieData(setUpEntries(accountList)))
+            .subscribe(pieData -> {
+                pieChart.setData(pieData);
+                selectChart(0);
+                pieChart.invalidate();
+            }, throwable -> showError(), this::showNoChart);
     }
 
-    @NonNull
-    private List<PieEntry> setUpEntries(List<Account> list) {
+    @NonNull private List<PieEntry> setUpEntries(List<Account> list) {
         this.accountList = list;
         List<PieEntry> entries = new ArrayList<>(accountList.size());
         for (Account account : accountList) {
@@ -124,8 +113,7 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
         return entries;
     }
 
-    @NonNull
-    private PieData setupPieData(List<PieEntry> pieEntries) {
+    @NonNull private PieData setupPieData(List<PieEntry> pieEntries) {
         highlights = new ArrayList<>(pieEntries.size());
         for (int i = 0; i < pieEntries.size(); i++) {
             highlights.add(new Highlight(i, 0, 0));
@@ -139,13 +127,11 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
         return new PieData(dataSet);
     }
 
-    @Override
-    public void showWeeklyDetail() {
+    @Override public void showWeeklyDetail() {
 
     }
 
-    @Override
-    public void selectChart(int position) {
+    @Override public void selectChart(int position) {
         if (pieChart != null && pieChart.getData() != null && position < highlights.size()) {
             pieChart.highlightValue(highlights.get(position));
         }
@@ -157,18 +143,15 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
         }
     }
 
-    @Override
-    public void showNoChart() {
+    @Override public void showNoChart() {
 
     }
 
-    @Override
-    public void showError() {
+    @Override public void showError() {
 
     }
 
-    @Override
-    public void addAccountToChart(Account account) {
+    @Override public void addAccountToChart(Account account) {
         IPieDataSet dataSet = pieChart.getData().getDataSet();
         Money minus = account.getIncome().minus(account.getOutcome());
         dataSet.addEntry(new PieEntry(minus.getAmount().floatValue(), account.getAccountName()));
@@ -177,8 +160,7 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
         pieChart.invalidate();
     }
 
-    @Override
-    public void deleteAccountToChart(Account account) {
+    @Override public void deleteAccountToChart(Account account) {
         IPieDataSet dataSet = pieChart.getData().getDataSet();
         int index = -1;
         for (int i = 0; i < dataSet.getEntryCount(); i++) {
@@ -194,8 +176,7 @@ public class AccountDetailFragment extends Fragment implements AccountDetailCont
         pieChart.invalidate();
     }
 
-    @Override
-    public void updateAccountChart(Account account) {
+    @Override public void updateAccountChart(Account account) {
         IPieDataSet dataSet = pieChart.getData().getDataSet();
         PieEntry entry = dataSet.getEntryForIndex(accountList.indexOf(account));
         Money minus = account.getIncome().minus(account.getOutcome());

@@ -17,7 +17,6 @@
 package com.phoenix.soft.costy.transition;
 
 import android.content.Context;
-
 import android.transition.ChangeBounds;
 import android.transition.ChangeClipBounds;
 import android.transition.ChangeTransform;
@@ -44,7 +43,7 @@ public class DetailTransition extends TransitionSet {
     private void init() {
         setOrdering(ORDERING_SEQUENTIAL);
         addTransition(new ChangeBounds()).
-                addTransition(new ChangeTransform()).
-        addTransition(new ChangeClipBounds());
+            addTransition(new ChangeTransform()).
+            addTransition(new ChangeClipBounds());
     }
 }

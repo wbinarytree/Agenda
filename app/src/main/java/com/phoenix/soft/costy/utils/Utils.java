@@ -23,7 +23,6 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
-
 import java.util.regex.Pattern;
 
 /**
@@ -33,8 +32,7 @@ import java.util.regex.Pattern;
 public class Utils {
     private static final String USERNAME_PATTERN = "^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$";
 
-    @SuppressWarnings("deprecation")
-    public static Spanned fromHtml(String html) {
+    @SuppressWarnings("deprecation") public static Spanned fromHtml(String html) {
         Spanned result;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
@@ -44,7 +42,8 @@ public class Utils {
         return result;
     }
 
-    public static void viewMoveToCenter(View view, Activity context, Animator.AnimatorListener listener) {
+    public static void viewMoveToCenter(View view, Activity context,
+        Animator.AnimatorListener listener) {
         DisplayMetrics dm = new DisplayMetrics();
         context.getWindowManager().getDefaultDisplay().getMetrics(dm);
         int originalPos[] = new int[2];
@@ -55,7 +54,8 @@ public class Utils {
     }
 
     public static boolean isEmailValid(String target) {
-        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target)
+            .matches();
     }
 
     public static boolean isPasswordValid(String password) {

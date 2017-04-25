@@ -21,10 +21,11 @@ package com.phoenix.soft.costy.login;
  */
 
 public class LoginContract {
-    interface Presenter{
+    interface Presenter {
 
     }
-    interface View{
+
+    interface View {
 
     }
 }

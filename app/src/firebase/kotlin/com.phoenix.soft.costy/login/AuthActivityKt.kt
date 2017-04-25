@@ -28,7 +28,6 @@ import android.view.View
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.jakewharton.rxbinding2.view.RxView
 import com.phoenix.soft.costy.R
 import javax.inject.Inject
 

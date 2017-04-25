@@ -18,14 +18,10 @@ package com.phoenix.soft.costy.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-
 import com.phoenix.soft.costy.models.firebase.TransactionFire;
-
-import org.joda.money.Money;
-
 import java.io.Serializable;
 import java.util.Date;
+import org.joda.money.Money;
 
 /**
  * Created by yaoda on 22/02/17.
@@ -79,13 +75,11 @@ public class Transaction implements Serializable, Parcelable {
         this.title = title;
     }
 
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
         dest.writeLong(this.date != null ? this.date.getTime() : -1);
         dest.writeSerializable(this.money);
@@ -106,19 +100,18 @@ public class Transaction implements Serializable, Parcelable {
     }
 
     public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
-        @Override
-        public Transaction createFromParcel(Parcel source) {
+        @Override public Transaction createFromParcel(Parcel source) {
             return new Transaction(source);
         }
 
-        @Override
-        public Transaction[] newArray(int size) {
+        @Override public Transaction[] newArray(int size) {
             return new Transaction[size];
         }
     };
 
-    public TransactionFire toTransactionFire(){
-        TransactionFire transactionFire = new TransactionFire(getDate().toString(),getMoney().toString(),getDesc(),getTitle());
+    public TransactionFire toTransactionFire() {
+        TransactionFire transactionFire =
+            new TransactionFire(getDate().toString(), getMoney().toString(), getDesc(), getTitle());
         transactionFire.setKey(getKey());
         return transactionFire;
     }
@@ -130,7 +123,6 @@ public class Transaction implements Serializable, Parcelable {
     public void setKey(String key) {
         this.key = key;
     }
-
 
     public TransactionFire toFire() {
         return this.toTransactionFire();

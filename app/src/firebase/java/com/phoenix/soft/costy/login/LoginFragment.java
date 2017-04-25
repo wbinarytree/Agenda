@@ -30,15 +30,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.google.firebase.auth.FirebaseAuth;
 import com.phoenix.soft.costy.MainApplication;
 import com.phoenix.soft.costy.R;
-
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.phoenix.soft.costy.utils.Utils.isEmailValid;
 import static com.phoenix.soft.costy.utils.Utils.isPasswordValid;
@@ -49,23 +46,20 @@ import static com.phoenix.soft.costy.utils.Utils.isPasswordValid;
 
 public class LoginFragment extends Fragment implements AuthActivity.FabClick {
     public static final String TAG = "LoginFragment";
-    @BindView(R.id.email)
-    AutoCompleteTextView etUsername;
-    @BindView(R.id.password)
-    EditText etPassword;
+    @BindView(R.id.email) AutoCompleteTextView etUsername;
+    @BindView(R.id.password) EditText etPassword;
     FloatingActionButton fab;
-    @Inject
-    FirebaseAuth auth;
+    @Inject FirebaseAuth auth;
 
     public static LoginFragment newInstance() {
-         Bundle args = new Bundle();
-         LoginFragment fragment = new LoginFragment();
+        Bundle args = new Bundle();
+        LoginFragment fragment = new LoginFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+        @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         MainApplication.getAppComponent().inject(this);
         ButterKnife.bind(this, v);
@@ -80,10 +74,7 @@ public class LoginFragment extends Fragment implements AuthActivity.FabClick {
         return v;
     }
 
-
-
-    @Override
-    public void onFabClick(View v) {
+    @Override public void onFabClick(View v) {
         etUsername.setError(null);
         etPassword.setError(null);
         String email = etUsername.getText().toString();
@@ -113,7 +104,7 @@ public class LoginFragment extends Fragment implements AuthActivity.FabClick {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (!task.isSuccessful()) {
                     Toast.makeText(getContext(), R.string.msg_error_login, Toast.LENGTH_SHORT)
-                         .show();
+                        .show();
                     fab.clearAnimation();
                 }
             });

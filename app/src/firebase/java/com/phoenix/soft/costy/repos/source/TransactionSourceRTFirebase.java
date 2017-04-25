@@ -17,7 +17,6 @@
 package com.phoenix.soft.costy.repos.source;
 
 import android.util.ArrayMap;
-
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,14 +24,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.phoenix.soft.costy.models.Transaction;
 import com.phoenix.soft.costy.models.firebase.TransactionFire;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by yaoda on 05/04/17.
@@ -45,7 +42,6 @@ public class TransactionSourceRTFirebase implements TransactionSourceRT {
     private ArrayMap<String, Transaction> transactionMap;
     private Observable<ValueEvent<Transaction>> transactionUpdate;
     private Observable<List<Transaction>> transListObservable;
-
 
     public TransactionSourceRTFirebase(DatabaseReference dbRef, String key) {
         this.dbRef = dbRef.child(TRANS).child(key);
@@ -71,32 +67,27 @@ public class TransactionSourceRTFirebase implements TransactionSourceRT {
         } else {
             return null;
         }
-
-
     }
 
-    @Override
-    public Observable<List<Transaction>> getTransactionList() {
+    @Override public Observable<List<Transaction>> getTransactionList() {
         if (transListObservable == null) {
             transListObservable = Observable.create((ObservableEmitter<DataSnapshot> e) -> {
                 ValueEventListener valueEventListener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    @Override public void onDataChange(DataSnapshot dataSnapshot) {
                         if (!e.isDisposed()) {
                             e.onNext(dataSnapshot);
-//                        e.onComplete();
+                            //                        e.onComplete();
                         }
                     }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    @Override public void onCancelled(DatabaseError databaseError) {
                         if (!e.isDisposed()) {
                             e.onError(new Throwable(databaseError.getMessage()));
                         }
                     }
                 };
                 dbRef.addListenerForSingleValueEvent(valueEventListener);
-//            dbRef.addValueEventListener(valueEventListener);
+                //            dbRef.addValueEventListener(valueEventListener);
                 e.setCancellable(() -> dbRef.removeEventListener(valueEventListener));
             }).map(dataSnapshot -> {
                 this.actual = parserList(dataSnapshot);
@@ -109,91 +100,82 @@ public class TransactionSourceRTFirebase implements TransactionSourceRT {
         return transListObservable;
     }
 
-    @Override
-    public Observable<ValueEvent<Transaction>> getTransactionUpdate() {
+    @Override public Observable<ValueEvent<Transaction>> getTransactionUpdate() {
         if (transactionUpdate == null) {
-            transactionUpdate = Observable.create((ObservableEmitter<ValueEvent<Transaction>> e) -> {
-                ChildEventListener childEventListener = new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        if (!e.isDisposed()) {
-                            Transaction transaction = parser(dataSnapshot);
-                            String key = dataSnapshot.getKey();
-                            if (!transactionMap.containsKey(key)) {
-                                actual.add(0, transaction);
-                                transactionMap.put(key, transaction);
-                                e.onNext(new ValueEvent<>(transaction, EventType.TYPE_ADD));
+            transactionUpdate =
+                Observable.create((ObservableEmitter<ValueEvent<Transaction>> e) -> {
+                    ChildEventListener childEventListener = new ChildEventListener() {
+                        @Override public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            if (!e.isDisposed()) {
+                                Transaction transaction = parser(dataSnapshot);
+                                String key = dataSnapshot.getKey();
+                                if (!transactionMap.containsKey(key)) {
+                                    actual.add(0, transaction);
+                                    transactionMap.put(key, transaction);
+                                    e.onNext(new ValueEvent<>(transaction, EventType.TYPE_ADD));
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        if (!e.isDisposed()) {
-                            Transaction transaction = parser(dataSnapshot);
-                            String key = dataSnapshot.getKey();
-                            Transaction accountInMap = transactionMap.get(key);
-                            if (accountInMap != null) {
-                                actual.set(actual.indexOf(accountInMap), transaction);
-                                transactionMap.put(key, transaction);
-                                e.onNext(new ValueEvent<>(transaction, EventType.TYPE_UPDATE));
+                        @Override public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                            if (!e.isDisposed()) {
+                                Transaction transaction = parser(dataSnapshot);
+                                String key = dataSnapshot.getKey();
+                                Transaction accountInMap = transactionMap.get(key);
+                                if (accountInMap != null) {
+                                    actual.set(actual.indexOf(accountInMap), transaction);
+                                    transactionMap.put(key, transaction);
+                                    e.onNext(new ValueEvent<>(transaction, EventType.TYPE_UPDATE));
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-                        if (!e.isDisposed()) {
-                            Transaction transaction = parser(dataSnapshot);
-                            String key = dataSnapshot.getKey();
-                            if (transactionMap.containsKey(key)) {
-                                actual.remove(transactionMap.get(key));
-                                transactionMap.remove(key);
-                                e.onNext(new ValueEvent<>(transaction, EventType.TYPE_DELETE));
+                        @Override public void onChildRemoved(DataSnapshot dataSnapshot) {
+                            if (!e.isDisposed()) {
+                                Transaction transaction = parser(dataSnapshot);
+                                String key = dataSnapshot.getKey();
+                                if (transactionMap.containsKey(key)) {
+                                    actual.remove(transactionMap.get(key));
+                                    transactionMap.remove(key);
+                                    e.onNext(new ValueEvent<>(transaction, EventType.TYPE_DELETE));
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                        if (!e.isDisposed()) {
-                            // TODO: 05/04/17
+                        @Override public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                            if (!e.isDisposed()) {
+                                // TODO: 05/04/17
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        if (!e.isDisposed()) {
-                            e.onError(new Throwable(databaseError.getMessage()));
+                        @Override public void onCancelled(DatabaseError databaseError) {
+                            if (!e.isDisposed()) {
+                                e.onError(new Throwable(databaseError.getMessage()));
+                            }
                         }
-                    }
-                };
-                dbRef.addChildEventListener(childEventListener);
-                e.setCancellable(() -> dbRef.removeEventListener(childEventListener));
-            }).share();
+                    };
+                    dbRef.addChildEventListener(childEventListener);
+                    e.setCancellable(() -> dbRef.removeEventListener(childEventListener));
+                }).share();
         }
         return transactionUpdate;
     }
 
-    @Override
-    public Maybe<Transaction> getTransaction(String id) {
+    @Override public Maybe<Transaction> getTransaction(String id) {
         return null;
     }
 
-    @Override
-    public Observable<Boolean> addTransaction(Transaction transaction) {
+    @Override public Observable<Boolean> addTransaction(Transaction transaction) {
         DatabaseReference push = dbRef.push();
         transaction.setKey(push.getKey());
         return Observable.just(push.setValue(transaction.toFire()).isSuccessful());
     }
 
-    @Override
-    public Observable<Boolean> updateTransaction(Transaction transaction) {
+    @Override public Observable<Boolean> updateTransaction(Transaction transaction) {
         return null;
     }
 
-    @Override
-    public Observable<Boolean> deleteTransaction(Transaction transaction) {
+    @Override public Observable<Boolean> deleteTransaction(Transaction transaction) {
         return null;
     }
 }

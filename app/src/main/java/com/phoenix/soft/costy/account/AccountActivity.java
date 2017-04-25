@@ -32,39 +32,25 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import com.phoenix.soft.costy.R;
-import com.phoenix.soft.costy.models.Account;
-
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.phoenix.soft.costy.R;
+import com.phoenix.soft.costy.models.Account;
 import io.reactivex.disposables.CompositeDisposable;
+import java.util.List;
 
 public class AccountActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.image_over_lay)
-    ImageView imageToolBar;
-    @BindView(R.id.appbar)
-    AppBarLayout appbar;
-    @BindView(R.id.coll_layout)
-    CollapsingToolbarLayout coll;
-    @BindView(R.id.container_pager)
-    ViewPager viewPager;
-    @BindView(R.id.tab_bar)
-    TabLayout tabLayout;
-    @BindView(R.id.container_error)
-    LinearLayout errorLayout;
-    @BindView(R.id.container_no_account)
-    LinearLayout noAccountLayout;
-    @BindView(R.id.container_detail)
-    FrameLayout detailContainer;
+    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.image_over_lay) ImageView imageToolBar;
+    @BindView(R.id.appbar) AppBarLayout appbar;
+    @BindView(R.id.coll_layout) CollapsingToolbarLayout coll;
+    @BindView(R.id.container_pager) ViewPager viewPager;
+    @BindView(R.id.tab_bar) TabLayout tabLayout;
+    @BindView(R.id.container_error) LinearLayout errorLayout;
+    @BindView(R.id.container_no_account) LinearLayout noAccountLayout;
+    @BindView(R.id.container_detail) FrameLayout detailContainer;
     @BindView(R.id.drawer_layout)
 
     DrawerLayout drawerLayout;
@@ -74,15 +60,13 @@ public class AccountActivity extends AppCompatActivity {
     private CompositeDisposable disposable = new CompositeDisposable();
     private boolean isExpand;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initDrawer();
-//        disposable.add(accoutViewModel.getAccountList()
-//                                      .subscribe(this::showAccountList, this::showError));
-
+        //        disposable.add(accoutViewModel.getAccountList()
+        //                                      .subscribe(this::showAccountList, this::showError));
 
     }
 
@@ -96,29 +80,23 @@ public class AccountActivity extends AppCompatActivity {
 
     private void initDrawer() {
         setSupportActionBar(toolbar);
-        appbar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> isExpand = verticalOffset == 0);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
-        );
+        appbar.addOnOffsetChangedListener(
+            (appBarLayout, verticalOffset) -> isExpand = verticalOffset == 0);
+        ActionBarDrawerToggle toggle =
+            new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setPageMargin(20);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
@@ -132,8 +110,7 @@ public class AccountActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
         disposable.clear();
     }
@@ -142,7 +119,6 @@ public class AccountActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
     }
-
 }
 
 
