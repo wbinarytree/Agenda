@@ -16,24 +16,18 @@
 
 package com.phoenix.soft.costy.login.di
 
-import com.phoenix.soft.costy.dagger.AppComponent
-import com.phoenix.soft.costy.login.AuthActivityKt
+import com.google.firebase.auth.FirebaseAuth
+import com.phoenix.soft.costy.login.AuthManager
 import com.phoenix.soft.costy.login.FirebaseAuthManager
-import com.phoenix.soft.costy.login.SignUpFragmentKt
-import dagger.Component
-import javax.inject.Scope
+import dagger.Module
+import dagger.Provides
 
 /**
- * Created by phoenix on 2017/4/16.
+ * Created by yaoda on 25/04/17.
  */
-@AuthScope
-@Component(dependencies = arrayOf(AppComponent::class))
-interface AuthComponent {
-    fun inject(authActivity: AuthActivityKt)
-    fun provide(): FirebaseAuthManager
-    fun inject(signUpFragmentKt: SignUpFragmentKt)
+@Module
+class AuthModule {
+    @AuthScope
+    @Provides
+    fun provideManager(auth: FirebaseAuth): AuthManager = FirebaseAuthManager(auth)
 }
-
-@Scope
-@Retention(AnnotationRetention.RUNTIME)
-annotation class AuthScope

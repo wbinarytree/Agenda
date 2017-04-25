@@ -17,12 +17,15 @@
 package com.phoenix.soft.costy.login
 
 import android.text.TextUtils
-import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.EMAIL
-import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.PASSWORD
-import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.SIGN_UP_ERROR
-import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.UNKNOWN
-import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.USERNAME
+import com.phoenix.soft.costy.login.events.SignUpUiModule.Companion.ErrorType.EMAIL
+import com.phoenix.soft.costy.login.events.SignUpUiModule.Companion.ErrorType.PASSWORD
+import com.phoenix.soft.costy.login.events.SignUpUiModule.Companion.ErrorType.SIGN_UP_ERROR
+import com.phoenix.soft.costy.login.events.SignUpUiModule.Companion.ErrorType.UNKNOWN
+import com.phoenix.soft.costy.login.events.SignUpUiModule.Companion.ErrorType.USERNAME
 import com.phoenix.soft.costy.login.di.AuthScope
+import com.phoenix.soft.costy.login.events.SignUpUiModule
+import com.phoenix.soft.costy.login.events.AuthEvent
+import com.phoenix.soft.costy.login.events.SignUpResult
 import com.phoenix.soft.costy.utils.Utils.isEmailValid
 import com.phoenix.soft.costy.utils.Utils.isPasswordValid
 import com.phoenix.soft.costy.utils.Utils.isUsername
@@ -34,7 +37,7 @@ import javax.inject.Inject
  * Created by yaoda on 20/04/17.
  */
 @AuthScope
-class AuthTranslator @Inject constructor(val auth: FirebaseAuthManager) {
+class AuthTranslator @Inject constructor(val auth: AuthManager) {
 
     val signUpResult: ObservableTransformer<SignUpResult, SignUpUiModule> = ObservableTransformer {
         it.map {
@@ -45,12 +48,6 @@ class AuthTranslator @Inject constructor(val auth: FirebaseAuthManager) {
                 else -> SignUpUiModule.error(UNKNOWN)
             }
         }
-    }
-
-    val signUp: ObservableTransformer<Any, SignUpUiModule> = ObservableTransformer {
-        it.map { SignUpAction("11wangyaoda@gmail.com", "930621a123", "username") }
-            .compose(auth.signUp)
-            .compose(signUpResult)
     }
 
     val signUpProcess: ObservableTransformer<AuthEvent, SignUpUiModule> = ObservableTransformer {
