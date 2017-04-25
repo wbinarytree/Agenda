@@ -16,12 +16,14 @@
 
 package com.phoenix.soft.costy.login
 
+import com.phoenix.soft.costy.login.events.SignUpResult
 import io.reactivex.Observable
+import io.reactivex.ObservableTransformer
 
 /**
  * Created by yaoda on 20/04/17.
  */
 
 interface AuthManager {
-    fun signUp(action: SignUpAction): Observable<SignUpResult>
+    val signUp: ObservableTransformer<SignUpAction, SignUpResult>
 }

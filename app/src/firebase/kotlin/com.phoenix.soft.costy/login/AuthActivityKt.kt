@@ -44,7 +44,7 @@ class AuthActivityKt : AppCompatActivity() {
     @BindView(R.id.login_background)
     lateinit var root: View
     @Inject
-    lateinit var auth: FirebaseAuthManager
+    lateinit var auth: AuthManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

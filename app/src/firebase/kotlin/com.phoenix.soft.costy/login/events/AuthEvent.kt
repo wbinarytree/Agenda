@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.login
+package com.phoenix.soft.costy.login.events
 
 /**
  * Created by yaoda on 21/04/17.

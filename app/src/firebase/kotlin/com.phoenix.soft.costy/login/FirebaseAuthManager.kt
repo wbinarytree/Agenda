@@ -19,6 +19,7 @@ package com.phoenix.soft.costy.login
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.phoenix.soft.costy.login.di.AuthScope
+import com.phoenix.soft.costy.login.events.SignUpResult
 import com.phoenix.soft.costy.models.User
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
@@ -29,10 +30,10 @@ import javax.inject.Inject
 /**
  * Created by phoenix on 2017/4/16.
  */
-@AuthScope
-class FirebaseAuthManager @Inject constructor(val auth: FirebaseAuth) {
 
-    val signUp: ObservableTransformer<SignUpAction, SignUpResult> = ObservableTransformer {
+class FirebaseAuthManager constructor(val auth: FirebaseAuth) :AuthManager{
+
+    override val signUp: ObservableTransformer<SignUpAction, SignUpResult> = ObservableTransformer {
         it.flatMap { (email, password, username) ->
             RxAuth.createUser(auth, email, password)
                 .flatMap {

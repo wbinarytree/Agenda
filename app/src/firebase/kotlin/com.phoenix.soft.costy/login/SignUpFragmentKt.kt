@@ -34,6 +34,8 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.phoenix.soft.costy.MainApplication
 import com.phoenix.soft.costy.R
 import com.phoenix.soft.costy.login.di.DaggerAuthComponent
+import com.phoenix.soft.costy.login.events.SignUpUiModule
+import com.phoenix.soft.costy.login.events.AuthEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
