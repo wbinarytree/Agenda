@@ -19,26 +19,23 @@ package com.phoenix.soft.costy.models.firebase;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.phoenix.soft.costy.models.Transaction;
-
-import org.joda.money.Money;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.joda.money.Money;
 
 /**
  * Created by yaoda on 17/03/17.
  */
-@IgnoreExtraProperties
-public class TransactionFire{
+@IgnoreExtraProperties public class TransactionFire {
     //    new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
-    private static final SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+    private static final SimpleDateFormat parser =
+        new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
     private Date date;
     private String money;
     private String desc;
     private String title;
-    @Exclude
-    private String key;
+    @Exclude private String key;
 
     //for firebase
     public TransactionFire() {
@@ -93,16 +90,13 @@ public class TransactionFire{
         this.title = title;
     }
 
-
     public String getKey() {
         return key;
     }
 
-
     public void setKey(String key) {
         this.key = key;
     }
-
 
     public Transaction toModule() {
         Transaction transaction = null;

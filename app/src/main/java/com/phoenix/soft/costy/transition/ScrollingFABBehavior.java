@@ -33,16 +33,19 @@ public class ScrollingFABBehavior extends FloatingActionButton.Behavior {
         super();
     }
 
-
-    @Override
-    public boolean onStartNestedScroll(final CoordinatorLayout coordinatorLayout, final FloatingActionButton child, final View directTargetChild, final View target, final int nestedScrollAxes) {
+    @Override public boolean onStartNestedScroll(final CoordinatorLayout coordinatorLayout,
+        final FloatingActionButton child, final View directTargetChild, final View target,
+        final int nestedScrollAxes) {
         // Ensure we react to vertical scrolling
-        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL || super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
+        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL || super.onStartNestedScroll(
+            coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
     }
 
-    @Override
-    public void onNestedScroll(final CoordinatorLayout coordinatorLayout, final FloatingActionButton child, final View target, final int dxConsumed, final int dyConsumed, final int dxUnconsumed, final int dyUnconsumed) {
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+    @Override public void onNestedScroll(final CoordinatorLayout coordinatorLayout,
+        final FloatingActionButton child, final View target, final int dxConsumed,
+        final int dyConsumed, final int dxUnconsumed, final int dyUnconsumed) {
+        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed,
+            dyUnconsumed);
         if (dyConsumed > 0 && child.getVisibility() == View.VISIBLE) {
             // User scrolled down and the FAB is currently visible -> hide the FAB
             child.hide();

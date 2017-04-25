@@ -19,20 +19,16 @@ package com.phoenix.soft.costy.models.firebase;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.phoenix.soft.costy.models.Account;
-
+import java.util.List;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
-
-import java.util.List;
 
 /**
  * Created by phoenix on 2017/3/17.
  */
-@IgnoreExtraProperties
-public class AccountFire  {
+@IgnoreExtraProperties public class AccountFire {
 
-    @Exclude
-    private String key;
+    @Exclude private String key;
     private String accountName;
     private String accountPicUrl;
     private long accountID;
@@ -48,10 +44,10 @@ public class AccountFire  {
         this.currency = currency;
     }
 
-    @Exclude
-    private List<TransactionFire> detailList;
+    @Exclude private List<TransactionFire> detailList;
 
-    public AccountFire(String accountName, String accountPicUrl, long accountID, String income, String outcome,String currency) {
+    public AccountFire(String accountName, String accountPicUrl, long accountID, String income,
+        String outcome, String currency) {
         this.accountName = accountName;
         this.accountPicUrl = accountPicUrl;
         this.accountID = accountID;
@@ -69,23 +65,19 @@ public class AccountFire  {
         this.accountID = accountID;
     }
 
-
     public String getKey() {
         return key;
     }
-
 
     public void setKey(String key) {
         this.key = key;
     }
 
-
     public Account toModule() {
         return toAccount();
     }
 
-    @Exclude
-    public Account toAccount() {
+    @Exclude public Account toAccount() {
         Account account = new Account();
         account.setAccountPicUrl(getAccountPicUrl());
         account.setAccountID(getAccountID());

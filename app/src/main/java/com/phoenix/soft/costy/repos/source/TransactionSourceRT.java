@@ -16,13 +16,10 @@
 
 package com.phoenix.soft.costy.repos.source;
 
-
 import com.phoenix.soft.costy.models.Transaction;
-
-import java.util.List;
-
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import java.util.List;
 
 /**
  * Created by yaoda on 05/04/17.

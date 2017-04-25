@@ -29,18 +29,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView;
 import com.phoenix.soft.costy.MainApplication;
 import com.phoenix.soft.costy.R;
 import com.phoenix.soft.costy.utils.Utils;
-
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.phoenix.soft.costy.utils.Utils.isEmailValid;
 import static com.phoenix.soft.costy.utils.Utils.isPasswordValid;
@@ -52,15 +48,11 @@ import static com.phoenix.soft.costy.utils.Utils.isUsername;
 
 public class SignUpFragment extends Fragment implements AuthActivity.FabClick {
     public static final String TAG = "SignUpFragment";
-    @BindView(R.id.email)
-    AutoCompleteTextView etUsername;
-    @BindView(R.id.password)
-    EditText etPassword;
-    @BindView(R.id.username)
-    EditText etNickName;
+    @BindView(R.id.email) AutoCompleteTextView etUsername;
+    @BindView(R.id.password) EditText etPassword;
+    @BindView(R.id.username) EditText etNickName;
     FloatingActionButton fab;
-    @Inject
-    FirebaseAuth auth;
+    @Inject FirebaseAuth auth;
 
     public static SignUpFragment newInstance() {
         Bundle args = new Bundle();
@@ -69,10 +61,9 @@ public class SignUpFragment extends Fragment implements AuthActivity.FabClick {
         return fragment;
     }
 
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    @Nullable @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+        @Nullable Bundle savedInstanceState) {
         MainApplication.getAppComponent().inject(this);
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         ButterKnife.bind(this, view);
@@ -80,8 +71,7 @@ public class SignUpFragment extends Fragment implements AuthActivity.FabClick {
         return view;
     }
 
-    @Override
-    public void onFabClick(View view) {
+    @Override public void onFabClick(View view) {
         etUsername.setError(null);
         etPassword.setError(null);
         etNickName.setError(null);
@@ -116,15 +106,16 @@ public class SignUpFragment extends Fragment implements AuthActivity.FabClick {
             fab.startAnimation(animation);
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(nickname)
-                            .build();
+                    UserProfileChangeRequest profileUpdates =
+                        new UserProfileChangeRequest.Builder().setDisplayName(nickname).build();
                     authResult.getUser().updateProfile(profileUpdates);
                 })
-                .addOnFailureListener(e -> Snackbar.make(getActivity().findViewById(R.id.login_background), Utils
-                        .fromHtml("<font color=\"#ffffff\">Sorry, Sign up fail</font>"), Snackbar.LENGTH_SHORT)
-                                                   .setAction(getString(R.string.title_retry), v -> onFabClick(v))
-                                                   .show());
+                .addOnFailureListener(
+                    e -> Snackbar.make(getActivity().findViewById(R.id.login_background),
+                        Utils.fromHtml("<font color=\"#ffffff\">Sorry, Sign up fail</font>"),
+                        Snackbar.LENGTH_SHORT)
+                        .setAction(getString(R.string.title_retry), v -> onFabClick(v))
+                        .show());
         }
     }
 }

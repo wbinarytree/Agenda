@@ -20,14 +20,13 @@ import com.phoenix.soft.costy.base.BaseContract;
 import com.phoenix.soft.costy.models.Account;
 import com.phoenix.soft.costy.models.Transaction;
 import com.phoenix.soft.costy.repos.source.EventType;
-
 import java.util.List;
 
 /**
  * Created by yaoda on 22/02/17.
  */
 
-public interface AccountContract   {
+public interface AccountContract {
     interface View extends BaseContract.BaseView {
         void showAccountList();
 
@@ -39,7 +38,6 @@ public interface AccountContract   {
 
         void updateAccount(Account account, EventType updateType);
 
-
         void showModifyAccount();
 
         void showLoading();
@@ -49,7 +47,7 @@ public interface AccountContract   {
         void initAccountList(List<Account> accounts);
     }
 
-    interface Presenter  extends BaseContract.BasePresenter<View>{
+    interface Presenter extends BaseContract.BasePresenter<View> {
         void loadAccount();
 
         void addAccount(Account account);

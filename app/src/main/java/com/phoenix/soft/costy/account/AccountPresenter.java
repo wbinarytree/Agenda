@@ -16,27 +16,22 @@
 
 package com.phoenix.soft.costy.account;
 
-
 import com.phoenix.soft.costy.account.di.AccountRepoScope;
 import com.phoenix.soft.costy.models.Account;
 import com.phoenix.soft.costy.models.Transaction;
 import com.phoenix.soft.costy.repos.source.AccountSourceRT;
 import com.phoenix.soft.costy.repos.source.ValueEvent;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import java.util.List;
+import javax.inject.Inject;
 
 /**
  * Created by yaoda on 22/02/17.
  */
-@AccountRepoScope
-public class AccountPresenter implements AccountContract.Presenter {
+@AccountRepoScope public class AccountPresenter implements AccountContract.Presenter {
 
     private static final String TAG = "AccountPresenter";
     private final Observable<ValueEvent<Account>> accountUpdate;
@@ -45,57 +40,47 @@ public class AccountPresenter implements AccountContract.Presenter {
     private AccountSourceRT realTimeRepo;
     private Observable<List<Account>> accountList;
 
-    @Inject
-    public AccountPresenter(AccountSourceRT realTime) {
+    @Inject public AccountPresenter(AccountSourceRT realTime) {
         this.realTimeRepo = realTime;
         compositeDisposable = new CompositeDisposable();
         accountList = realTimeRepo.getAccountList();
         accountUpdate = realTimeRepo.getAccountUpdate();
     }
 
-    @Override
-    public void loadAccount() {
+    @Override public void loadAccount() {
         view.showLoading();
 
         Disposable subscribe = accountList.observeOn(AndroidSchedulers.mainThread())
-                .doOnEach(disposable -> view.hideLoading())
-                .doAfterNext(accounts -> compositeDisposable.add(accountUpdate.subscribe(
-                        value -> view.updateAccount(value.getValue(), value.getType()),
-                        throwable -> view.showError())))
-                .subscribe(
-                        accounts -> view.initAccountList(accounts),
-                        throwable -> view.showError());
+            .doOnEach(disposable -> view.hideLoading())
+            .doAfterNext(accounts -> compositeDisposable.add(accountUpdate.subscribe(
+                value -> view.updateAccount(value.getValue(), value.getType()),
+                throwable -> view.showError())))
+            .subscribe(accounts -> view.initAccountList(accounts), throwable -> view.showError());
         compositeDisposable.add(subscribe);
     }
 
-    @Override
-    public void addAccount(Account account) {
+    @Override public void addAccount(Account account) {
         realTimeRepo.addAccount(account);
-//        view.updateAccount(account);
+        //        view.updateAccount(account);
     }
 
-    @Override
-    public void modifyAccount() {
+    @Override public void modifyAccount() {
     }
 
-    @Override
-    public void deleteAccount(Account account) {
+    @Override public void deleteAccount(Account account) {
         realTimeRepo.deleteAccount(account);
     }
 
-    @Override
-    public void attachView(AccountContract.View view) {
+    @Override public void attachView(AccountContract.View view) {
         this.view = view;
     }
 
-    @Override
-    public void detachView() {
+    @Override public void detachView() {
         this.view = null;
         compositeDisposable.clear();
     }
 
-    @Override
-    public void updateTransactionToAccount(Transaction transaction, Account account) {
+    @Override public void updateTransactionToAccount(Transaction transaction, Account account) {
         if (transaction.getMoney().isNegative()) {
             account.setOutcome(account.getOutcome().plus(transaction.getMoney().abs()));
         } else {
@@ -103,5 +88,4 @@ public class AccountPresenter implements AccountContract.Presenter {
         }
         realTimeRepo.updateAccount(account);
     }
-
 }

@@ -17,17 +17,14 @@
 package com.phoenix.soft.costy.repos.source;
 
 import android.util.ArrayMap;
-
 import com.jakewharton.rxrelay2.BehaviorRelay;
 import com.jakewharton.rxrelay2.Relay;
 import com.jakewharton.rxrelay2.ReplayRelay;
 import com.phoenix.soft.costy.models.Account;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.phoenix.soft.costy.repos.source.EventType.TYPE_ADD;
 import static com.phoenix.soft.costy.repos.source.EventType.TYPE_DELETE;
@@ -42,52 +39,45 @@ public class AccountCache implements AccountSourceRT {
     private final Relay<ValueEvent<Account>> accountUpdate;
     private final Relay<List<Account>> listUpdate;
 
-
     public AccountCache() {
         this.accountUpdate = ReplayRelay.createWithSize(1);
         this.listUpdate = BehaviorRelay.create();
         cache = new ArrayMap<>();
     }
 
-    @Override
-    public Observable<List<Account>> getAccountList() {
+    @Override public Observable<List<Account>> getAccountList() {
         return listUpdate;
     }
 
-    @Override
-    public Observable<ValueEvent<Account>> getAccountUpdate() {
+    @Override public Observable<ValueEvent<Account>> getAccountUpdate() {
         return accountUpdate;
     }
 
-    @Override
-    public Maybe<Account> getAccount(String id) {
+    @Override public Maybe<Account> getAccount(String id) {
         Account item = cache.get(id);
         return item == null ? Maybe.empty() : Maybe.just(item);
     }
 
-    @Override
-    public Observable<Boolean> addAccount(Account account) {
+    @Override public Observable<Boolean> addAccount(Account account) {
         Account put = cache.put(account.getKey(), account);
         accountUpdate.accept(new ValueEvent<>(account, TYPE_ADD));
         listUpdate.accept(new ArrayList<>(cache.values()));
         return put == null ? Observable.just(true) : Observable.just(false);
     }
 
-    @Override
-    public Observable<Boolean> updateAccount(Account account) {
+    @Override public Observable<Boolean> updateAccount(Account account) {
         cache.put(account.getKey(), account);
         accountUpdate.accept(new ValueEvent<>(account, TYPE_UPDATE));
         listUpdate.accept(new ArrayList<>(cache.values()));
         return Observable.just(true);
     }
 
-    @Override
-    public Observable<Boolean> deleteAccount(Account account) {
+    @Override public Observable<Boolean> deleteAccount(Account account) {
         Account remove = cache.remove(account.getKey());
         if (remove == null) {
             return Observable.just(false);
         } else {
-            accountUpdate.accept(new ValueEvent<>(account,TYPE_DELETE));
+            accountUpdate.accept(new ValueEvent<>(account, TYPE_DELETE));
             listUpdate.accept(new ArrayList<>(cache.values()));
             return Observable.just(true);
         }

@@ -24,7 +24,5 @@ import java.lang.annotation.Target;
 /**
  * Created by yaoda on 06/03/17.
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Subscribe {
+@Retention(RetentionPolicy.RUNTIME) @Target(ElementType.METHOD) public @interface Subscribe {
 }

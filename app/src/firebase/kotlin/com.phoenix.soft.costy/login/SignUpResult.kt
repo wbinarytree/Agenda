@@ -30,7 +30,8 @@ sealed class SignUpResult {
 
         fun success(user: User): SignUpResult = SuccessResult(user)
 
-        fun failure(message: String?): SignUpResult = FailResult(message ?: "Sign Up Error With unknown message")
+        fun failure(message: String?): SignUpResult = FailResult(
+            message ?: "Sign Up Error With unknown message")
 
     }
 

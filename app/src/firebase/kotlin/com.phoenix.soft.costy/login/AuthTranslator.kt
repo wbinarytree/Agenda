@@ -17,9 +17,15 @@
 package com.phoenix.soft.costy.login
 
 import android.text.TextUtils
-import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.*
+import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.EMAIL
+import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.PASSWORD
+import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.SIGN_UP_ERROR
+import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.UNKNOWN
+import com.phoenix.soft.costy.login.SignUpUiModule.Companion.ErrorType.USERNAME
 import com.phoenix.soft.costy.login.di.AuthScope
-import com.phoenix.soft.costy.utils.Utils.*
+import com.phoenix.soft.costy.utils.Utils.isEmailValid
+import com.phoenix.soft.costy.utils.Utils.isPasswordValid
+import com.phoenix.soft.costy.utils.Utils.isUsername
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import javax.inject.Inject
@@ -43,18 +49,18 @@ class AuthTranslator @Inject constructor(val auth: FirebaseAuthManager) {
 
     val signUp: ObservableTransformer<Any, SignUpUiModule> = ObservableTransformer {
         it.map { SignUpAction("11wangyaoda@gmail.com", "930621a123", "username") }
-                .compose(auth.signUp)
-                .compose(signUpResult)
+            .compose(auth.signUp)
+            .compose(signUpResult)
     }
 
     val signUpProcess: ObservableTransformer<AuthEvent, SignUpUiModule> = ObservableTransformer {
-        it.flatMap {
-            event ->
+        it.flatMap { event ->
             if (event is AuthEvent.SignUpEvent) {
                 val result = checkEvent(event)
                 when (result) {
                     is SignUpUiModule -> Observable.just(result)
-                    is SignUpAction -> Observable.just(result).compose(auth.signUp).compose(signUpResult)
+                    is SignUpAction -> Observable.just(result).compose(auth.signUp).compose(
+                        signUpResult)
                     else -> {
                         Observable.just(SignUpUiModule.error(UNKNOWN))
                     }

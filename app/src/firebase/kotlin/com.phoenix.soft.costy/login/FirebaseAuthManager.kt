@@ -35,22 +35,22 @@ class FirebaseAuthManager @Inject constructor(val auth: FirebaseAuth) {
     val signUp: ObservableTransformer<SignUpAction, SignUpResult> = ObservableTransformer {
         it.flatMap { (email, password, username) ->
             RxAuth.createUser(auth, email, password)
-                    .flatMap {
-                        RxUser.updateUsername(it.user, username)
-                                .andThen(Observable.just(it))
-                    }
-                    .map { SignUpResult.success(toUser(it.user)) }
-                    .onErrorReturn { SignUpResult.failure(it.message) }
-                    .startWith(SignUpResult.idle)
+                .flatMap {
+                    RxUser.updateUsername(it.user, username)
+                        .andThen(Observable.just(it))
+                }
+                .map { SignUpResult.success(toUser(it.user)) }
+                .onErrorReturn { SignUpResult.failure(it.message) }
+                .startWith(SignUpResult.idle)
         }
     }
 
     val authTrans: ObservableTransformer<Any, SignUpResult> = ObservableTransformer {
         it.flatMap {
             RxAuth.createUser(auth, "11wangyaoda@gmail.com", "930621a123")
-                    .map { SignUpResult.success(toUser(it.user)) }
-                    .onErrorReturn { SignUpResult.failure(it.message) }
-                    .startWith(SignUpResult.idle)
+                .map { SignUpResult.success(toUser(it.user)) }
+                .onErrorReturn { SignUpResult.failure(it.message) }
+                .startWith(SignUpResult.idle)
         }
     }
 
@@ -61,8 +61,7 @@ class FirebaseAuthManager @Inject constructor(val auth: FirebaseAuth) {
 //            }
 //            .map { SignUpResult.success(toUser(it.user)) }
 
-
 }
 
 public fun toUser(user: FirebaseUser)
-        = User(user.uid, user.displayName, user.email)
+    = User(user.uid, user.displayName, user.email)

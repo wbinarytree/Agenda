@@ -26,19 +26,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.phoenix.soft.costy.MainActivity;
 import com.phoenix.soft.costy.R;
 import com.phoenix.soft.costy.models.Account;
-
-import org.joda.money.CurrencyUnit;
-import org.joda.money.Money;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 
 /**
  * Created by yaoda on 13/03/17.
@@ -46,40 +42,39 @@ import butterknife.ButterKnife;
 
 public class AccountAddDialogFragment extends DialogFragment {
     public static final String TAG = "AddAccountDialog";
-    @BindView(R.id.et_mount)
-    EditText mount;
-    @BindView(R.id.et_name)
-    EditText name;
-    @BindView(R.id.currency_spinner)
-    Spinner spinner;
-    private static List<CurrencyUnit> currencyUnitList = new ArrayList<>();static {
+    private static List<CurrencyUnit> currencyUnitList = new ArrayList<>();
+
+    static {
         currencyUnitList.add(CurrencyUnit.USD);
         currencyUnitList.add(CurrencyUnit.EUR);
         currencyUnitList.add(CurrencyUnit.of("CNY"));
         currencyUnitList.add(CurrencyUnit.GBP);
         currencyUnitList.add(CurrencyUnit.JPY);
     }
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+    @BindView(R.id.et_mount) EditText mount;
+    @BindView(R.id.et_name) EditText name;
+    @BindView(R.id.currency_spinner) Spinner spinner;
+
+    @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_account, null);
         ButterKnife.bind(this, view);
-        AlertDialog mDialog = new AlertDialog.Builder(getContext()).setTitle(R.string.title_transaction_add)
-                                                                   .setPositiveButton("add", null)
-                                                                   .setNegativeButton("cancel", null)
-                                                                   .setView(view)
-                                                                   .create();
-        mDialog.setOnShowListener(dialog -> ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)
-                                                                  .setOnClickListener(v -> addAccount()));
+        AlertDialog mDialog =
+            new AlertDialog.Builder(getContext()).setTitle(R.string.title_transaction_add)
+                .setPositiveButton("add", null)
+                .setNegativeButton("cancel", null)
+                .setView(view)
+                .create();
+        mDialog.setOnShowListener(
+            dialog -> ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                .setOnClickListener(v -> addAccount()));
         name.setOnEditorActionListener((v1, actionId, event) -> {
             addAccount();
             return true;
         });
-        spinner.setAdapter(new CurrencyAdapter(getContext(),currencyUnitList));
+        spinner.setAdapter(new CurrencyAdapter(getContext(), currencyUnitList));
         return mDialog;
     }
-
 
     private void addAccount() {
         String mountNumber = mount.getText().toString();
@@ -107,7 +102,6 @@ public class AccountAddDialogFragment extends DialogFragment {
         CurrencyAdapter(@NonNull Context context, List<CurrencyUnit> currencyUnitList) {
             super(context, android.R.layout.simple_spinner_dropdown_item, currencyUnitList);
         }
-
     }
 }
 

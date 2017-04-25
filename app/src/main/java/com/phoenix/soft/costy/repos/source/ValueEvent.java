@@ -36,5 +36,4 @@ public class ValueEvent<T> {
     public T getValue() {
         return value;
     }
-
 }

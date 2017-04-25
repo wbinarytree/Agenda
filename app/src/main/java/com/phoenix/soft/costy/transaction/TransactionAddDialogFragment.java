@@ -26,11 +26,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-
-import com.phoenix.soft.costy.R;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.phoenix.soft.costy.R;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -39,25 +37,22 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class TransactionAddDialogFragment extends DialogFragment {
-    @BindView(R.id.et_mount)
-    EditText mount;
-    @BindView(R.id.rd_group)
-    RadioGroup radioGroup;
+    @BindView(R.id.et_mount) EditText mount;
+    @BindView(R.id.rd_group) RadioGroup radioGroup;
 
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_detail, null);
         ButterKnife.bind(this, view);
-        AlertDialog mDialog = new AlertDialog.Builder(getContext()).setTitle(R.string.title_transaction_add)
-                                                                   .setPositiveButton("add", null)
-                                                                   .setNegativeButton("cancel", null)
-                                                                   .setView(view)
-                                                                   .create();
-        mDialog.setOnShowListener(dialog -> ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)
-                                                                  .setOnClickListener(v -> addtranscation()));
+        AlertDialog mDialog =
+            new AlertDialog.Builder(getContext()).setTitle(R.string.title_transaction_add)
+                .setPositiveButton("add", null)
+                .setNegativeButton("cancel", null)
+                .setView(view)
+                .create();
+        mDialog.setOnShowListener(
+            dialog -> ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                .setOnClickListener(v -> addtranscation()));
         mount.setOnEditorActionListener((v1, actionId, event) -> {
             addtranscation();
             return true;
@@ -65,8 +60,7 @@ public class TransactionAddDialogFragment extends DialogFragment {
         return mDialog;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -84,11 +78,10 @@ public class TransactionAddDialogFragment extends DialogFragment {
                     isAdd = false;
                     break;
             }
-            Intent intent = new Intent().putExtra("mountNumber", mountNumber).putExtra("isAdd", isAdd);
+            Intent intent =
+                new Intent().putExtra("mountNumber", mountNumber).putExtra("isAdd", isAdd);
             getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
             getDialog().dismiss();
         }
     }
-
-
 }

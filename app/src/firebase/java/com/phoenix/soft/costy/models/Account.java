@@ -19,47 +19,38 @@ package com.phoenix.soft.costy.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.phoenix.soft.costy.models.firebase.AccountFire;
-
-import org.joda.money.CurrencyUnit;
-import org.joda.money.Money;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 
 /**
  * Created by yaoda on 22/02/17.
  */
-@IgnoreExtraProperties
-public class Account implements Parcelable, Serializable {
-    @Exclude
-    public static final Parcelable.Creator<Account> CREATOR = new Parcelable.Creator<Account>() {
-        @Override
-        public Account createFromParcel(Parcel source) {
-            return new Account(source);
-        }
+@IgnoreExtraProperties public class Account implements Parcelable, Serializable {
+    @Exclude public static final Parcelable.Creator<Account> CREATOR =
+        new Parcelable.Creator<Account>() {
+            @Override public Account createFromParcel(Parcel source) {
+                return new Account(source);
+            }
 
-        @Override
-        public Account[] newArray(int size) {
-            return new Account[size];
-        }
-    };
+            @Override public Account[] newArray(int size) {
+                return new Account[size];
+            }
+        };
     private CurrencyUnit currency;
     private String accountName;
     private String accountPicUrl;
     private long accountID;
-    @Exclude
-    private List<Transaction> transactionList;
-    @Exclude
-    private Money income;
-    @Exclude
-    private Money outcome;
-    @Exclude
-    private String key;
+    @Exclude private List<Transaction> transactionList;
+    @Exclude private Money income;
+    @Exclude private Money outcome;
+    @Exclude private String key;
+
     public Account() {
     }
 
@@ -137,15 +128,11 @@ public class Account implements Parcelable, Serializable {
         this.outcome = outcome;
     }
 
-    @Exclude
-    @Override
-    public int describeContents() {
+    @Exclude @Override public int describeContents() {
         return 0;
     }
 
-    @Exclude
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    @Exclude @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.accountName);
         dest.writeString(this.accountPicUrl);
         dest.writeLong(this.accountID);
@@ -156,12 +143,9 @@ public class Account implements Parcelable, Serializable {
 
     public AccountFire toAccountFire() {
         //accountFire.setTransactionList();
-        AccountFire accountFire = new AccountFire(getAccountName(),
-                getAccountPicUrl(),
-                getAccountID(),
-                getIncome().toString(),
-                getOutcome().toString(),
-                getCurrency().toString());
+        AccountFire accountFire =
+            new AccountFire(getAccountName(), getAccountPicUrl(), getAccountID(),
+                getIncome().toString(), getOutcome().toString(), getCurrency().toString());
         accountFire.setKey(getKey());
         return accountFire;
     }

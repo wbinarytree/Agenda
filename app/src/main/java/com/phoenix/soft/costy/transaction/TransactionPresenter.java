@@ -16,19 +16,15 @@
 
 package com.phoenix.soft.costy.transaction;
 
-
-
 import com.phoenix.soft.costy.models.Account;
 import com.phoenix.soft.costy.models.Transaction;
 import com.phoenix.soft.costy.repos.source.TransactionSourceRT;
 import com.phoenix.soft.costy.repos.source.ValueEvent;
-
-import java.util.List;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import java.util.List;
 
 /**
  * Created by yaoda on 23/02/17.
@@ -46,7 +42,6 @@ public class TransactionPresenter implements TransactionContract.Presenter {
     private Observable<List<Transaction>> transactionList;
     private Observable<ValueEvent<Transaction>> transactionUpdate;
 
-
     public TransactionPresenter(Account account, TransactionSourceRT transactionSource) {
         this.account = account;
         this.transactionSource = transactionSource;
@@ -55,42 +50,34 @@ public class TransactionPresenter implements TransactionContract.Presenter {
         transactionUpdate = transactionSource.getTransactionUpdate();
     }
 
-    @Override
-    public void loadDetailList() {
+    @Override public void loadDetailList() {
         Disposable subscribe = transactionList.observeOn(AndroidSchedulers.mainThread())
-                                              .doAfterNext(ignore -> subScribeUpdate())
-                                              .subscribe(transactionsList -> {
-                                                          transactions = transactionsList;
-                                                          view.initTransactionList(transactionsList);
-                                                      },
-                                                      throwable -> view.showError(throwable.getMessage()),
-                                                      () -> {
+            .doAfterNext(ignore -> subScribeUpdate())
+            .subscribe(transactionsList -> {
+                transactions = transactionsList;
+                view.initTransactionList(transactionsList);
+            }, throwable -> view.showError(throwable.getMessage()), () -> {
 
-                                                      });
+            });
         disposables.add(subscribe);
-
     }
 
     private void subScribeUpdate() {
         disposables.add(transactionUpdate.subscribe(transactionValueEvent -> view.updateList(),
-                throwable -> view.showError(throwable.getMessage())));
+            throwable -> view.showError(throwable.getMessage())));
     }
 
-    @Override
-    public void addDetail(Transaction transaction) {
+    @Override public void addDetail(Transaction transaction) {
 
         transactionSource.addTransaction(transaction);
-//        view.updateList();
+        //        view.updateList();
     }
 
-
-    @Override
-    public void attachView(TransactionContract.View view) {
+    @Override public void attachView(TransactionContract.View view) {
         this.view = view;
     }
 
-    @Override
-    public void detachView() {
+    @Override public void detachView() {
         this.view = null;
         disposables.clear();
     }

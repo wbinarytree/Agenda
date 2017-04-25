@@ -17,7 +17,6 @@
 package com.phoenix.soft.costy.repos.source;
 
 import android.util.ArrayMap;
-
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,15 +24,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.phoenix.soft.costy.models.Account;
 import com.phoenix.soft.costy.models.firebase.AccountFire;
-
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by yaoda on 04/04/17.
@@ -50,7 +46,6 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
         this.dbRef = dbRef.child(ACCOUNT);
         accountMap = new ArrayMap<>();
     }
-
 
     private static List<Account> parserList(DataSnapshot dataSnapshot) {
         List<Account> vList = Collections.synchronizedList(new ArrayList<Account>());
@@ -73,27 +68,24 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
         }
     }
 
-    @Override
-    public Observable<List<Account>> getAccountList() {
+    @Override public Observable<List<Account>> getAccountList() {
         return Observable.create((ObservableEmitter<DataSnapshot> e) -> {
             ValueEventListener valueEventListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                @Override public void onDataChange(DataSnapshot dataSnapshot) {
                     if (!e.isDisposed()) {
                         e.onNext(dataSnapshot);
-//                        e.onComplete();
+                        //                        e.onComplete();
                     }
                 }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                @Override public void onCancelled(DatabaseError databaseError) {
                     if (!e.isDisposed()) {
                         e.onError(new Throwable(databaseError.getMessage()));
                     }
                 }
             };
             dbRef.addListenerForSingleValueEvent(valueEventListener);
-//            dbRef.addValueEventListener(valueEventListener);
+            //            dbRef.addValueEventListener(valueEventListener);
             e.setCancellable(() -> dbRef.removeEventListener(valueEventListener));
         }).map(dataSnapshot -> {
             this.actual = parserList(dataSnapshot);
@@ -104,13 +96,11 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
         }).replay(1).autoConnect();
     }
 
-    @Override
-    public Observable<ValueEvent<Account>> getAccountUpdate() {
+    @Override public Observable<ValueEvent<Account>> getAccountUpdate() {
         if (accountUpdate == null) {
             accountUpdate = Observable.create((ObservableEmitter<ValueEvent<Account>> e) -> {
                 ChildEventListener childEventListener = new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    @Override public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         if (!e.isDisposed()) {
                             Account account = parser(dataSnapshot);
                             String key = dataSnapshot.getKey();
@@ -122,8 +112,7 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
                         }
                     }
 
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    @Override public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                         if (!e.isDisposed()) {
                             Account account = parser(dataSnapshot);
                             String key = dataSnapshot.getKey();
@@ -136,8 +125,7 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
                         }
                     }
 
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    @Override public void onChildRemoved(DataSnapshot dataSnapshot) {
                         if (!e.isDisposed()) {
                             Account account = parser(dataSnapshot);
                             String key = dataSnapshot.getKey();
@@ -149,15 +137,13 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
                         }
                     }
 
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    @Override public void onChildMoved(DataSnapshot dataSnapshot, String s) {
                         if (!e.isDisposed()) {
                             // TODO: 05/04/17
                         }
                     }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    @Override public void onCancelled(DatabaseError databaseError) {
                         if (!e.isDisposed()) {
                             e.onError(new Throwable(databaseError.getMessage()));
                         }
@@ -170,20 +156,17 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
         return accountUpdate;
     }
 
-    @Override
-    public Maybe<Account> getAccount(String id) {
+    @Override public Maybe<Account> getAccount(String id) {
         return null;
     }
 
-    @Override
-    public Observable<Boolean> addAccount(Account account) {
+    @Override public Observable<Boolean> addAccount(Account account) {
         DatabaseReference push = dbRef.push();
         account.setKey(push.getKey());
         return Observable.just(push.setValue(account.toAccountFire()).isSuccessful());
     }
 
-    @Override
-    public Observable<Boolean> updateAccount(Account account) {
+    @Override public Observable<Boolean> updateAccount(Account account) {
         int position = -1;
         for (int i = 0; i < actual.size(); i++) {
             if (account.getKey().equals(actual.get(i).getKey())) {
@@ -191,16 +174,15 @@ public class AccountSourceRTFirebase implements AccountSourceRT {
             }
         }
         if (position == -1) {
-            return Observable.error(new Throwable("Cant find Account match :" + account.getKey() + "in repository"));
+            return Observable.error(
+                new Throwable("Cant find Account match :" + account.getKey() + "in repository"));
         } else {
-            return Observable.just(dbRef.child(account.getKey())
-                                        .setValue(account.toAccountFire())
-                                        .isSuccessful());
+            return Observable.just(
+                dbRef.child(account.getKey()).setValue(account.toAccountFire()).isSuccessful());
         }
     }
 
-    @Override
-    public Observable<Boolean> deleteAccount(Account account) {
+    @Override public Observable<Boolean> deleteAccount(Account account) {
         if (!actual.contains(account)) {
             return Observable.just(false);
         } else {

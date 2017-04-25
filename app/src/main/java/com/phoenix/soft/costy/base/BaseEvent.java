@@ -16,9 +16,6 @@
 
 package com.phoenix.soft.costy.base;
 
-import io.reactivex.Observable;
-import io.reactivex.observers.TestObserver;
-
 /**
  * Created by yaoda on 20/04/17.
  */
@@ -31,5 +28,4 @@ public class BaseEvent {
     public abstract static class BaseResult {
 
     }
-
 }

@@ -22,7 +22,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import com.phoenix.soft.costy.models.Account;
 
 import static com.phoenix.soft.costy.db.DBContract.AccountEntry.ACCOUNT_INCOME;
@@ -44,12 +43,8 @@ public class UserDataHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "Account.db";
 
-
-
     private static final String TAG = "database";
     private static UserDataHelper sInstance;
-
-
 
     public UserDataHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -65,14 +60,12 @@ public class UserDataHelper extends SQLiteOpenHelper {
         return sInstance;
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
+    @Override public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ACCOUNT_TABLE);
         db.execSQL(SQL_CREATE_DETAIL_TABLE);
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_ACCOUNT_TABLE);
         db.execSQL(SQL_DELETE_DETAIL_TABLE);
 
@@ -102,14 +95,17 @@ public class UserDataHelper extends SQLiteOpenHelper {
 
             // First try to update the user in case the user already exists in the database
             // This assumes userNames are unique
-            int rows = db.update(ACCOUNT_TABLE_NAME, values, ACCOUNT_NAME + "= ?", new String[]{account.getAccountName()});
+            int rows = db.update(ACCOUNT_TABLE_NAME, values, ACCOUNT_NAME + "= ?",
+                new String[] { account.getAccountName() });
 
             // Check if update succeeded
             if (rows == 1) {
                 // Get the primary key of the user we just updated
-                String usersSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
-                        _ID, ACCOUNT_TABLE_NAME, ACCOUNT_NAME);
-                Cursor cursor = db.rawQuery(usersSelectQuery, new String[]{String.valueOf(account.getAccountName())});
+                String usersSelectQuery =
+                    String.format("SELECT %s FROM %s WHERE %s = ?", _ID, ACCOUNT_TABLE_NAME,
+                        ACCOUNT_NAME);
+                Cursor cursor = db.rawQuery(usersSelectQuery,
+                    new String[] { String.valueOf(account.getAccountName()) });
                 try {
                     if (cursor.moveToFirst()) {
                         userId = cursor.getInt(0);
@@ -132,5 +128,4 @@ public class UserDataHelper extends SQLiteOpenHelper {
         }
         return userId;
     }
-
 }
