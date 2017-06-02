@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'com.getkeepsafe.dexcount'
+//apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -10,7 +10,7 @@ apply plugin: 'kotlin-kapt'
 def fl = "default"
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.phoenix.soft.costy"
         minSdkVersion 21
@@ -18,13 +18,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    flavorDimensions("baas")
+
 
     dexOptions {
         javaMaxHeapSize '4096m'
@@ -32,22 +33,25 @@ android {
 
     buildTypes {
         debug {
+
             // Minifying the variant used for tests is not supported when using Jack.
             minifyEnabled false
             // Uses new built-in shrinker http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'),
+                'proguardTest-rules.pro'
         }
         release {
+
             minifyEnabled false
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
     }
     productFlavors {
         firebase {
+            dimension "baas"
             applicationId "com.phoenix.soft.costy"
             resValue "string", "package_name", applicationId
             fl = "firebase"
@@ -55,18 +59,19 @@ android {
                 firebase.java.srcDirs += 'src/firebase/kotlin'
             }
         }
-        leancloud{
+        leancloud {
+            dimension "baas"
             applicationId "com.phoenix.soft.costy"
             applicationIdSuffix ".cn"
             versionNameSuffix "-cn"
             resValue "string", "package_name", applicationId
             fl = "leancloud"
         }
+
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-
 }
 //kapt {
 //    generateStubs = true
@@ -99,8 +104,8 @@ dependencies {
     //dagger/butterknife
     compile 'com.google.dagger:dagger:2.9'
     compile 'com.jakewharton:butterknife:8.5.1'
-//    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
-//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    //    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
     kapt 'com.google.dagger:dagger-compiler:2.9'
     kapt 'com.jakewharton:butterknife-compiler:8.5.1'
@@ -130,16 +135,16 @@ dependencies {
     firebaseCompile 'com.google.android.gms:play-services-auth:10.2.1'
     firebaseCompile 'com.google.firebase:firebase-database:10.2.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-//    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    //    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
 if (getGradle().getStartParameter().getTaskRequests()
-        .toString().contains("Firebase")){
+    .toString().contains("Firebase")) {
     apply plugin: 'com.google.gms.google-services'
 }
 
 buildscript {
-    ext.kotlin_version = '1.1.1'
+    ext.kotlin_version = '1.1.2-4'
     repositories {
         jcenter()
         maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1' }
@@ -148,7 +153,6 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
     }
-
 }
 
 repositories {

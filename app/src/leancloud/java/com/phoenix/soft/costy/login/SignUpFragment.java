@@ -1,4 +1,4 @@
-package com.phoenix.soft.costy.login;
+package com.phoenix.soft.costy.auth;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

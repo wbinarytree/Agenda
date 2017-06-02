@@ -14,25 +14,28 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.login.events
+package com.phoenix.soft.costy.auth.events
 
 import com.phoenix.soft.costy.models.User
 
-sealed class SignUpUiModule {
+sealed class AuthUiModel {
     companion object {
         fun error(type: ErrorType, msg: String = type.name + " is not validated"):
-            SignUpUiModule = ErrorModule(type, msg)
+            AuthUiModel = ErrorModel(type, msg)
 
-        fun success(user: User): SignUpUiModule = SuccessModule(user)
-        val inProcess: SignUpUiModule = Idle()
+        fun success(user: User): AuthUiModel = SuccessModel(user)
+
+        fun idle() = Idle()
+        fun process() = Process()
 
         enum class ErrorType {
-            USERNAME, PASSWORD, EMAIL, UNKNOWN, SIGN_UP_ERROR
+            USERNAME, PASSWORD, EMAIL, UNKNOWN, SIGN_UP_ERROR,
+            SIGN_IN_ERROR
         }
     }
 
-    data class ErrorModule(val type: ErrorType, val msg: String) : SignUpUiModule()
-    data class SuccessModule(val user: User) : SignUpUiModule()
-    class Idle : SignUpUiModule()
+    data class ErrorModel(val type: ErrorType, val msg: String) : AuthUiModel()
+    data class SuccessModel(val user: User) : AuthUiModel()
+    class Process : AuthUiModel()
+    class Idle : AuthUiModel()
 }
-

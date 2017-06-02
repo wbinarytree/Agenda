@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.login.di
+package com.phoenix.soft.costy.auth.di
 
 import com.phoenix.soft.costy.dagger.AppComponent
-import com.phoenix.soft.costy.login.AuthActivityKt
-import com.phoenix.soft.costy.login.AuthManager
-import com.phoenix.soft.costy.login.FirebaseAuthManager
-import com.phoenix.soft.costy.login.SignUpFragmentKt
+import com.phoenix.soft.costy.auth.AuthActivityKt
+import com.phoenix.soft.costy.auth.AuthManager
+import com.phoenix.soft.costy.auth.SignUpFragmentKt
 import dagger.Component
 import javax.inject.Scope
 

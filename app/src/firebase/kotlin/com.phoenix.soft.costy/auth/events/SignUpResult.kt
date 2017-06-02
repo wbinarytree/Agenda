@@ -14,27 +14,37 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.login.events
+package com.phoenix.soft.costy.auth.events
 
+import com.phoenix.soft.costy.common.Result
 import com.phoenix.soft.costy.models.User
 
-sealed class SignUpResult {
+sealed class SignUpResult : Result() {
     class SuccessResult(val user: User) : SignUpResult()
-
-    class IdleResult : SignUpResult()
 
     class FailResult(val message: String) : SignUpResult()
 
     companion object {
-        val idle: SignUpResult = IdleResult()
-
         fun success(user: User): SignUpResult = SuccessResult(user)
 
         fun failure(message: String?): SignUpResult = FailResult(
             message ?: "Sign Up Error With unknown message")
-
     }
+}
 
+sealed class SignInResult : Result() {
+
+    class SuccessResult(val user: User) : SignInResult()
+
+
+    class FailResult(val message: String) : SignInResult()
+
+    companion object {
+        fun success(user: User): SignInResult = SuccessResult(user)
+
+        fun failure(message: String?): SignInResult = FailResult(
+            message ?: "Sign In Error With unknown message")
+    }
 }
 
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.login
+package com.phoenix.soft.costy.auth
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -51,7 +51,6 @@ class AuthActivityKt : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         ButterKnife.bind(this)
         tvSignUp.setText(R.string.title_about)
-
     }
 
     private fun setupSignUpText() {

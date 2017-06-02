@@ -20,6 +20,8 @@ import android.app.Application;
 import android.util.ArrayMap;
 import com.facebook.stetho.Stetho;
 import com.google.firebase.auth.FirebaseAuth;
+import com.phoenix.soft.costy.auth.di.AuthComponent;
+import com.phoenix.soft.costy.auth.di.DaggerAuthComponent;
 import com.phoenix.soft.costy.dagger.AppComponent;
 import com.phoenix.soft.costy.dagger.DaggerAppComponent;
 import com.phoenix.soft.costy.models.Account;
@@ -36,7 +38,7 @@ public class MainApplication extends Application {
     public final static String DATEPATTERN = "EEE MMM dd HH:mm:ss yyyy";
     private static AppComponent appComponent;
     private static ArrayMap<String, TransactionComponent> transactionMap;
-    @Inject FirebaseAuth mAuth;
+    private static AuthComponent authComponent;
 
     public static AppComponent getAppComponent() {
         return appComponent;
@@ -56,15 +58,18 @@ public class MainApplication extends Application {
         transactionMap.remove(key);
     }
 
-    public FirebaseAuth getAuth() {
-        return mAuth;
+    public static AuthComponent getAuthComponent() {
+        return authComponent;
     }
 
-    @Override public void onCreate() {
+
+    @Override
+    public void onCreate() {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
         appComponent = DaggerAppComponent.create();
-        appComponent.inject(this);
         transactionMap = new ArrayMap<>();
+        authComponent =
+            DaggerAuthComponent.builder().appComponent(MainApplication.getAppComponent()).build();
     }
 }

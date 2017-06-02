@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.login;
+package com.phoenix.soft.costy.auth;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -60,9 +60,13 @@ public class AuthActivity extends AppCompatActivity {
         //        fab.hide();
         setupSignUpText();
         tvSignUp.setVisibility(View.GONE);
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.container, new SignUpFragmentKt())
-            .commit();
+        if(savedInstanceState ==null){
+            getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, SignUpFragmentKt.Companion.newInstance())
+                .addToBackStack(SignUpFragmentKt.Companion.getTAG())
+                .commit();
+        }
+
         //        mAuthListener = firebaseAuth -> {
         //            FirebaseUser user = firebaseAuth.getCurrentUser();
         //            if (user != null) {

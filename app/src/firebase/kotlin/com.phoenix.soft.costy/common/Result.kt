@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.login.events
+package com.phoenix.soft.costy.common
 
 /**
- * Created by yaoda on 21/04/17.
+ * Created by yaoda on 01/06/17.
  */
-sealed class AuthEvent {
-    data class SignUpEvent(val email: String, val password: String,
-        val username: String) : AuthEvent()
-}
+open class Result
+
+open class Action
+
+open class UiModel
+
+open class Event
