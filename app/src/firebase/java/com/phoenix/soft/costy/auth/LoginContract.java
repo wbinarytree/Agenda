@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.login;
+package com.phoenix.soft.costy.auth;
 
 /**
  * Created by phoenix on 2017/3/16.

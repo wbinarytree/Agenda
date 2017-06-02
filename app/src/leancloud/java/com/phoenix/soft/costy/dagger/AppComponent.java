@@ -2,9 +2,9 @@ package com.phoenix.soft.costy.dagger;
 
 
 import com.phoenix.soft.costy.MainApplication;
-import com.phoenix.soft.costy.login.AuthActivity;
-import com.phoenix.soft.costy.login.LoginFragment;
-import com.phoenix.soft.costy.login.SignUpFragment;
+import com.phoenix.soft.costy.auth.AuthActivity;
+import com.phoenix.soft.costy.auth.LoginFragment;
+import com.phoenix.soft.costy.auth.SignUpFragment;
 import com.phoenix.soft.costy.transaction.di.TransactionComponent;
 import com.phoenix.soft.costy.transaction.di.TransactionModule;
 

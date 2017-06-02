@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.login
-
-import com.phoenix.soft.costy.login.events.SignUpResult
-import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
+package com.phoenix.soft.costy.auth.events
 
 /**
- * Created by yaoda on 20/04/17.
+ * Created by yaoda on 02/06/17.
  */
+data class SignUpAction(val email: String, val password: String, val username: String)
 
-interface AuthManager {
-    val signUp: ObservableTransformer<SignUpAction, SignUpResult>
-}
+data class SignInAction(val email: String, val password: String)

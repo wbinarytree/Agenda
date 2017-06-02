@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.login.di
-
-import com.google.firebase.auth.FirebaseAuth
-import com.phoenix.soft.costy.login.AuthManager
-import com.phoenix.soft.costy.login.FirebaseAuthManager
-import dagger.Module
-import dagger.Provides
+package com.phoenix.soft.costy.auth.events
 
 /**
- * Created by yaoda on 25/04/17.
+ * Created by yaoda on 21/04/17.
  */
-@Module
-class AuthModule {
-    @AuthScope
-    @Provides
-    fun provideManager(auth: FirebaseAuth): AuthManager = FirebaseAuthManager(auth)
+sealed class AuthEvent {
+    data class SignUpEvent(val email: String, val password: String,
+        val username: String) : AuthEvent()
+
+    data class SignInEvent(val email: String, val password: String) : AuthEvent()
+
+    data class InputEvent(val text: String) : AuthEvent()
 }
