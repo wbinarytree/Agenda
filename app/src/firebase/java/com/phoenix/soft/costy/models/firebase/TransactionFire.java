@@ -27,7 +27,8 @@ import org.joda.money.Money;
 /**
  * Created by yaoda on 17/03/17.
  */
-@IgnoreExtraProperties public class TransactionFire {
+@IgnoreExtraProperties
+public class TransactionFire {
     //    new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
     private static final SimpleDateFormat parser =
         new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
@@ -35,7 +36,8 @@ import org.joda.money.Money;
     private String money;
     private String desc;
     private String title;
-    @Exclude private String key;
+    @Exclude
+    private String key;
 
     //for firebase
     public TransactionFire() {

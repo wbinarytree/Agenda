@@ -52,7 +52,7 @@ class AuthTranslator @Inject constructor(val auth: AuthManager) {
     }
         .scan<AuthUiModel>(AuthUiModel.idle()) { current, new ->
             //todo more state check
-            if (current is AuthUiModel.Process && new is AuthUiModel.Idle) {
+            if (current.process && new.process) {
                 return@scan current
             }
             return@scan new
@@ -105,7 +105,7 @@ class AuthTranslator @Inject constructor(val auth: AuthManager) {
     }
 
     private inline fun check(email: String, password: String, username: String = "valid_username",
-        action: () -> Observable<AuthUiModel>): Observable<AuthUiModel> {
+                             action: () -> Observable<AuthUiModel>): Observable<AuthUiModel> {
         if (TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             return Observable.just(AuthUiModel.error(PASSWORD))
         }

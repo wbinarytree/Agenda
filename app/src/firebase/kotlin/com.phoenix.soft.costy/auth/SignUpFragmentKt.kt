@@ -33,10 +33,6 @@ import com.phoenix.soft.costy.MainApplication
 import com.phoenix.soft.costy.R
 import com.phoenix.soft.costy.auth.events.AuthEvent.InputEvent
 import com.phoenix.soft.costy.auth.events.AuthEvent.SignUpEvent
-import com.phoenix.soft.costy.auth.events.AuthUiModel
-import com.phoenix.soft.costy.auth.events.AuthUiModel.Companion.ErrorType.EMAIL
-import com.phoenix.soft.costy.auth.events.AuthUiModel.Companion.ErrorType.PASSWORD
-import com.phoenix.soft.costy.auth.events.AuthUiModel.Companion.ErrorType.USERNAME
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -58,7 +54,7 @@ class SignUpFragmentKt : Fragment() {
     val disposables: CompositeDisposable = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View? {
         val root: View = inflater.inflate(R.layout.fragment_sign_up, container, false)
         ButterKnife.bind(this, root)
         MainApplication.getAuthComponent().inject(this)
@@ -86,32 +82,27 @@ class SignUpFragmentKt : Fragment() {
             .auth(translator)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                when (it) {
-                    is AuthUiModel.Idle -> {
-                        fab.setImageResource(R.drawable.ic_arrow_forward_white_24dp)
-                        fab.clearAnimation()
-                    }
-                    is AuthUiModel.SuccessModel -> {
-                        fab.setImageResource(R.drawable.ic_check_white_24dp)
-                        fab.clearAnimation()
-                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
-                    }
-                    is AuthUiModel.ErrorModel -> {
-                        fab.setImageResource(R.drawable.anim_clear)
-                        fab.clearAnimation()
-                        when (it.type) {
-                            EMAIL -> email.error = it.msg
-                            PASSWORD -> password.error = it.msg
-                            USERNAME -> username.error = it.msg
-                            else -> Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    is AuthUiModel.Process -> {
-                        fab.setImageResource(R.drawable.ic_sync_white_24dp)
-                        val animation = AnimationUtils.loadAnimation(context, R.anim.rotate)
-                        fab.startAnimation(animation)
-                    }
-
+                username.error = it.usernameError
+                password.error = it.passwordError
+                email.error = it.emailError
+                if (it.msg != null) {
+                    Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
+                }
+                if (it.process) {
+                    fab.setImageResource(R.drawable.ic_sync_white_24dp)
+                    val animation = AnimationUtils.loadAnimation(context, R.anim.rotate)
+                    fab.startAnimation(animation)
+                } else {
+                    fab.setImageResource(R.drawable.ic_arrow_forward_white_24dp)
+                    fab.clearAnimation()
+                }
+                if (it.user != null) {
+                    fab.setImageResource(R.drawable.ic_check_white_24dp)
+                    fab.clearAnimation()
+                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+                }
+                if (it.errorType != null) {
+                    fab.setImageResource(R.drawable.ic_cross_white_24dp)
                 }
             }, {
                 Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
@@ -120,8 +111,6 @@ class SignUpFragmentKt : Fragment() {
             }, {
                 Log.d("disposable", "starting")
             })
-
-
         disposables.add(disposable)
     }
 

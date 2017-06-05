@@ -46,10 +46,13 @@ import static com.phoenix.soft.costy.utils.Utils.isPasswordValid;
 
 public class LoginFragment extends Fragment implements AuthActivity.FabClick {
     public static final String TAG = "LoginFragment";
-    @BindView(R.id.email) AutoCompleteTextView etUsername;
-    @BindView(R.id.password) EditText etPassword;
+    @BindView(R.id.email)
+    AutoCompleteTextView etUsername;
+    @BindView(R.id.password)
+    EditText etPassword;
     FloatingActionButton fab;
-    @Inject FirebaseAuth auth;
+    @Inject
+    FirebaseAuth auth;
 
     public static LoginFragment newInstance() {
         Bundle args = new Bundle();
@@ -58,7 +61,8 @@ public class LoginFragment extends Fragment implements AuthActivity.FabClick {
         return fragment;
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
         @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         MainApplication.getAppComponent().inject(this);
@@ -74,7 +78,8 @@ public class LoginFragment extends Fragment implements AuthActivity.FabClick {
         return v;
     }
 
-    @Override public void onFabClick(View v) {
+    @Override
+    public void onFabClick(View v) {
         etUsername.setError(null);
         etPassword.setError(null);
         String email = etUsername.getText().toString();

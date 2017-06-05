@@ -16,17 +16,32 @@
 
 package com.phoenix.soft.costy.auth.events
 
+import com.phoenix.soft.costy.auth.events.AuthUiModel.Companion.ErrorType.EMAIL
+import com.phoenix.soft.costy.auth.events.AuthUiModel.Companion.ErrorType.PASSWORD
+import com.phoenix.soft.costy.auth.events.AuthUiModel.Companion.ErrorType.USERNAME
 import com.phoenix.soft.costy.models.User
 
-sealed class AuthUiModel {
+data class AuthUiModel(val msg: String? = null,
+                       val usernameError: String? = null,
+                       val passwordError: String? = null,
+                       val emailError: String? = null,
+                       val errorType: ErrorType? = null,
+                       val user: User? = null,
+                       val process: Boolean = false) {
+
     companion object {
-        fun error(type: ErrorType, msg: String = type.name + " is not validated"):
-            AuthUiModel = ErrorModel(type, msg)
+        fun error(type: ErrorType,
+                  msg: String = type.name + " is not validated"): AuthUiModel = when (type) {
+            USERNAME -> AuthUiModel(usernameError = msg, errorType = type)
+            PASSWORD -> AuthUiModel(passwordError = msg, errorType = type)
+            EMAIL -> AuthUiModel(emailError = msg, errorType = type)
+            else -> AuthUiModel(msg = msg, errorType = type)
+        }
 
-        fun success(user: User): AuthUiModel = SuccessModel(user)
+        fun success(user: User) = AuthUiModel(user = user, process = false)
 
-        fun idle() = Idle()
-        fun process() = Process()
+        fun idle() = AuthUiModel()
+        fun process() = AuthUiModel(process = true)
 
         enum class ErrorType {
             USERNAME, PASSWORD, EMAIL, UNKNOWN, SIGN_UP_ERROR,
@@ -34,8 +49,4 @@ sealed class AuthUiModel {
         }
     }
 
-    data class ErrorModel(val type: ErrorType, val msg: String) : AuthUiModel()
-    data class SuccessModel(val user: User) : AuthUiModel()
-    class Process : AuthUiModel()
-    class Idle : AuthUiModel()
 }

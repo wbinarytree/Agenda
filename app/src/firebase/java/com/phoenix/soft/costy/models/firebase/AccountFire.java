@@ -26,25 +26,19 @@ import org.joda.money.Money;
 /**
  * Created by phoenix on 2017/3/17.
  */
-@IgnoreExtraProperties public class AccountFire {
+@IgnoreExtraProperties
+public class AccountFire {
 
-    @Exclude private String key;
+    @Exclude
+    private String key;
     private String accountName;
     private String accountPicUrl;
     private long accountID;
     private String income;
     private String outcome;
     private String currency;
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    @Exclude private List<TransactionFire> detailList;
+    @Exclude
+    private List<TransactionFire> detailList;
 
     public AccountFire(String accountName, String accountPicUrl, long accountID, String income,
         String outcome, String currency) {
@@ -65,6 +59,14 @@ import org.joda.money.Money;
         this.accountID = accountID;
     }
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
     public String getKey() {
         return key;
     }
@@ -77,7 +79,8 @@ import org.joda.money.Money;
         return toAccount();
     }
 
-    @Exclude public Account toAccount() {
+    @Exclude
+    public Account toAccount() {
         Account account = new Account();
         account.setAccountPicUrl(getAccountPicUrl());
         account.setAccountID(getAccountID());

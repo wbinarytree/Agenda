@@ -37,7 +37,8 @@ public class AccountRemoteSource implements AccountSourceRT {
         this.dbRef = dbRef.child(TAG);
     }
 
-    @Override public Observable<List<Account>> getAccountList() {
+    @Override
+    public Observable<List<Account>> getAccountList() {
 
         RxDatabase.queryOnceList(dbRef, AccountFire.class).map(list -> {
             List<Account> accounts = new ArrayList<>(list.size());
@@ -49,23 +50,28 @@ public class AccountRemoteSource implements AccountSourceRT {
         return null;
     }
 
-    @Override public Observable<ValueEvent<Account>> getAccountUpdate() {
+    @Override
+    public Observable<ValueEvent<Account>> getAccountUpdate() {
         return null;
     }
 
-    @Override public Maybe<Account> getAccount(String id) {
+    @Override
+    public Maybe<Account> getAccount(String id) {
         return null;
     }
 
-    @Override public Observable<Boolean> addAccount(Account account) {
+    @Override
+    public Observable<Boolean> addAccount(Account account) {
         return null;
     }
 
-    @Override public Observable<Boolean> updateAccount(Account account) {
+    @Override
+    public Observable<Boolean> updateAccount(Account account) {
         return null;
     }
 
-    @Override public Observable<Boolean> deleteAccount(Account account) {
+    @Override
+    public Observable<Boolean> deleteAccount(Account account) {
         return null;
     }
 }

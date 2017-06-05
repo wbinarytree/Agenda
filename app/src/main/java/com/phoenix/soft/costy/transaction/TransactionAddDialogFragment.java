@@ -29,6 +29,7 @@ import android.widget.RadioGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.phoenix.soft.costy.R;
+import com.phoenix.soft.costy.models.Account;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -37,10 +38,22 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class TransactionAddDialogFragment extends DialogFragment {
-    @BindView(R.id.et_mount) EditText mount;
-    @BindView(R.id.rd_group) RadioGroup radioGroup;
+    @BindView(R.id.et_mount)
+    EditText mount;
+    @BindView(R.id.rd_group)
+    RadioGroup radioGroup;
 
-    @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public static TransactionAddDialogFragment newInstance(Account account) {
+        Bundle args = new Bundle();
+        args.putString("account_id",account.getKey());
+        TransactionAddDialogFragment fragment = new TransactionAddDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_detail, null);
         ButterKnife.bind(this, view);
@@ -52,19 +65,20 @@ public class TransactionAddDialogFragment extends DialogFragment {
                 .create();
         mDialog.setOnShowListener(
             dialog -> ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE)
-                .setOnClickListener(v -> addtranscation()));
+                .setOnClickListener(v -> addTransaction()));
         mount.setOnEditorActionListener((v1, actionId, event) -> {
-            addtranscation();
+            addTransaction();
             return true;
         });
         return mDialog;
     }
 
-    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void addtranscation() {
+    private void addTransaction() {
         String mountNumber = mount.getText().toString();
         if (mountNumber.equals("")) {
             mount.setError("Enter Number");

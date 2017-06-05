@@ -28,12 +28,35 @@ import org.joda.money.Money;
  */
 
 public class Transaction implements Serializable, Parcelable {
+    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
+        @Override
+        public Transaction createFromParcel(Parcel source) {
+            return new Transaction(source);
+        }
+
+        @Override
+        public Transaction[] newArray(int size) {
+            return new Transaction[size];
+        }
+    };
     private long id;
     private Date date;
     private Money money;
     private String desc;
     private String title;
     private String key;
+
+    public Transaction() {
+    }
+
+    protected Transaction(Parcel in) {
+        this.id = in.readLong();
+        long tmpDate = in.readLong();
+        this.date = tmpDate == -1 ? null : new Date(tmpDate);
+        this.money = (Money) in.readSerializable();
+        this.desc = in.readString();
+        this.title = in.readString();
+    }
 
     public long getId() {
         return id;
@@ -75,39 +98,19 @@ public class Transaction implements Serializable, Parcelable {
         this.title = title;
     }
 
-    @Override public int describeContents() {
+    @Override
+    public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
         dest.writeLong(this.date != null ? this.date.getTime() : -1);
         dest.writeSerializable(this.money);
         dest.writeString(this.desc);
         dest.writeString(this.title);
     }
-
-    public Transaction() {
-    }
-
-    protected Transaction(Parcel in) {
-        this.id = in.readLong();
-        long tmpDate = in.readLong();
-        this.date = tmpDate == -1 ? null : new Date(tmpDate);
-        this.money = (Money) in.readSerializable();
-        this.desc = in.readString();
-        this.title = in.readString();
-    }
-
-    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
-        @Override public Transaction createFromParcel(Parcel source) {
-            return new Transaction(source);
-        }
-
-        @Override public Transaction[] newArray(int size) {
-            return new Transaction[size];
-        }
-    };
 
     public TransactionFire toTransactionFire() {
         TransactionFire transactionFire =

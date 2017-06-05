@@ -48,11 +48,15 @@ import static com.phoenix.soft.costy.utils.Utils.isUsername;
 
 public class SignUpFragment extends Fragment implements AuthActivity.FabClick {
     public static final String TAG = "SignUpFragment";
-    @BindView(R.id.email) AutoCompleteTextView etUsername;
-    @BindView(R.id.password) EditText etPassword;
-    @BindView(R.id.username) EditText etNickName;
+    @BindView(R.id.email)
+    AutoCompleteTextView etUsername;
+    @BindView(R.id.password)
+    EditText etPassword;
+    @BindView(R.id.username)
+    EditText etNickName;
     FloatingActionButton fab;
-    @Inject FirebaseAuth auth;
+    @Inject
+    FirebaseAuth auth;
 
     public static SignUpFragment newInstance() {
         Bundle args = new Bundle();
@@ -61,7 +65,8 @@ public class SignUpFragment extends Fragment implements AuthActivity.FabClick {
         return fragment;
     }
 
-    @Nullable @Override
+    @Nullable
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
         @Nullable Bundle savedInstanceState) {
         MainApplication.getAppComponent().inject(this);
@@ -71,7 +76,8 @@ public class SignUpFragment extends Fragment implements AuthActivity.FabClick {
         return view;
     }
 
-    @Override public void onFabClick(View view) {
+    @Override
+    public void onFabClick(View view) {
         etUsername.setError(null);
         etPassword.setError(null);
         etNickName.setError(null);

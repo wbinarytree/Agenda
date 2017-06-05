@@ -69,18 +69,21 @@ public class TransactionSourceRTFirebase implements TransactionSourceRT {
         }
     }
 
-    @Override public Observable<List<Transaction>> getTransactionList() {
+    @Override
+    public Observable<List<Transaction>> getTransactionList() {
         if (transListObservable == null) {
             transListObservable = Observable.create((ObservableEmitter<DataSnapshot> e) -> {
                 ValueEventListener valueEventListener = new ValueEventListener() {
-                    @Override public void onDataChange(DataSnapshot dataSnapshot) {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
                         if (!e.isDisposed()) {
                             e.onNext(dataSnapshot);
                             //                        e.onComplete();
                         }
                     }
 
-                    @Override public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
                         if (!e.isDisposed()) {
                             e.onError(new Throwable(databaseError.getMessage()));
                         }
@@ -100,12 +103,14 @@ public class TransactionSourceRTFirebase implements TransactionSourceRT {
         return transListObservable;
     }
 
-    @Override public Observable<ValueEvent<Transaction>> getTransactionUpdate() {
+    @Override
+    public Observable<ValueEvent<Transaction>> getTransactionUpdate() {
         if (transactionUpdate == null) {
             transactionUpdate =
                 Observable.create((ObservableEmitter<ValueEvent<Transaction>> e) -> {
                     ChildEventListener childEventListener = new ChildEventListener() {
-                        @Override public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                             if (!e.isDisposed()) {
                                 Transaction transaction = parser(dataSnapshot);
                                 String key = dataSnapshot.getKey();
@@ -117,7 +122,8 @@ public class TransactionSourceRTFirebase implements TransactionSourceRT {
                             }
                         }
 
-                        @Override public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                             if (!e.isDisposed()) {
                                 Transaction transaction = parser(dataSnapshot);
                                 String key = dataSnapshot.getKey();
@@ -130,7 +136,8 @@ public class TransactionSourceRTFirebase implements TransactionSourceRT {
                             }
                         }
 
-                        @Override public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
                             if (!e.isDisposed()) {
                                 Transaction transaction = parser(dataSnapshot);
                                 String key = dataSnapshot.getKey();
@@ -142,13 +149,15 @@ public class TransactionSourceRTFirebase implements TransactionSourceRT {
                             }
                         }
 
-                        @Override public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
                             if (!e.isDisposed()) {
                                 // TODO: 05/04/17
                             }
                         }
 
-                        @Override public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
                             if (!e.isDisposed()) {
                                 e.onError(new Throwable(databaseError.getMessage()));
                             }
@@ -161,21 +170,25 @@ public class TransactionSourceRTFirebase implements TransactionSourceRT {
         return transactionUpdate;
     }
 
-    @Override public Maybe<Transaction> getTransaction(String id) {
+    @Override
+    public Maybe<Transaction> getTransaction(String id) {
         return null;
     }
 
-    @Override public Observable<Boolean> addTransaction(Transaction transaction) {
+    @Override
+    public Observable<Boolean> addTransaction(Transaction transaction) {
         DatabaseReference push = dbRef.push();
         transaction.setKey(push.getKey());
         return Observable.just(push.setValue(transaction.toFire()).isSuccessful());
     }
 
-    @Override public Observable<Boolean> updateTransaction(Transaction transaction) {
+    @Override
+    public Observable<Boolean> updateTransaction(Transaction transaction) {
         return null;
     }
 
-    @Override public Observable<Boolean> deleteTransaction(Transaction transaction) {
+    @Override
+    public Observable<Boolean> deleteTransaction(Transaction transaction) {
         return null;
     }
 }

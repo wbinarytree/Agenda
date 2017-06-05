@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
-package com.phoenix.soft.costy.account.di;
+package com.phoenix.soft.costy.account.events
 
-import com.google.firebase.database.DatabaseReference;
-import com.phoenix.soft.costy.repos.source.AccountSourceRT;
-import com.phoenix.soft.costy.repos.source.AccountSourceRTFirebase;
-import dagger.Module;
-import dagger.Provides;
-import javax.inject.Named;
+import com.phoenix.soft.costy.models.Account
 
 /**
- * Created by yaoda on 24/03/17.
+ * Created by yaoda on 05/06/17.
  */
+sealed class DashEvent {
+    class InitEvent : DashEvent()
+    class UpdateListEvent : DashEvent()
+    data class AccountEvent(val account: Account, val type: Type) : DashEvent()
 
-@Module
-public class AccountPresenterModule {
-    @AccountRepoScope
-    @Provides
-    AccountSourceRT provideRealTimeAccountSource(@Named("Account") DatabaseReference dbRef) {
-        return new AccountSourceRTFirebase(dbRef);
+    companion object {
+        enum class Type {
+            ADD, DELETE, UPDATE
+        }
+
     }
 }

@@ -29,7 +29,8 @@ import javax.inject.Named;
  * Created by yaoda on 24/03/17.
  */
 
-@Module public class TransactionModule {
+@Module
+public class TransactionModule {
 
     private Account account;
 
@@ -37,17 +38,20 @@ import javax.inject.Named;
         this.account = account;
     }
 
-    @Provides Account provideAccount() {
+    @Provides
+    Account provideAccount() {
         return account;
     }
 
-    @TranscationScope @Provides TransactionSourceRT provideRealTransactionSource(
-        @Named("Account") DatabaseReference dbRef) {
+    @TranscationScope
+    @Provides
+    TransactionSourceRT provideRealTransactionSource(@Named("Account") DatabaseReference dbRef) {
         return new TransactionSourceRTFirebase(dbRef, account.getKey());
     }
 
-    @TranscationScope @Provides TransactionPresenter providePresenter(
-        TransactionSourceRT sourceRT) {
+    @TranscationScope
+    @Provides
+    TransactionPresenter providePresenter(TransactionSourceRT sourceRT) {
         return new TransactionPresenter(account, sourceRT);
     }
 }

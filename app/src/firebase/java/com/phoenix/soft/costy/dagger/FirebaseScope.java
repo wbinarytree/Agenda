@@ -23,5 +23,7 @@ import javax.inject.Scope;
 /**
  * Created by yaoda on 10/04/17.
  */
-@Scope @Retention(RetentionPolicy.RUNTIME) public @interface FirebaseScope {
+@Scope
+@Retention(RetentionPolicy.RUNTIME)
+public @interface FirebaseScope {
 }

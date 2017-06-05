@@ -19,7 +19,6 @@ package com.phoenix.soft.costy;
 import android.app.Application;
 import android.util.ArrayMap;
 import com.facebook.stetho.Stetho;
-import com.google.firebase.auth.FirebaseAuth;
 import com.phoenix.soft.costy.auth.di.AuthComponent;
 import com.phoenix.soft.costy.auth.di.DaggerAuthComponent;
 import com.phoenix.soft.costy.dagger.AppComponent;
@@ -27,7 +26,6 @@ import com.phoenix.soft.costy.dagger.DaggerAppComponent;
 import com.phoenix.soft.costy.models.Account;
 import com.phoenix.soft.costy.transaction.di.TransactionComponent;
 import com.phoenix.soft.costy.transaction.di.TransactionModule;
-import javax.inject.Inject;
 
 /**
  * Created by yaoda on 27/02/17.
@@ -61,7 +59,6 @@ public class MainApplication extends Application {
     public static AuthComponent getAuthComponent() {
         return authComponent;
     }
-
 
     @Override
     public void onCreate() {

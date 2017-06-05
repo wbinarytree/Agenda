@@ -31,7 +31,8 @@ import javax.inject.Singleton;
 /**
  * Created by yaoda on 10/04/17.
  */
-@Singleton @Component(modules = { AppModule.class, FirebaseModule.class })
+@Singleton
+@Component(modules = { AppModule.class, FirebaseModule.class })
 public interface AppComponent {
     TransactionComponent plus(TransactionModule transModule);
 
@@ -45,5 +46,6 @@ public interface AppComponent {
 
     void inject(SignUpFragment signUpFragment);
 
-    @Named("Account") DatabaseReference getDataRef();
+    @Named("Account")
+    DatabaseReference getDataRef();
 }

@@ -43,13 +43,18 @@ import javax.inject.Inject;
 public class AuthActivity extends AppCompatActivity {
 
     private static final String TAG = "AuthActivity";
-    @BindView(R.id.tv_sign_up) TextView tvSignUp;
-    @BindView(R.id.fab) FloatingActionButton fab;
-    @BindView(R.id.login_background) View root;
-    @Inject FirebaseAuth firebaseAuth;
+    @BindView(R.id.tv_sign_up)
+    TextView tvSignUp;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.login_background)
+    View root;
+    @Inject
+    FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         MainApplication.getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -60,7 +65,7 @@ public class AuthActivity extends AppCompatActivity {
         //        fab.hide();
         setupSignUpText();
         tvSignUp.setVisibility(View.GONE);
-        if(savedInstanceState ==null){
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, SignUpFragmentKt.Companion.newInstance())
                 .addToBackStack(SignUpFragmentKt.Companion.getTAG())
@@ -146,12 +151,14 @@ public class AuthActivity extends AppCompatActivity {
         tvSignUp.setVisibility(View.GONE);
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onStart() {
         super.onStart();
         //        firebaseAuth.addAuthStateListener(mAuthListener);
     }
 
-    @Override public void onStop() {
+    @Override
+    public void onStop() {
         super.onStop();
         if (mAuthListener != null) {
             firebaseAuth.removeAuthStateListener(mAuthListener);
@@ -164,11 +171,13 @@ public class AuthActivity extends AppCompatActivity {
         int end = string.indexOf("}") - 1;
         SpannableString ss = new SpannableString(string.replace("{", "").replace("}", ""));
         ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override public void onClick(View textView) {
+            @Override
+            public void onClick(View textView) {
                 showSignUp();
             }
 
-            @Override public void updateDrawState(TextPaint ds) {
+            @Override
+            public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setUnderlineText(true);
             }
@@ -178,7 +187,8 @@ public class AuthActivity extends AppCompatActivity {
         tvSignUp.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    @Override public void onBackPressed() {
+    @Override
+    public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
         if (!(fragment instanceof LoginFragment)) {
             showLogin();
