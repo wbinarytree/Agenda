@@ -16,16 +16,20 @@
 
 package com.phoenix.soft.costy.account
 
+import android.animation.ValueAnimator
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.animation.AnimationUtils
+import com.jakewharton.rxbinding2.view.RxView
 import com.phoenix.soft.costy.R
 import com.phoenix.soft.costy.R.layout
 import com.phoenix.soft.costy.R.string
+import com.phoenix.soft.costy.account.events.DashEvent.FabClickEvent
 import com.phoenix.soft.costy.account.events.DashUiModel
 import com.phoenix.soft.costy.account.events.DashUiModel.Companion.ErrorType.NETWORK
 import com.phoenix.soft.costy.account.events.DashUiModel.Companion.ErrorType.NO_ACCOUNT
@@ -41,6 +45,7 @@ import kotlinx.android.synthetic.main.activity_main.fab
 import kotlinx.android.synthetic.main.app_bar.appbar
 import kotlinx.android.synthetic.main.app_bar.tab_bar
 import kotlinx.android.synthetic.main.app_bar.toolbar
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by yaoda on 05/06/17.
@@ -48,8 +53,10 @@ import kotlinx.android.synthetic.main.app_bar.toolbar
 class DashboardActivity : AppCompatActivity() {
     private var isExpand: Boolean = false
     private var adapter: AccountPagerAdapter? = null
-
     private val disposable = CompositeDisposable()
+
+    private val clickFab = RxView.clicks(fab).throttleFirst(200,
+        TimeUnit.MILLISECONDS).map { FabClickEvent() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +75,7 @@ class DashboardActivity : AppCompatActivity() {
                 container_pager.visibility = VISIBLE
                 container_error.visibility = GONE
                 container_no_account.visibility = GONE
-                it.accounts?.let { it1 -> updateView(it1) }
+                it.accounts?.let { DashboardActivity::updateView }
             }
             if (it.process) {
                 fab.setImageResource(R.drawable.ic_sync_white_24dp)
@@ -102,16 +109,17 @@ class DashboardActivity : AppCompatActivity() {
 
 
     private fun updateView(accounts: List<Account>) {
-        if (adapter == null) {
+        adapter?.apply {
             adapter = AccountPagerAdapter(supportFragmentManager, accounts)
             view_pager.adapter = adapter
         }
+
+        //todo replace with action/events
         fab.setOnClickListener {
             val item = accounts[view_pager.currentItem]
             val frag = TransactionAddDialogFragment.newInstance(item)
             frag.show(supportFragmentManager, "add")
         }
-
         TODO(
             "not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -120,5 +128,10 @@ class DashboardActivity : AppCompatActivity() {
                           func: (DashUiModel) -> Unit) {
         TODO(
             "not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.clear()
     }
 }

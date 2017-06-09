@@ -24,6 +24,7 @@ import com.phoenix.soft.costy.models.Account
 sealed class DashEvent {
     class InitEvent : DashEvent()
     class UpdateListEvent : DashEvent()
+    class FabClickEvent : DashEvent()
     data class AccountEvent(val account: Account, val type: Type) : DashEvent()
 
     companion object {
